@@ -1,0 +1,1198 @@
+Serie,Fecha,Modelo,Valor,Tramo
+Total,2009-01-01,Observado,149944.02934517286,train
+Total,2009-02-01,Observado,127303.6922033775,train
+Total,2009-03-01,Observado,158795.67381860287,train
+Total,2009-04-01,Observado,172013.46769401646,train
+Total,2009-05-01,Observado,124559.52435069307,train
+Total,2009-06-01,Observado,151442.80337827274,train
+Total,2009-07-01,Observado,137616.9517422195,train
+Total,2009-08-01,Observado,179344.0418037644,train
+Total,2009-09-01,Observado,132791.13353560158,train
+Total,2009-10-01,Observado,153153.6097868689,train
+Total,2009-11-01,Observado,173623.27295869164,train
+Total,2009-12-01,Observado,219594.65119713944,train
+Total,2010-01-01,Observado,162333.26551165638,train
+Total,2010-02-01,Observado,132527.46022602476,train
+Total,2010-03-01,Observado,163351.09275954103,train
+Total,2010-04-01,Observado,170870.90530317114,train
+Total,2010-05-01,Observado,141291.6089476861,train
+Total,2010-06-01,Observado,155468.94707462683,train
+Total,2010-07-01,Observado,199667.83285998116,train
+Total,2010-08-01,Observado,183931.0306162957,train
+Total,2010-09-01,Observado,130760.34969839198,train
+Total,2010-10-01,Observado,157632.1243212268,train
+Total,2010-11-01,Observado,179538.33569674406,train
+Total,2010-12-01,Observado,227411.04636668903,train
+Total,2011-01-01,Observado,169708.55722701532,train
+Total,2011-02-01,Observado,139869.86559086666,train
+Total,2011-03-01,Observado,169957.79100865728,train
+Total,2011-04-01,Observado,191655.76499508988,train
+Total,2011-05-01,Observado,145923.54778125993,train
+Total,2011-06-01,Observado,163014.46872590488,train
+Total,2011-07-01,Observado,200521.00470178173,train
+Total,2011-08-01,Observado,174775.4937045801,train
+Total,2011-09-01,Observado,141183.83971974195,train
+Total,2011-10-01,Observado,152049.08059590787,train
+Total,2011-11-01,Observado,187320.07790124384,train
+Total,2011-12-01,Observado,243735.110670736,train
+Total,2012-01-01,Observado,177125.95776830107,train
+Total,2012-02-01,Observado,147819.44219831316,train
+Total,2012-03-01,Observado,186237.20825214812,train
+Total,2012-04-01,Observado,182891.2362626656,train
+Total,2012-05-01,Observado,152137.5120438028,train
+Total,2012-06-01,Observado,173240.56422688224,train
+Total,2012-07-01,Observado,199340.37067282855,train
+Total,2012-08-01,Observado,170666.4032403826,train
+Total,2012-09-01,Observado,147847.52798648956,train
+Total,2012-10-01,Observado,167995.4374967636,train
+Total,2012-11-01,Observado,195400.06831855705,train
+Total,2012-12-01,Observado,238839.75250727762,train
+Total,2013-01-01,Observado,170858.69653542404,train
+Total,2013-02-01,Observado,140163.89946159557,train
+Total,2013-03-01,Observado,217092.55536296268,train
+Total,2013-04-01,Observado,179526.03722270243,train
+Total,2013-05-01,Observado,179243.65691496403,train
+Total,2013-06-01,Observado,197164.99485562296,train
+Total,2013-07-01,Observado,211596.01726466767,train
+Total,2013-08-01,Observado,197150.9391696579,train
+Total,2013-09-01,Observado,163867.0618713466,train
+Total,2013-10-01,Observado,167624.46888297106,train
+Total,2013-11-01,Observado,202965.0230046185,train
+Total,2013-12-01,Observado,262449.40193935845,train
+Total,2014-01-01,Observado,219460.3466763904,train
+Total,2014-02-01,Observado,173476.24586474686,train
+Total,2014-03-01,Observado,200137.33022266923,train
+Total,2014-04-01,Observado,229359.13314891764,train
+Total,2014-05-01,Observado,190264.5647526079,train
+Total,2014-06-01,Observado,200093.47330128693,train
+Total,2014-07-01,Observado,237558.59480590303,train
+Total,2014-08-01,Observado,225101.63196751615,train
+Total,2014-09-01,Observado,187684.7805935593,train
+Total,2014-10-01,Observado,223650.87089512649,train
+Total,2014-11-01,Observado,248017.60998571018,train
+Total,2014-12-01,Observado,325372.73464960407,train
+Total,2015-01-01,Observado,244120.9512092014,train
+Total,2015-02-01,Observado,197207.24754449067,train
+Total,2015-03-01,Observado,249587.40803931904,train
+Total,2015-04-01,Observado,247561.50812161784,train
+Total,2015-05-01,Observado,226414.60772244775,train
+Total,2015-06-01,Observado,245382.68691700848,train
+Total,2015-07-01,Observado,253035.17713215481,train
+Total,2015-08-01,Observado,245666.15541175148,train
+Total,2015-09-01,Observado,206700.77080266396,train
+Total,2015-10-01,Observado,227800.27882344543,train
+Total,2015-11-01,Observado,245184.0101002201,train
+Total,2015-12-01,Observado,329225.2385317896,train
+Total,2016-01-01,Observado,262106.62935210663,train
+Total,2016-02-01,Observado,214638.7297908925,train
+Total,2016-03-01,Observado,322030.33266050776,train
+Total,2016-04-01,Observado,211444.92035013385,train
+Total,2016-05-01,Observado,223932.92774985192,train
+Total,2016-06-01,Observado,226287.2952819879,train
+Total,2016-07-01,Observado,269012.23955853493,train
+Total,2016-08-01,Observado,258799.9277235241,train
+Total,2016-09-01,Observado,186819.30831740005,train
+Total,2016-10-01,Observado,249121.26446227162,train
+Total,2016-11-01,Observado,251531.98052789876,train
+Total,2016-12-01,Observado,321301.18866569793,train
+Total,2017-01-01,Observado,259641.60794906894,train
+Total,2017-02-01,Observado,233718.22885076457,train
+Total,2017-03-01,Observado,294444.4751136085,train
+Total,2017-04-01,Observado,377828.7289698364,train
+Total,2017-05-01,Observado,243741.78519639443,train
+Total,2017-06-01,Observado,247853.40796743412,train
+Total,2017-07-01,Observado,291574.27301642345,train
+Total,2017-08-01,Observado,274293.59321544983,train
+Total,2017-09-01,Observado,213696.60197929587,train
+Total,2017-10-01,Observado,239055.67001993404,train
+Total,2017-11-01,Observado,275693.4157893119,train
+Total,2017-12-01,Observado,356109.498921525,train
+Total,2018-01-01,Observado,303819.2179742683,train
+Total,2018-02-01,Observado,251666.9915704992,train
+Total,2018-03-01,Observado,393020.78296043223,train
+Total,2018-04-01,Observado,308239.86135377205,train
+Total,2018-05-01,Observado,277750.0821155593,train
+Total,2018-06-01,Observado,311280.35050851083,train
+Total,2018-07-01,Observado,337300.58994755434,train
+Total,2018-08-01,Observado,352316.5717399916,train
+Total,2018-09-01,Observado,272777.06846753834,train
+Total,2018-10-01,Observado,282172.2126978078,train
+Total,2018-11-01,Observado,309687.6366610493,train
+Total,2018-12-01,Observado,393729.4913142119,train
+Total,2019-01-01,Observado,357645.74981634185,train
+Total,2019-02-01,Observado,285350.90763189853,train
+Total,2019-03-01,Observado,359757.9903426129,train
+Total,2019-04-01,Observado,388538.5481624975,train
+Total,2019-05-01,Observado,299297.3401131452,train
+Total,2019-06-01,Observado,333161.5553659841,train
+Total,2019-07-01,Observado,365333.6909719392,train
+Total,2019-08-01,Observado,365512.75428666285,train
+Total,2019-09-01,Observado,298250.07724295655,train
+Total,2019-10-01,Observado,294503.9913642525,train
+Total,2019-11-01,Observado,335783.9260785361,train
+Total,2019-12-01,Observado,449114.07050016744,train
+Total,2020-01-01,Observado,388222.6026616117,train
+Total,2020-02-01,Observado,317917.9765175921,train
+Total,2020-03-01,Observado,155415.57609206438,train
+Total,2020-04-01,Observado,10039.0,train
+Total,2020-05-01,Observado,9779.0,train
+Total,2020-06-01,Observado,11817.0,train
+Total,2020-07-01,Observado,13484.0,train
+Total,2020-08-01,Observado,15357.0,train
+Total,2020-09-01,Observado,12572.492682926828,train
+Total,2020-10-01,Observado,16680.78434895513,train
+Total,2020-11-01,Observado,52865.0,train
+Total,2020-12-01,Observado,55620.0,train
+Total,2021-01-01,Observado,89960.0,train
+Total,2021-02-01,Observado,52605.0,train
+Total,2021-03-01,Observado,85017.39633341735,train
+Total,2021-04-01,Observado,59743.190221464305,test
+Total,2021-05-01,Observado,73873.0,test
+Total,2021-06-01,Observado,95146.0,test
+Total,2021-07-01,Observado,97594.66433359256,test
+Total,2021-08-01,Observado,72327.0,test
+Total,2021-09-01,Observado,67022.99999999997,test
+Total,2021-10-01,Observado,83528.0,test
+Total,2021-11-01,Observado,98578.0,test
+Total,2021-12-01,Observado,223569.1278011966,test
+Total,2022-01-01,Observado,134303.0,test
+Total,2022-02-01,Observado,193903.59999999998,test
+Total,2022-03-01,Observado,227886.0,test
+Total,2022-04-01,Observado,292648.0,test
+Total,2022-05-01,Observado,260013.0,test
+Total,2022-06-01,Observado,269366.0,test
+Total,2022-07-01,Observado,306246.0,test
+Total,2022-08-01,Observado,297602.0,test
+Total,2022-09-01,Observado,246464.0,test
+Total,2022-10-01,Observado,281938.0,test
+Total,2022-11-01,Observado,318693.0,test
+Total,2022-12-01,Observado,400266.0,test
+Total,2023-01-01,Observado,258166.18821264658,test
+Total,2023-02-01,Observado,198751.85766927942,test
+Total,2023-03-01,Observado,251839.50267324003,test
+Total,2023-04-01,Observado,283179.2556557847,test
+Total,2023-05-01,Observado,213191.0389184069,test
+Total,2023-06-01,Observado,224580.17382775573,test
+Total,2023-07-01,Observado,257626.95044792973,test
+Total,2023-08-01,Observado,264514.08794636687,test
+Total,2023-09-01,Observado,218486.4781049799,test
+Total,2023-10-01,Observado,164499.38846570504,test
+Total,2023-11-01,Observado,255894.27623440052,test
+Total,2023-12-01,Observado,327097.61316611955,test
+Total,2024-01-01,Observado,292731.86680673156,test
+Total,2024-02-01,Observado,265990.67321318097,test
+Total,2024-03-01,Observado,322310.3940022896,test
+Total,2024-04-01,Observado,240988.81729405138,test
+Total,2024-05-01,Observado,238807.9548151027,test
+Total,2024-06-01,Observado,234781.2268619937,test
+Total,2024-07-01,Observado,266974.95506929053,test
+Total,2024-08-01,Observado,282101.8310109445,test
+Total,2024-09-01,Observado,215658.80983415912,test
+Total,2024-10-01,Observado,249665.70083733913,test
+Total,2024-11-01,Observado,302674.076910829,test
+Total,2024-12-01,Observado,361749.6884796847,test
+Total,2025-01-01,Observado,289543.5982553855,test
+Total,2025-02-01,Observado,254428.88643334265,test
+Total,2025-03-01,Observado,278538.25098417036,test
+Total,2025-04-01,Observado,300287.6910735994,test
+Total,2025-05-01,Observado,247981.92597209418,test
+Total,2025-06-01,Observado,254190.09615352156,test
+Total,2025-07-01,Observado,283388.6987866118,test
+Total,2025-08-01,Observado,293780.5243930469,test
+Total,2025-09-01,Observado,218069.51122057904,test
+Total,2025-10-01,Observado,255920.93232213068,test
+Total,2025-11-01,Observado,310585.5201071752,test
+Total,2025-12-01,Observado,365573.0218067979,test
+Total,2026-01-01,Observado,300664.07527322107,test
+Total,2026-02-01,Observado,236844.11361811566,test
+Total,2026-03-01,Observado,291160.36570034793,test
+Total,2026-04-01,Observado,260951.0456123683,test
+Total,2026-05-01,Observado,241312.29525905842,test
+Total,2026-06-01,Observado,245687.58097717003,test
+Total,2021-04-01,"ARIMA(1,1,1)",92667.95885832407,test
+Total,2021-05-01,"ARIMA(1,1,1)",88948.95868983408,test
+Total,2021-06-01,"ARIMA(1,1,1)",90697.82503286241,test
+Total,2021-07-01,"ARIMA(1,1,1)",89862.24167286101,test
+Total,2021-08-01,"ARIMA(1,1,1)",90258.47813085017,test
+Total,2021-09-01,"ARIMA(1,1,1)",90069.90679519434,test
+Total,2021-10-01,"ARIMA(1,1,1)",90159.49640276693,test
+Total,2021-11-01,"ARIMA(1,1,1)",90116.89821100578,test
+Total,2021-12-01,"ARIMA(1,1,1)",90137.1450675006,test
+Total,2022-01-01,"ARIMA(1,1,1)",90127.52000673724,test
+Total,2022-02-01,"ARIMA(1,1,1)",90132.09522268022,test
+Total,2022-03-01,"ARIMA(1,1,1)",90129.9203308447,test
+Total,2022-04-01,"ARIMA(1,1,1)",90130.9541752856,test
+Total,2022-05-01,"ARIMA(1,1,1)",90130.46272817436,test
+Total,2022-06-01,"ARIMA(1,1,1)",90130.69634087417,test
+Total,2022-07-01,"ARIMA(1,1,1)",90130.58529126698,test
+Total,2022-08-01,"ARIMA(1,1,1)",90130.63807950531,test
+Total,2022-09-01,"ARIMA(1,1,1)",90130.61298622034,test
+Total,2022-10-01,"ARIMA(1,1,1)",90130.62491449888,test
+Total,2022-11-01,"ARIMA(1,1,1)",90130.61924430293,test
+Total,2022-12-01,"ARIMA(1,1,1)",90130.6219396727,test
+Total,2023-01-01,"ARIMA(1,1,1)",90130.62065840869,test
+Total,2023-02-01,"ARIMA(1,1,1)",90130.62126746711,test
+Total,2023-03-01,"ARIMA(1,1,1)",90130.62097794662,test
+Total,2023-04-01,"ARIMA(1,1,1)",90130.6211155723,test
+Total,2023-05-01,"ARIMA(1,1,1)",90130.62105015088,test
+Total,2023-06-01,"ARIMA(1,1,1)",90130.62108124934,test
+Total,2023-07-01,"ARIMA(1,1,1)",90130.62106646644,test
+Total,2023-08-01,"ARIMA(1,1,1)",90130.62107349357,test
+Total,2023-09-01,"ARIMA(1,1,1)",90130.62107015317,test
+Total,2023-10-01,"ARIMA(1,1,1)",90130.62107174107,test
+Total,2023-11-01,"ARIMA(1,1,1)",90130.62107098618,test
+Total,2023-12-01,"ARIMA(1,1,1)",90130.62107134498,test
+Total,2024-01-01,"ARIMA(1,1,1)",90130.62107117446,test
+Total,2024-02-01,"ARIMA(1,1,1)",90130.62107125547,test
+Total,2024-03-01,"ARIMA(1,1,1)",90130.6210712169,test
+Total,2024-04-01,"ARIMA(1,1,1)",90130.62107123515,test
+Total,2024-05-01,"ARIMA(1,1,1)",90130.6210712265,test
+Total,2024-06-01,"ARIMA(1,1,1)",90130.62107123066,test
+Total,2024-07-01,"ARIMA(1,1,1)",90130.62107122874,test
+Total,2024-08-01,"ARIMA(1,1,1)",90130.6210712297,test
+Total,2024-09-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2024-10-01,"ARIMA(1,1,1)",90130.62107122938,test
+Total,2024-11-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2024-12-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-01-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-02-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-03-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-04-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-05-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-06-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-07-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-08-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-09-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-10-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-11-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2025-12-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2026-01-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2026-02-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2026-03-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2026-04-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2026-05-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2026-06-01,"ARIMA(1,1,1)",90130.62107122922,test
+Total,2021-04-01,Holt-Winters,66700.58490047812,test
+Total,2021-05-01,Holt-Winters,56369.801363312545,test
+Total,2021-06-01,Holt-Winters,62276.03594458689,test
+Total,2021-07-01,Holt-Winters,70069.00082461904,test
+Total,2021-08-01,Holt-Winters,68968.62742889898,test
+Total,2021-09-01,Holt-Winters,54737.41415462191,test
+Total,2021-10-01,Holt-Winters,62181.50324787491,test
+Total,2021-11-01,Holt-Winters,76668.49745774589,test
+Total,2021-12-01,Holt-Winters,97147.04936566166,test
+Total,2022-01-01,Holt-Winters,81713.98528461195,test
+Total,2022-02-01,Holt-Winters,65664.44347613053,test
+Total,2022-03-01,Holt-Winters,81137.64634659202,test
+Total,2022-04-01,Holt-Winters,63656.71878718662,test
+Total,2022-05-01,Holt-Winters,53797.37822131512,test
+Total,2022-06-01,Holt-Winters,59434.08312266354,test
+Total,2022-07-01,Holt-Winters,66871.417812109,test
+Total,2022-08-01,Holt-Winters,65821.25970754726,test
+Total,2022-09-01,Holt-Winters,52239.48463386801,test
+Total,2022-10-01,Holt-Winters,59343.86440419551,test
+Total,2022-11-01,Holt-Winters,73169.74790829589,test
+Total,2022-12-01,Holt-Winters,92713.76572936965,test
+Total,2023-01-01,Holt-Winters,77984.98603878902,test
+Total,2023-02-01,Holt-Winters,62667.86144250433,test
+Total,2023-03-01,Holt-Winters,77434.9481979158,test
+Total,2023-04-01,Holt-Winters,60751.758815864756,test
+Total,2023-05-01,Holt-Winters,51342.34702786881,test
+Total,2023-06-01,Holt-Winters,56721.8221753037,test
+Total,2023-07-01,Holt-Winters,63819.75577751449,test
+Total,2023-08-01,Holt-Winters,62817.52140065084,test
+Total,2023-09-01,Holt-Winters,49855.54756210023,test
+Total,2023-10-01,Holt-Winters,56635.72056765771,test
+Total,2023-11-01,Holt-Winters,69830.66300359143,test
+Total,2023-12-01,Holt-Winters,88482.79398961131,test
+Total,2024-01-01,Holt-Winters,74426.15883055446,test
+Total,2024-02-01,Holt-Winters,59808.02775256139,test
+Total,2024-03-01,Holt-Winters,73901.22184220553,test
+Total,2024-04-01,Holt-Winters,57979.366036125524,test
+Total,2024-05-01,Holt-Winters,48999.350627939755,test
+Total,2024-06-01,Holt-Winters,54133.3346431305,test
+Total,2024-07-01,Holt-Winters,60907.35564999591,test
+Total,2024-08-01,Holt-Winters,59950.85801235071,test
+Total,2024-09-01,Holt-Winters,47580.40091967887,test
+Total,2024-10-01,Holt-Winters,54051.16226288481,test
+Total,2024-11-01,Holt-Winters,66643.95648366424,test
+Total,2024-12-01,Holt-Winters,84444.90168872398,test
+Total,2025-01-01,Holt-Winters,71029.73789744278,test
+Total,2025-02-01,Holt-Winters,57078.70192655181,test
+Total,2025-03-01,Holt-Winters,70528.75628988747,test
+Total,2025-04-01,Holt-Winters,55333.49077414979,test
+Total,2025-05-01,Holt-Winters,46763.276339052885,test
+Total,2025-06-01,Holt-Winters,51662.97215432251,test
+Total,2025-07-01,Holt-Winters,58127.862243906035,test
+Total,2025-08-01,Holt-Winters,57215.01415972451,test
+Total,2025-09-01,Holt-Winters,45409.08007995417,test
+Total,2025-10-01,Holt-Winters,51584.54969207306,test
+Total,2025-11-01,Holt-Winters,63602.67459537235,test
+Total,2025-12-01,Holt-Winters,80591.27769016297,test
+Total,2026-01-01,Holt-Winters,67788.31186580309,test
+Total,2026-02-01,Holt-Winters,54473.92826760819,test
+Total,2026-03-01,Holt-Winters,67310.19244065435,test
+Total,2026-04-01,Holt-Winters,52808.35943161565,test
+Total,2026-05-01,Holt-Winters,44629.2447948421,test
+Total,2026-06-01,Holt-Winters,49305.34409922973,test
+Total,2021-04-01,Seasonal Naive,10039.0,test
+Total,2021-05-01,Seasonal Naive,9779.0,test
+Total,2021-06-01,Seasonal Naive,11817.0,test
+Total,2021-07-01,Seasonal Naive,13484.0,test
+Total,2021-08-01,Seasonal Naive,15357.0,test
+Total,2021-09-01,Seasonal Naive,12572.492682926828,test
+Total,2021-10-01,Seasonal Naive,16680.78434895513,test
+Total,2021-11-01,Seasonal Naive,52865.0,test
+Total,2021-12-01,Seasonal Naive,55620.0,test
+Total,2022-01-01,Seasonal Naive,89960.0,test
+Total,2022-02-01,Seasonal Naive,52605.0,test
+Total,2022-03-01,Seasonal Naive,85017.39633341735,test
+Total,2022-04-01,Seasonal Naive,10039.0,test
+Total,2022-05-01,Seasonal Naive,9779.0,test
+Total,2022-06-01,Seasonal Naive,11817.0,test
+Total,2022-07-01,Seasonal Naive,13484.0,test
+Total,2022-08-01,Seasonal Naive,15357.0,test
+Total,2022-09-01,Seasonal Naive,12572.492682926828,test
+Total,2022-10-01,Seasonal Naive,16680.78434895513,test
+Total,2022-11-01,Seasonal Naive,52865.0,test
+Total,2022-12-01,Seasonal Naive,55620.0,test
+Total,2023-01-01,Seasonal Naive,89960.0,test
+Total,2023-02-01,Seasonal Naive,52605.0,test
+Total,2023-03-01,Seasonal Naive,85017.39633341735,test
+Total,2023-04-01,Seasonal Naive,10039.0,test
+Total,2023-05-01,Seasonal Naive,9779.0,test
+Total,2023-06-01,Seasonal Naive,11817.0,test
+Total,2023-07-01,Seasonal Naive,13484.0,test
+Total,2023-08-01,Seasonal Naive,15357.0,test
+Total,2023-09-01,Seasonal Naive,12572.492682926828,test
+Total,2023-10-01,Seasonal Naive,16680.78434895513,test
+Total,2023-11-01,Seasonal Naive,52865.0,test
+Total,2023-12-01,Seasonal Naive,55620.0,test
+Total,2024-01-01,Seasonal Naive,89960.0,test
+Total,2024-02-01,Seasonal Naive,52605.0,test
+Total,2024-03-01,Seasonal Naive,85017.39633341735,test
+Total,2024-04-01,Seasonal Naive,10039.0,test
+Total,2024-05-01,Seasonal Naive,9779.0,test
+Total,2024-06-01,Seasonal Naive,11817.0,test
+Total,2024-07-01,Seasonal Naive,13484.0,test
+Total,2024-08-01,Seasonal Naive,15357.0,test
+Total,2024-09-01,Seasonal Naive,12572.492682926828,test
+Total,2024-10-01,Seasonal Naive,16680.78434895513,test
+Total,2024-11-01,Seasonal Naive,52865.0,test
+Total,2024-12-01,Seasonal Naive,55620.0,test
+Total,2025-01-01,Seasonal Naive,89960.0,test
+Total,2025-02-01,Seasonal Naive,52605.0,test
+Total,2025-03-01,Seasonal Naive,85017.39633341735,test
+Total,2025-04-01,Seasonal Naive,10039.0,test
+Total,2025-05-01,Seasonal Naive,9779.0,test
+Total,2025-06-01,Seasonal Naive,11817.0,test
+Total,2025-07-01,Seasonal Naive,13484.0,test
+Total,2025-08-01,Seasonal Naive,15357.0,test
+Total,2025-09-01,Seasonal Naive,12572.492682926828,test
+Total,2025-10-01,Seasonal Naive,16680.78434895513,test
+Total,2025-11-01,Seasonal Naive,52865.0,test
+Total,2025-12-01,Seasonal Naive,55620.0,test
+Total,2026-01-01,Seasonal Naive,89960.0,test
+Total,2026-02-01,Seasonal Naive,52605.0,test
+Total,2026-03-01,Seasonal Naive,85017.39633341735,test
+Total,2026-04-01,Seasonal Naive,10039.0,test
+Total,2026-05-01,Seasonal Naive,9779.0,test
+Total,2026-06-01,Seasonal Naive,11817.0,test
+Aérea,2009-01-01,Observado,81693.0,train
+Aérea,2009-02-01,Observado,70099.0,train
+Aérea,2009-03-01,Observado,84494.0,train
+Aérea,2009-04-01,Observado,80618.0,train
+Aérea,2009-05-01,Observado,64621.0,train
+Aérea,2009-06-01,Observado,81500.0,train
+Aérea,2009-07-01,Observado,74818.0,train
+Aérea,2009-08-01,Observado,76026.0,train
+Aérea,2009-09-01,Observado,61974.0,train
+Aérea,2009-10-01,Observado,72950.0,train
+Aérea,2009-11-01,Observado,82455.0,train
+Aérea,2009-12-01,Observado,104131.0,train
+Aérea,2010-01-01,Observado,85216.0,train
+Aérea,2010-02-01,Observado,69352.0,train
+Aérea,2010-03-01,Observado,88849.0,train
+Aérea,2010-04-01,Observado,76466.0,train
+Aérea,2010-05-01,Observado,65070.0,train
+Aérea,2010-06-01,Observado,84570.0,train
+Aérea,2010-07-01,Observado,102317.0,train
+Aérea,2010-08-01,Observado,79180.0,train
+Aérea,2010-09-01,Observado,62853.0,train
+Aérea,2010-10-01,Observado,76272.0,train
+Aérea,2010-11-01,Observado,84445.0,train
+Aérea,2010-12-01,Observado,99643.0,train
+Aérea,2011-01-01,Observado,81827.0,train
+Aérea,2011-02-01,Observado,69199.0,train
+Aérea,2011-03-01,Observado,77868.0,train
+Aérea,2011-04-01,Observado,77120.0,train
+Aérea,2011-05-01,Observado,68133.0,train
+Aérea,2011-06-01,Observado,82437.0,train
+Aérea,2011-07-01,Observado,97679.0,train
+Aérea,2011-08-01,Observado,77477.0,train
+Aérea,2011-09-01,Observado,65329.0,train
+Aérea,2011-10-01,Observado,71644.0,train
+Aérea,2011-11-01,Observado,86040.0,train
+Aérea,2011-12-01,Observado,101211.0,train
+Aérea,2012-01-01,Observado,81067.0,train
+Aérea,2012-02-01,Observado,70168.0,train
+Aérea,2012-03-01,Observado,84564.0,train
+Aérea,2012-04-01,Observado,75122.0,train
+Aérea,2012-05-01,Observado,71959.0,train
+Aérea,2012-06-01,Observado,87824.0,train
+Aérea,2012-07-01,Observado,96204.0,train
+Aérea,2012-08-01,Observado,72237.0,train
+Aérea,2012-09-01,Observado,65651.0,train
+Aérea,2012-10-01,Observado,75434.0,train
+Aérea,2012-11-01,Observado,87872.0,train
+Aérea,2012-12-01,Observado,102428.0,train
+Aérea,2013-01-01,Observado,80051.0,train
+Aérea,2013-02-01,Observado,69139.0,train
+Aérea,2013-03-01,Observado,90893.0,train
+Aérea,2013-04-01,Observado,72202.0,train
+Aérea,2013-05-01,Observado,71046.0,train
+Aérea,2013-06-01,Observado,89180.0,train
+Aérea,2013-07-01,Observado,95206.0,train
+Aérea,2013-08-01,Observado,77913.0,train
+Aérea,2013-09-01,Observado,66627.0,train
+Aérea,2013-10-01,Observado,79527.0,train
+Aérea,2013-11-01,Observado,92515.0,train
+Aérea,2013-12-01,Observado,112488.0,train
+Aérea,2014-01-01,Observado,90200.0,train
+Aérea,2014-02-01,Observado,78209.0,train
+Aérea,2014-03-01,Observado,92135.0,train
+Aérea,2014-04-01,Observado,89600.0,train
+Aérea,2014-05-01,Observado,80383.0,train
+Aérea,2014-06-01,Observado,99084.0,train
+Aérea,2014-07-01,Observado,102729.0,train
+Aérea,2014-08-01,Observado,86492.0,train
+Aérea,2014-09-01,Observado,73602.0,train
+Aérea,2014-10-01,Observado,86265.0,train
+Aérea,2014-11-01,Observado,95776.0,train
+Aérea,2014-12-01,Observado,117878.0,train
+Aérea,2015-01-01,Observado,95064.0,train
+Aérea,2015-02-01,Observado,79878.0,train
+Aérea,2015-03-01,Observado,98121.0,train
+Aérea,2015-04-01,Observado,87540.0,train
+Aérea,2015-05-01,Observado,84334.0,train
+Aérea,2015-06-01,Observado,104893.0,train
+Aérea,2015-07-01,Observado,106927.0,train
+Aérea,2015-08-01,Observado,90600.0,train
+Aérea,2015-09-01,Observado,82888.0,train
+Aérea,2015-10-01,Observado,97243.0,train
+Aérea,2015-11-01,Observado,110173.0,train
+Aérea,2015-12-01,Observado,129751.0,train
+Aérea,2016-01-01,Observado,109052.0,train
+Aérea,2016-02-01,Observado,90944.0,train
+Aérea,2016-03-01,Observado,117172.0,train
+Aérea,2016-04-01,Observado,90938.0,train
+Aérea,2016-05-01,Observado,96379.0,train
+Aérea,2016-06-01,Observado,113143.0,train
+Aérea,2016-07-01,Observado,130062.0,train
+Aérea,2016-08-01,Observado,100986.0,train
+Aérea,2016-09-01,Observado,80637.42857142864,train
+Aérea,2016-10-01,Observado,102214.0,train
+Aérea,2016-11-01,Observado,111954.0,train
+Aérea,2016-12-01,Observado,111842.0,train
+Aérea,2017-01-01,Observado,99217.0,train
+Aérea,2017-02-01,Observado,94604.0,train
+Aérea,2017-03-01,Observado,106339.0,train
+Aérea,2017-04-01,Observado,110230.0,train
+Aérea,2017-05-01,Observado,89750.0,train
+Aérea,2017-06-01,Observado,114128.0,train
+Aérea,2017-07-01,Observado,134449.0,train
+Aérea,2017-08-01,Observado,100536.0,train
+Aérea,2017-09-01,Observado,91091.0,train
+Aérea,2017-10-01,Observado,109105.0,train
+Aérea,2017-11-01,Observado,121392.0,train
+Aérea,2017-12-01,Observado,142949.0,train
+Aérea,2018-01-01,Observado,117446.0,train
+Aérea,2018-02-01,Observado,96337.0,train
+Aérea,2018-03-01,Observado,124266.0,train
+Aérea,2018-04-01,Observado,104951.0,train
+Aérea,2018-05-01,Observado,103815.0,train
+Aérea,2018-06-01,Observado,120718.00000000067,train
+Aérea,2018-07-01,Observado,134933.0,train
+Aérea,2018-08-01,Observado,110568.00000000073,train
+Aérea,2018-09-01,Observado,94931.29173150646,train
+Aérea,2018-10-01,Observado,115003.9962846012,train
+Aérea,2018-11-01,Observado,135409.36194730835,train
+Aérea,2018-12-01,Observado,156607.3959668107,train
+Aérea,2019-01-01,Observado,126566.1334999886,train
+Aérea,2019-02-01,Observado,106574.12156398408,train
+Aérea,2019-03-01,Observado,118895.93695089713,train
+Aérea,2019-04-01,Observado,125309.99999999898,train
+Aérea,2019-05-01,Observado,109523.99999999949,train
+Aérea,2019-06-01,Observado,127604.99999999903,train
+Aérea,2019-07-01,Observado,138562.64109759167,train
+Aérea,2019-08-01,Observado,115045.0,train
+Aérea,2019-09-01,Observado,101240.07692307643,train
+Aérea,2019-10-01,Observado,119128.99999999865,train
+Aérea,2019-11-01,Observado,137092.00000000224,train
+Aérea,2019-12-01,Observado,157842.00000000006,train
+Aérea,2020-01-01,Observado,130697.00219828535,train
+Aérea,2020-02-01,Observado,112885.99999999997,train
+Aérea,2020-03-01,Observado,54830.992130115425,train
+Aérea,2020-04-01,Observado,489.0,train
+Aérea,2020-05-01,Observado,610.0,train
+Aérea,2020-06-01,Observado,1418.0,train
+Aérea,2020-07-01,Observado,1047.0,train
+Aérea,2020-08-01,Observado,1259.0,train
+Aérea,2020-09-01,Observado,5605.999999999998,train
+Aérea,2020-10-01,Observado,5307.932304319844,train
+Aérea,2020-11-01,Observado,38994.0,train
+Aérea,2020-12-01,Observado,50380.0,train
+Aérea,2021-01-01,Observado,40805.0,train
+Aérea,2021-02-01,Observado,28784.0,train
+Aérea,2021-03-01,Observado,58807.13961892686,train
+Aérea,2021-04-01,Observado,33048.102901499005,test
+Aérea,2021-05-01,Observado,58366.0,test
+Aérea,2021-06-01,Observado,73416.0,test
+Aérea,2021-07-01,Observado,70340.0,test
+Aérea,2021-08-01,Observado,50329.0,test
+Aérea,2021-09-01,Observado,45550.999999999956,test
+Aérea,2021-10-01,Observado,53420.0,test
+Aérea,2021-11-01,Observado,68351.0,test
+Aérea,2021-12-01,Observado,122254.0,test
+Aérea,2022-01-01,Observado,97752.0,test
+Aérea,2022-02-01,Observado,80539.0,test
+Aérea,2022-03-01,Observado,106141.0,test
+Aérea,2022-04-01,Observado,121028.0,test
+Aérea,2022-05-01,Observado,111839.0,test
+Aérea,2022-06-01,Observado,123396.0,test
+Aérea,2022-07-01,Observado,124663.0,test
+Aérea,2022-08-01,Observado,108896.0,test
+Aérea,2022-09-01,Observado,103209.0,test
+Aérea,2022-10-01,Observado,122939.0,test
+Aérea,2022-11-01,Observado,131410.0,test
+Aérea,2022-12-01,Observado,158463.0,test
+Aérea,2023-01-01,Observado,76401.0,test
+Aérea,2023-02-01,Observado,75406.0,test
+Aérea,2023-03-01,Observado,92733.0,test
+Aérea,2023-04-01,Observado,79354.0,test
+Aérea,2023-05-01,Observado,71802.0,test
+Aérea,2023-06-01,Observado,87780.0,test
+Aérea,2023-07-01,Observado,99032.0,test
+Aérea,2023-08-01,Observado,79152.0,test
+Aérea,2023-09-01,Observado,67306.0,test
+Aérea,2023-10-01,Observado,59326.0,test
+Aérea,2023-11-01,Observado,89140.0,test
+Aérea,2023-12-01,Observado,108408.0,test
+Aérea,2024-01-01,Observado,96039.0,test
+Aérea,2024-02-01,Observado,98871.0,test
+Aérea,2024-03-01,Observado,108491.0,test
+Aérea,2024-04-01,Observado,87857.0,test
+Aérea,2024-05-01,Observado,87997.0,test
+Aérea,2024-06-01,Observado,104464.0,test
+Aérea,2024-07-01,Observado,110379.0,test
+Aérea,2024-08-01,Observado,88635.0,test
+Aérea,2024-09-01,Observado,69269.0,test
+Aérea,2024-10-01,Observado,81187.0,test
+Aérea,2024-11-01,Observado,97137.0,test
+Aérea,2024-12-01,Observado,113027.0,test
+Aérea,2025-01-01,Observado,101124.0,test
+Aérea,2025-02-01,Observado,92703.0,test
+Aérea,2025-03-01,Observado,107244.0,test
+Aérea,2025-04-01,Observado,93466.0,test
+Aérea,2025-05-01,Observado,87753.0,test
+Aérea,2025-06-01,Observado,99411.0,test
+Aérea,2025-07-01,Observado,117361.0,test
+Aérea,2025-08-01,Observado,90643.0,test
+Aérea,2025-09-01,Observado,70416.0,test
+Aérea,2025-10-01,Observado,90000.0,test
+Aérea,2025-11-01,Observado,111567.0,test
+Aérea,2025-12-01,Observado,127283.0,test
+Aérea,2026-01-01,Observado,113435.0,test
+Aérea,2026-02-01,Observado,106821.0,test
+Aérea,2026-03-01,Observado,127540.0,test
+Aérea,2026-04-01,Observado,102029.0,test
+Aérea,2026-05-01,Observado,95804.0,test
+Aérea,2026-06-01,Observado,98211.0,test
+Aérea,2021-04-01,"ARIMA(1,1,1)",65304.66202810968,test
+Aérea,2021-05-01,"ARIMA(1,1,1)",62728.458276259305,test
+Aérea,2021-06-01,"ARIMA(1,1,1)",63705.59757531737,test
+Aérea,2021-07-01,"ARIMA(1,1,1)",63328.54249935902,test
+Aérea,2021-08-01,"ARIMA(1,1,1)",63473.084749529145,test
+Aérea,2021-09-01,"ARIMA(1,1,1)",63417.534729481886,test
+Aérea,2021-10-01,"ARIMA(1,1,1)",63438.86280440932,test
+Aérea,2021-11-01,"ARIMA(1,1,1)",63430.67096955147,test
+Aérea,2021-12-01,"ARIMA(1,1,1)",63433.81689533933,test
+Aérea,2022-01-01,"ARIMA(1,1,1)",63432.60869302181,test
+Aérea,2022-02-01,"ARIMA(1,1,1)",63433.072696968426,test
+Aérea,2022-03-01,"ARIMA(1,1,1)",63432.89449716917,test
+Aérea,2022-04-01,"ARIMA(1,1,1)",63432.962934236755,test
+Aérea,2022-05-01,"ARIMA(1,1,1)",63432.93665116655,test
+Aérea,2022-06-01,"ARIMA(1,1,1)",63432.94674510373,test
+Aérea,2022-07-01,"ARIMA(1,1,1)",63432.94286855564,test
+Aérea,2022-08-01,"ARIMA(1,1,1)",63432.94435733287,test
+Aérea,2022-09-01,"ARIMA(1,1,1)",63432.943785572184,test
+Aérea,2022-10-01,"ARIMA(1,1,1)",63432.9440051552,test
+Aérea,2022-11-01,"ARIMA(1,1,1)",63432.94392082493,test
+Aérea,2022-12-01,"ARIMA(1,1,1)",63432.94395321174,test
+Aérea,2023-01-01,"ARIMA(1,1,1)",63432.943940773715,test
+Aérea,2023-02-01,"ARIMA(1,1,1)",63432.94394555054,test
+Aérea,2023-03-01,"ARIMA(1,1,1)",63432.943943716,test
+Aérea,2023-04-01,"ARIMA(1,1,1)",63432.94394442059,test
+Aérea,2023-05-01,"ARIMA(1,1,1)",63432.94394415005,test
+Aérea,2023-06-01,"ARIMA(1,1,1)",63432.94394425394,test
+Aérea,2023-07-01,"ARIMA(1,1,1)",63432.94394421405,test
+Aérea,2023-08-01,"ARIMA(1,1,1)",63432.94394422937,test
+Aérea,2023-09-01,"ARIMA(1,1,1)",63432.943944223516,test
+Aérea,2023-10-01,"ARIMA(1,1,1)",63432.94394422577,test
+Aérea,2023-11-01,"ARIMA(1,1,1)",63432.94394422487,test
+Aérea,2023-12-01,"ARIMA(1,1,1)",63432.943944225204,test
+Aérea,2024-01-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-02-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-03-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-04-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-05-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-06-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-07-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-08-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-09-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-10-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-11-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2024-12-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-01-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-02-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-03-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-04-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-05-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-06-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-07-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-08-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-09-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-10-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-11-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2025-12-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2026-01-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2026-02-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2026-03-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2026-04-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2026-05-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2026-06-01,"ARIMA(1,1,1)",63432.943944225095,test
+Aérea,2021-04-01,Holt-Winters,36416.72397311845,test
+Aérea,2021-05-01,Holt-Winters,34116.04111066833,test
+Aérea,2021-06-01,Holt-Winters,44123.45912605921,test
+Aérea,2021-07-01,Holt-Winters,46696.08269838257,test
+Aérea,2021-08-01,Holt-Winters,39391.407259619366,test
+Aérea,2021-09-01,Holt-Winters,38679.33122631254,test
+Aérea,2021-10-01,Holt-Winters,44940.905011388684,test
+Aérea,2021-11-01,Holt-Winters,59842.89466179413,test
+Aérea,2021-12-01,Holt-Winters,70615.73863180936,test
+Aérea,2022-01-01,Holt-Winters,57794.218587232994,test
+Aérea,2022-02-01,Holt-Winters,48687.57062827198,test
+Aérea,2022-03-01,Holt-Winters,57262.642170160965,test
+Aérea,2022-04-01,Holt-Winters,35460.283641656875,test
+Aérea,2022-05-01,Holt-Winters,33220.02537646525,test
+Aérea,2022-06-01,Holt-Winters,42964.610902838715,test
+Aérea,2022-07-01,Holt-Winters,45469.66769062505,test
+Aérea,2022-08-01,Holt-Winters,38356.84054120891,test
+Aérea,2022-09-01,Holt-Winters,37663.466306499475,test
+Aérea,2022-10-01,Holt-Winters,43760.58758039174,test
+Aérea,2022-11-01,Holt-Winters,58271.19485573259,test
+Aérea,2022-12-01,Holt-Winters,68761.1033682621,test
+Aérea,2023-01-01,Holt-Winters,56276.32473102178,test
+Aérea,2023-02-01,Holt-Winters,47408.85164673661,test
+Aérea,2023-03-01,Holt-Winters,55758.70951279116,test
+Aérea,2023-04-01,Holt-Winters,34528.96303563577,test
+Aérea,2023-05-01,Holt-Winters,32347.542390195475,test
+Aérea,2023-06-01,Holt-Winters,41836.19839864525,test
+Aérea,2023-07-01,Holt-Winters,44275.46296013992,test
+Aérea,2023-08-01,Holt-Winters,37349.44544141545,test
+Aérea,2023-09-01,Holt-Winters,36674.28182563379,test
+Aérea,2023-10-01,Holt-Winters,42611.26973067964,test
+Aérea,2023-11-01,Holt-Winters,56740.773806227444,test
+Aérea,2023-12-01,Holt-Winters,66955.17781203277,test
+Aérea,2024-01-01,Holt-Winters,54798.29648446918,test
+Aérea,2024-02-01,Holt-Winters,46163.71664182269,test
+Aérea,2024-03-01,Holt-Winters,54294.27579141505,test
+Aérea,2024-04-01,Holt-Winters,33622.10241645415,test
+Aérea,2024-05-01,Holt-Winters,31497.97409326454,test
+Aérea,2024-06-01,Holt-Winters,40737.42225686408,test
+Aérea,2024-07-01,Holt-Winters,43112.62254372931,test
+Aérea,2024-08-01,Holt-Winters,36368.50833119481,test
+Aérea,2024-09-01,Holt-Winters,35711.07705489941,test
+Aérea,2024-10-01,Holt-Winters,41492.13729649113,test
+Aérea,2024-11-01,Holt-Winters,55250.547377659226,test
+Aérea,2024-12-01,Holt-Winters,65196.682662746935,test
+Aérea,2025-01-01,Holt-Winters,53359.08682651577,test
+Aérea,2025-02-01,Holt-Winters,44951.283571813554,test
+Aérea,2025-03-01,Holt-Winters,52868.30361520447,test
+Aérea,2025-04-01,Holt-Winters,32739.0593727316,test
+Aérea,2025-05-01,Holt-Winters,30670.718659624596,test
+Aérea,2025-06-01,Holt-Winters,39667.50411499589,test
+Aérea,2025-07-01,Holt-Winters,41980.3226963751,test
+Aérea,2025-08-01,Holt-Winters,35413.33432408951,test
+Aérea,2025-09-01,Holt-Winters,34773.169669258394,test
+Aérea,2025-10-01,Holt-Winters,40402.39749512406,test
+Aérea,2025-11-01,Holt-Winters,53799.459907893244,test
+Aérea,2025-12-01,Holt-Winters,63484.37221927654,test
+Aérea,2026-01-01,Holt-Winters,51957.67623481861,test
+Aérea,2026-02-01,Holt-Winters,43770.69356073005,test
+Aérea,2026-03-01,Holt-Winters,51479.782839121945,test
+Aérea,2026-04-01,Holt-Winters,31879.20836522994,test
+Aérea,2026-05-01,Holt-Winters,29865.190069446355,test
+Aérea,2026-06-01,Holt-Winters,38625.68605327229,test
+Aérea,2021-04-01,Seasonal Naive,489.0,test
+Aérea,2021-05-01,Seasonal Naive,610.0,test
+Aérea,2021-06-01,Seasonal Naive,1418.0,test
+Aérea,2021-07-01,Seasonal Naive,1047.0,test
+Aérea,2021-08-01,Seasonal Naive,1259.0,test
+Aérea,2021-09-01,Seasonal Naive,5605.999999999998,test
+Aérea,2021-10-01,Seasonal Naive,5307.932304319844,test
+Aérea,2021-11-01,Seasonal Naive,38994.0,test
+Aérea,2021-12-01,Seasonal Naive,50380.0,test
+Aérea,2022-01-01,Seasonal Naive,40805.0,test
+Aérea,2022-02-01,Seasonal Naive,28784.0,test
+Aérea,2022-03-01,Seasonal Naive,58807.13961892686,test
+Aérea,2022-04-01,Seasonal Naive,489.0,test
+Aérea,2022-05-01,Seasonal Naive,610.0,test
+Aérea,2022-06-01,Seasonal Naive,1418.0,test
+Aérea,2022-07-01,Seasonal Naive,1047.0,test
+Aérea,2022-08-01,Seasonal Naive,1259.0,test
+Aérea,2022-09-01,Seasonal Naive,5605.999999999998,test
+Aérea,2022-10-01,Seasonal Naive,5307.932304319844,test
+Aérea,2022-11-01,Seasonal Naive,38994.0,test
+Aérea,2022-12-01,Seasonal Naive,50380.0,test
+Aérea,2023-01-01,Seasonal Naive,40805.0,test
+Aérea,2023-02-01,Seasonal Naive,28784.0,test
+Aérea,2023-03-01,Seasonal Naive,58807.13961892686,test
+Aérea,2023-04-01,Seasonal Naive,489.0,test
+Aérea,2023-05-01,Seasonal Naive,610.0,test
+Aérea,2023-06-01,Seasonal Naive,1418.0,test
+Aérea,2023-07-01,Seasonal Naive,1047.0,test
+Aérea,2023-08-01,Seasonal Naive,1259.0,test
+Aérea,2023-09-01,Seasonal Naive,5605.999999999998,test
+Aérea,2023-10-01,Seasonal Naive,5307.932304319844,test
+Aérea,2023-11-01,Seasonal Naive,38994.0,test
+Aérea,2023-12-01,Seasonal Naive,50380.0,test
+Aérea,2024-01-01,Seasonal Naive,40805.0,test
+Aérea,2024-02-01,Seasonal Naive,28784.0,test
+Aérea,2024-03-01,Seasonal Naive,58807.13961892686,test
+Aérea,2024-04-01,Seasonal Naive,489.0,test
+Aérea,2024-05-01,Seasonal Naive,610.0,test
+Aérea,2024-06-01,Seasonal Naive,1418.0,test
+Aérea,2024-07-01,Seasonal Naive,1047.0,test
+Aérea,2024-08-01,Seasonal Naive,1259.0,test
+Aérea,2024-09-01,Seasonal Naive,5605.999999999998,test
+Aérea,2024-10-01,Seasonal Naive,5307.932304319844,test
+Aérea,2024-11-01,Seasonal Naive,38994.0,test
+Aérea,2024-12-01,Seasonal Naive,50380.0,test
+Aérea,2025-01-01,Seasonal Naive,40805.0,test
+Aérea,2025-02-01,Seasonal Naive,28784.0,test
+Aérea,2025-03-01,Seasonal Naive,58807.13961892686,test
+Aérea,2025-04-01,Seasonal Naive,489.0,test
+Aérea,2025-05-01,Seasonal Naive,610.0,test
+Aérea,2025-06-01,Seasonal Naive,1418.0,test
+Aérea,2025-07-01,Seasonal Naive,1047.0,test
+Aérea,2025-08-01,Seasonal Naive,1259.0,test
+Aérea,2025-09-01,Seasonal Naive,5605.999999999998,test
+Aérea,2025-10-01,Seasonal Naive,5307.932304319844,test
+Aérea,2025-11-01,Seasonal Naive,38994.0,test
+Aérea,2025-12-01,Seasonal Naive,50380.0,test
+Aérea,2026-01-01,Seasonal Naive,40805.0,test
+Aérea,2026-02-01,Seasonal Naive,28784.0,test
+Aérea,2026-03-01,Seasonal Naive,58807.13961892686,test
+Aérea,2026-04-01,Seasonal Naive,489.0,test
+Aérea,2026-05-01,Seasonal Naive,610.0,test
+Aérea,2026-06-01,Seasonal Naive,1418.0,test
+Terrestre,2009-01-01,Observado,67442.0293451729,train
+Terrestre,2009-02-01,Observado,56266.692203377504,train
+Terrestre,2009-03-01,Observado,73111.67381860285,train
+Terrestre,2009-04-01,Observado,89897.46769401644,train
+Terrestre,2009-05-01,Observado,58898.524350693064,train
+Terrestre,2009-06-01,Observado,69100.80337827274,train
+Terrestre,2009-07-01,Observado,61683.95174221951,train
+Terrestre,2009-08-01,Observado,102144.04180376441,train
+Terrestre,2009-09-01,Observado,70046.13353560158,train
+Terrestre,2009-10-01,Observado,79357.60978686891,train
+Terrestre,2009-11-01,Observado,90295.2729586916,train
+Terrestre,2009-12-01,Observado,114201.65119713946,train
+Terrestre,2010-01-01,Observado,75945.26551165638,train
+Terrestre,2010-02-01,Observado,62145.46022602476,train
+Terrestre,2010-03-01,Observado,73213.09275954103,train
+Terrestre,2010-04-01,Observado,93049.90530317114,train
+Terrestre,2010-05-01,Observado,75182.6089476861,train
+Terrestre,2010-06-01,Observado,69955.9470746268,train
+Terrestre,2010-07-01,Observado,96362.83285998116,train
+Terrestre,2010-08-01,Observado,103549.03061629568,train
+Terrestre,2010-09-01,Observado,67193.34969839198,train
+Terrestre,2010-10-01,Observado,80576.12432122677,train
+Terrestre,2010-11-01,Observado,94155.33569674406,train
+Terrestre,2010-12-01,Observado,126547.04636668901,train
+Terrestre,2011-01-01,Observado,86590.55722701532,train
+Terrestre,2011-02-01,Observado,69655.86559086668,train
+Terrestre,2011-03-01,Observado,91059.79100865728,train
+Terrestre,2011-04-01,Observado,113079.76499508988,train
+Terrestre,2011-05-01,Observado,76689.54778125991,train
+Terrestre,2011-06-01,Observado,79665.4687259049,train
+Terrestre,2011-07-01,Observado,101582.00470178173,train
+Terrestre,2011-08-01,Observado,96080.49370458009,train
+Terrestre,2011-09-01,Observado,75213.83971974195,train
+Terrestre,2011-10-01,Observado,79613.08059590786,train
+Terrestre,2011-11-01,Observado,100328.07790124381,train
+Terrestre,2011-12-01,Observado,141223.110670736,train
+Terrestre,2012-01-01,Observado,94835.95776830107,train
+Terrestre,2012-02-01,Observado,76560.44219831316,train
+Terrestre,2012-03-01,Observado,100496.2082521481,train
+Terrestre,2012-04-01,Observado,106470.23626266561,train
+Terrestre,2012-05-01,Observado,79112.5120438028,train
+Terrestre,2012-06-01,Observado,84451.56422688227,train
+Terrestre,2012-07-01,Observado,101978.37067282858,train
+Terrestre,2012-08-01,Observado,97403.40324038261,train
+Terrestre,2012-09-01,Observado,81377.52798648953,train
+Terrestre,2012-10-01,Observado,91640.43749676358,train
+Terrestre,2012-11-01,Observado,106361.06831855708,train
+Terrestre,2012-12-01,Observado,135041.75250727765,train
+Terrestre,2013-01-01,Observado,89526.69653542402,train
+Terrestre,2013-02-01,Observado,69954.89946159555,train
+Terrestre,2013-03-01,Observado,124549.5553629627,train
+Terrestre,2013-04-01,Observado,106290.03722270243,train
+Terrestre,2013-05-01,Observado,107062.65691496404,train
+Terrestre,2013-06-01,Observado,107041.99485562296,train
+Terrestre,2013-07-01,Observado,115142.0172646677,train
+Terrestre,2013-08-01,Observado,118249.93916965791,train
+Terrestre,2013-09-01,Observado,96529.06187134661,train
+Terrestre,2013-10-01,Observado,87345.46888297105,train
+Terrestre,2013-11-01,Observado,109333.02300461852,train
+Terrestre,2013-12-01,Observado,148648.4019393584,train
+Terrestre,2014-01-01,Observado,128136.34667639041,train
+Terrestre,2014-02-01,Observado,93971.24586474686,train
+Terrestre,2014-03-01,Observado,106756.33022266922,train
+Terrestre,2014-04-01,Observado,138262.13314891764,train
+Terrestre,2014-05-01,Observado,108539.56475260793,train
+Terrestre,2014-06-01,Observado,100072.47330128694,train
+Terrestre,2014-07-01,Observado,133752.59480590303,train
+Terrestre,2014-08-01,Observado,137453.63196751618,train
+Terrestre,2014-09-01,Observado,113264.78059355928,train
+Terrestre,2014-10-01,Observado,136667.87089512646,train
+Terrestre,2014-11-01,Observado,151336.60998571018,train
+Terrestre,2014-12-01,Observado,206354.73464960407,train
+Terrestre,2015-01-01,Observado,147874.9512092014,train
+Terrestre,2015-02-01,Observado,116414.24754449064,train
+Terrestre,2015-03-01,Observado,150369.40803931904,train
+Terrestre,2015-04-01,Observado,158665.50812161784,train
+Terrestre,2015-05-01,Observado,141074.60772244775,train
+Terrestre,2015-06-01,Observado,139595.68691700848,train
+Terrestre,2015-07-01,Observado,145112.1771321548,train
+Terrestre,2015-08-01,Observado,153964.15541175148,train
+Terrestre,2015-09-01,Observado,123150.77080266396,train
+Terrestre,2015-10-01,Observado,129911.27882344543,train
+Terrestre,2015-11-01,Observado,134124.01010022007,train
+Terrestre,2015-12-01,Observado,198336.23853178963,train
+Terrestre,2016-01-01,Observado,151890.62935210663,train
+Terrestre,2016-02-01,Observado,122700.72979089251,train
+Terrestre,2016-03-01,Observado,203725.33266050776,train
+Terrestre,2016-04-01,Observado,119589.92035013388,train
+Terrestre,2016-05-01,Observado,126769.92774985194,train
+Terrestre,2016-06-01,Observado,112416.29528198791,train
+Terrestre,2016-07-01,Observado,138086.23955853493,train
+Terrestre,2016-08-01,Observado,156987.92772352407,train
+Terrestre,2016-09-01,Observado,105519.87974597143,train
+Terrestre,2016-10-01,Observado,146177.26446227162,train
+Terrestre,2016-11-01,Observado,138776.9805278988,train
+Terrestre,2016-12-01,Observado,208484.1886656979,train
+Terrestre,2017-01-01,Observado,160424.60794906897,train
+Terrestre,2017-02-01,Observado,139114.22885076454,train
+Terrestre,2017-03-01,Observado,188105.47511360855,train
+Terrestre,2017-04-01,Observado,267598.7289698364,train
+Terrestre,2017-05-01,Observado,153991.78519639446,train
+Terrestre,2017-06-01,Observado,133725.40796743415,train
+Terrestre,2017-07-01,Observado,157125.27301642342,train
+Terrestre,2017-08-01,Observado,173757.59321544983,train
+Terrestre,2017-09-01,Observado,122605.60197929587,train
+Terrestre,2017-10-01,Observado,129950.67001993404,train
+Terrestre,2017-11-01,Observado,154301.41578931193,train
+Terrestre,2017-12-01,Observado,213160.49892152502,train
+Terrestre,2018-01-01,Observado,186373.21797426828,train
+Terrestre,2018-02-01,Observado,155329.9915704992,train
+Terrestre,2018-03-01,Observado,268754.78296043223,train
+Terrestre,2018-04-01,Observado,203288.861353772,train
+Terrestre,2018-05-01,Observado,173935.08211555931,train
+Terrestre,2018-06-01,Observado,190562.35050851022,train
+Terrestre,2018-07-01,Observado,202367.58994755434,train
+Terrestre,2018-08-01,Observado,241748.57173999085,train
+Terrestre,2018-09-01,Observado,177845.77673603187,train
+Terrestre,2018-10-01,Observado,167168.2164132066,train
+Terrestre,2018-11-01,Observado,174278.27471374098,train
+Terrestre,2018-12-01,Observado,237122.0953474012,train
+Terrestre,2019-01-01,Observado,231079.6163163532,train
+Terrestre,2019-02-01,Observado,178776.78606791448,train
+Terrestre,2019-03-01,Observado,240862.05339171572,train
+Terrestre,2019-04-01,Observado,263228.54816249857,train
+Terrestre,2019-05-01,Observado,189773.34011314568,train
+Terrestre,2019-06-01,Observado,205556.555365985,train
+Terrestre,2019-07-01,Observado,226771.04987434755,train
+Terrestre,2019-08-01,Observado,250467.75428666288,train
+Terrestre,2019-09-01,Observado,197010.0003198801,train
+Terrestre,2019-10-01,Observado,175374.99136425383,train
+Terrestre,2019-11-01,Observado,198691.92607853384,train
+Terrestre,2019-12-01,Observado,291272.0705001674,train
+Terrestre,2020-01-01,Observado,257525.60046332626,train
+Terrestre,2020-02-01,Observado,205031.97651759212,train
+Terrestre,2020-03-01,Observado,100584.58396194897,train
+Terrestre,2020-04-01,Observado,9550.0,train
+Terrestre,2020-05-01,Observado,9169.0,train
+Terrestre,2020-06-01,Observado,10399.0,train
+Terrestre,2020-07-01,Observado,12437.0,train
+Terrestre,2020-08-01,Observado,14098.0,train
+Terrestre,2020-09-01,Observado,6966.49268292683,train
+Terrestre,2020-10-01,Observado,11372.852044635285,train
+Terrestre,2020-11-01,Observado,13871.0,train
+Terrestre,2020-12-01,Observado,5240.0,train
+Terrestre,2021-01-01,Observado,49155.0,train
+Terrestre,2021-02-01,Observado,23821.0,train
+Terrestre,2021-03-01,Observado,26210.2567144905,train
+Terrestre,2021-04-01,Observado,26695.087319965296,test
+Terrestre,2021-05-01,Observado,15507.0,test
+Terrestre,2021-06-01,Observado,21730.0,test
+Terrestre,2021-07-01,Observado,27254.664333592562,test
+Terrestre,2021-08-01,Observado,21998.0,test
+Terrestre,2021-09-01,Observado,21472.0,test
+Terrestre,2021-10-01,Observado,30108.0,test
+Terrestre,2021-11-01,Observado,30227.0,test
+Terrestre,2021-12-01,Observado,101315.12780119659,test
+Terrestre,2022-01-01,Observado,36551.0,test
+Terrestre,2022-02-01,Observado,113364.59999999999,test
+Terrestre,2022-03-01,Observado,121745.0,test
+Terrestre,2022-04-01,Observado,171620.0,test
+Terrestre,2022-05-01,Observado,148174.0,test
+Terrestre,2022-06-01,Observado,145970.0,test
+Terrestre,2022-07-01,Observado,181583.0,test
+Terrestre,2022-08-01,Observado,188706.0,test
+Terrestre,2022-09-01,Observado,143255.0,test
+Terrestre,2022-10-01,Observado,158999.0,test
+Terrestre,2022-11-01,Observado,187283.0,test
+Terrestre,2022-12-01,Observado,241803.0,test
+Terrestre,2023-01-01,Observado,181765.1882126466,test
+Terrestre,2023-02-01,Observado,123345.8576692794,test
+Terrestre,2023-03-01,Observado,159106.50267324006,test
+Terrestre,2023-04-01,Observado,203825.25565578468,test
+Terrestre,2023-05-01,Observado,141389.03891840694,test
+Terrestre,2023-06-01,Observado,136800.17382775573,test
+Terrestre,2023-07-01,Observado,158594.95044792976,test
+Terrestre,2023-08-01,Observado,185362.08794636687,test
+Terrestre,2023-09-01,Observado,151180.4781049799,test
+Terrestre,2023-10-01,Observado,105173.38846570507,test
+Terrestre,2023-11-01,Observado,166754.27623440055,test
+Terrestre,2023-12-01,Observado,218689.61316611952,test
+Terrestre,2024-01-01,Observado,196692.86680673156,test
+Terrestre,2024-02-01,Observado,167119.67321318097,test
+Terrestre,2024-03-01,Observado,213819.39400228957,test
+Terrestre,2024-04-01,Observado,153131.81729405138,test
+Terrestre,2024-05-01,Observado,150810.9548151027,test
+Terrestre,2024-06-01,Observado,130317.22686199367,test
+Terrestre,2024-07-01,Observado,156595.95506929053,test
+Terrestre,2024-08-01,Observado,193466.83101094456,test
+Terrestre,2024-09-01,Observado,146389.80983415912,test
+Terrestre,2024-10-01,Observado,168478.70083733913,test
+Terrestre,2024-11-01,Observado,205537.07691082897,test
+Terrestre,2024-12-01,Observado,248722.6884796847,test
+Terrestre,2025-01-01,Observado,188419.59825538556,test
+Terrestre,2025-02-01,Observado,161725.88643334268,test
+Terrestre,2025-03-01,Observado,171294.25098417036,test
+Terrestre,2025-04-01,Observado,206821.6910735994,test
+Terrestre,2025-05-01,Observado,160228.92597209418,test
+Terrestre,2025-06-01,Observado,154779.0961535216,test
+Terrestre,2025-07-01,Observado,166027.69878661176,test
+Terrestre,2025-08-01,Observado,203137.52439304692,test
+Terrestre,2025-09-01,Observado,147653.51122057904,test
+Terrestre,2025-10-01,Observado,165920.93232213068,test
+Terrestre,2025-11-01,Observado,199018.5201071752,test
+Terrestre,2025-12-01,Observado,238290.0218067979,test
+Terrestre,2026-01-01,Observado,187229.07527322107,test
+Terrestre,2026-02-01,Observado,130023.11361811563,test
+Terrestre,2026-03-01,Observado,163620.36570034793,test
+Terrestre,2026-04-01,Observado,158922.0456123683,test
+Terrestre,2026-05-01,Observado,145508.29525905845,test
+Terrestre,2026-06-01,Observado,147476.58097717003,test
+Terrestre,2021-04-01,"ARIMA(1,1,1)",25073.47092351645,test
+Terrestre,2021-05-01,"ARIMA(1,1,1)",24820.55526848355,test
+Terrestre,2021-06-01,"ARIMA(1,1,1)",24763.08677745375,test
+Terrestre,2021-07-01,"ARIMA(1,1,1)",24749.965626298872,test
+Terrestre,2021-08-01,"ARIMA(1,1,1)",24746.966524462827,test
+Terrestre,2021-09-01,"ARIMA(1,1,1)",24746.28084749048,test
+Terrestre,2021-10-01,"ARIMA(1,1,1)",24746.124073917857,test
+Terrestre,2021-11-01,"ARIMA(1,1,1)",24746.08822864846,test
+Terrestre,2021-12-01,"ARIMA(1,1,1)",24746.08003283347,test
+Terrestre,2022-01-01,"ARIMA(1,1,1)",24746.078158906177,test
+Terrestre,2022-02-01,"ARIMA(1,1,1)",24746.07773044311,test
+Terrestre,2022-03-01,"ARIMA(1,1,1)",24746.077632477383,test
+Terrestre,2022-04-01,"ARIMA(1,1,1)",24746.077610078082,test
+Terrestre,2022-05-01,"ARIMA(1,1,1)",24746.077604956594,test
+Terrestre,2022-06-01,"ARIMA(1,1,1)",24746.0776037856,test
+Terrestre,2022-07-01,"ARIMA(1,1,1)",24746.077603517853,test
+Terrestre,2022-08-01,"ARIMA(1,1,1)",24746.07760345662,test
+Terrestre,2022-09-01,"ARIMA(1,1,1)",24746.07760344264,test
+Terrestre,2022-10-01,"ARIMA(1,1,1)",24746.077603439433,test
+Terrestre,2022-11-01,"ARIMA(1,1,1)",24746.077603438687,test
+Terrestre,2022-12-01,"ARIMA(1,1,1)",24746.07760343851,test
+Terrestre,2023-01-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-02-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-03-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-04-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-05-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-06-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-07-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-08-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-09-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-10-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-11-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2023-12-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-01-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-02-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-03-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-04-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-05-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-06-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-07-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-08-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-09-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-10-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-11-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2024-12-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-01-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-02-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-03-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-04-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-05-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-06-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-07-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-08-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-09-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-10-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-11-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2025-12-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2026-01-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2026-02-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2026-03-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2026-04-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2026-05-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2026-06-01,"ARIMA(1,1,1)",24746.077603438465,test
+Terrestre,2021-04-01,Holt-Winters,15311.345268974284,test
+Terrestre,2021-05-01,Holt-Winters,20052.069363458402,test
+Terrestre,2021-06-01,Holt-Winters,22849.439625349314,test
+Terrestre,2021-07-01,Holt-Winters,25837.301229317734,test
+Terrestre,2021-08-01,Holt-Winters,28654.22876298049,test
+Terrestre,2021-09-01,Holt-Winters,18978.487228217695,test
+Terrestre,2021-10-01,Holt-Winters,23689.94645936284,test
+Terrestre,2021-11-01,Holt-Winters,26151.039849351586,test
+Terrestre,2021-12-01,Holt-Winters,25992.08190561009,test
+Terrestre,2022-01-01,Holt-Winters,54272.22304621958,test
+Terrestre,2022-02-01,Holt-Winters,24062.867421501174,test
+Terrestre,2022-03-01,Holt-Winters,23427.19116078709,test
+Terrestre,2022-04-01,Holt-Winters,14139.629972057366,test
+Terrestre,2022-05-01,Holt-Winters,18517.56563467029,test
+Terrestre,2022-06-01,Holt-Winters,21100.864469823813,test
+Terrestre,2022-07-01,Holt-Winters,23860.077115458407,test
+Terrestre,2022-08-01,Holt-Winters,26461.43658351245,test
+Terrestre,2022-09-01,Holt-Winters,17526.140396048406,test
+Terrestre,2022-10-01,Holt-Winters,21877.050716895024,test
+Terrestre,2022-11-01,Holt-Winters,24149.806588427164,test
+Terrestre,2022-12-01,Holt-Winters,24003.01305290562,test
+Terrestre,2023-01-01,Holt-Winters,50118.98942606224,test
+Terrestre,2023-02-01,Holt-Winters,22221.433546805143,test
+Terrestre,2023-03-01,Holt-Winters,21634.40301809443,test
+Terrestre,2023-04-01,Holt-Winters,13057.581305531929,test
+Terrestre,2023-05-01,Holt-Winters,17100.4912669613,test
+Terrestre,2023-06-01,Holt-Winters,19486.100695437384,test
+Terrestre,2023-07-01,Holt-Winters,22034.16196230399,test
+Terrestre,2023-08-01,Holt-Winters,24436.44991652608,test
+Terrestre,2023-09-01,Holt-Winters,16184.935790103344,test
+Terrestre,2023-10-01,Holt-Winters,20202.888549815216,test
+Terrestre,2023-11-01,Holt-Winters,22301.719611080807,test
+Terrestre,2023-12-01,Holt-Winters,22166.159590840747,test
+Terrestre,2024-01-01,Holt-Winters,46283.58596902372,test
+Terrestre,2024-02-01,Holt-Winters,20520.917155278523,test
+Terrestre,2024-03-01,Holt-Winters,19978.809697543245,test
+Terrestre,2024-04-01,Holt-Winters,12058.33744500516,test
+Terrestre,2024-05-01,Holt-Winters,15791.859866499452,test
+Terrestre,2024-06-01,Holt-Winters,17994.908258651787,test
+Terrestre,2024-07-01,Holt-Winters,20347.976707355065,test
+Terrestre,2024-08-01,Holt-Winters,22566.42728516684,test
+Terrestre,2024-09-01,Holt-Winters,14946.368145540508,test
+Terrestre,2024-10-01,Holt-Winters,18656.843238976802,test
+Terrestre,2024-11-01,Holt-Winters,20595.059251928356,test
+Terrestre,2024-12-01,Holt-Winters,20469.873091501093,test
+Terrestre,2025-01-01,Holt-Winters,42741.690418802995,test
+Terrestre,2025-02-01,Holt-Winters,18950.534402149286,test
+Terrestre,2025-03-01,Holt-Winters,18449.912234546406,test
+Terrestre,2025-04-01,Holt-Winters,11135.561673739103,test
+Terrestre,2025-05-01,Holt-Winters,14583.372731809859,test
+Terrestre,2025-06-01,Holt-Winters,16617.830745025098,test
+Terrestre,2025-07-01,Holt-Winters,18790.82838691135,test
+Terrestre,2025-08-01,Holt-Winters,20839.509918841573,test
+Terrestre,2025-09-01,Holt-Winters,13802.583071020093,test
+Terrestre,2025-10-01,Holt-Winters,17229.11051978938,test
+Terrestre,2025-11-01,Holt-Winters,19019.002704154398,test
+Terrestre,2025-12-01,Holt-Winters,18903.39653402571,test
+Terrestre,2026-01-01,Holt-Winters,39470.84180295477,test
+Terrestre,2026-02-01,Holt-Winters,17500.326686649438,test
+Terrestre,2026-03-01,Holt-Winters,17038.01510779313,test
+Terrestre,2026-04-01,Holt-Winters,10283.402198286582,test
+Terrestre,2026-05-01,Holt-Winters,13467.366227461269,test
+Terrestre,2026-06-01,Holt-Winters,15346.13540124776,test
+Terrestre,2021-04-01,Seasonal Naive,9550.0,test
+Terrestre,2021-05-01,Seasonal Naive,9169.0,test
+Terrestre,2021-06-01,Seasonal Naive,10399.0,test
+Terrestre,2021-07-01,Seasonal Naive,12437.0,test
+Terrestre,2021-08-01,Seasonal Naive,14098.0,test
+Terrestre,2021-09-01,Seasonal Naive,6966.49268292683,test
+Terrestre,2021-10-01,Seasonal Naive,11372.852044635285,test
+Terrestre,2021-11-01,Seasonal Naive,13871.0,test
+Terrestre,2021-12-01,Seasonal Naive,5240.0,test
+Terrestre,2022-01-01,Seasonal Naive,49155.0,test
+Terrestre,2022-02-01,Seasonal Naive,23821.0,test
+Terrestre,2022-03-01,Seasonal Naive,26210.2567144905,test
+Terrestre,2022-04-01,Seasonal Naive,9550.0,test
+Terrestre,2022-05-01,Seasonal Naive,9169.0,test
+Terrestre,2022-06-01,Seasonal Naive,10399.0,test
+Terrestre,2022-07-01,Seasonal Naive,12437.0,test
+Terrestre,2022-08-01,Seasonal Naive,14098.0,test
+Terrestre,2022-09-01,Seasonal Naive,6966.49268292683,test
+Terrestre,2022-10-01,Seasonal Naive,11372.852044635285,test
+Terrestre,2022-11-01,Seasonal Naive,13871.0,test
+Terrestre,2022-12-01,Seasonal Naive,5240.0,test
+Terrestre,2023-01-01,Seasonal Naive,49155.0,test
+Terrestre,2023-02-01,Seasonal Naive,23821.0,test
+Terrestre,2023-03-01,Seasonal Naive,26210.2567144905,test
+Terrestre,2023-04-01,Seasonal Naive,9550.0,test
+Terrestre,2023-05-01,Seasonal Naive,9169.0,test
+Terrestre,2023-06-01,Seasonal Naive,10399.0,test
+Terrestre,2023-07-01,Seasonal Naive,12437.0,test
+Terrestre,2023-08-01,Seasonal Naive,14098.0,test
+Terrestre,2023-09-01,Seasonal Naive,6966.49268292683,test
+Terrestre,2023-10-01,Seasonal Naive,11372.852044635285,test
+Terrestre,2023-11-01,Seasonal Naive,13871.0,test
+Terrestre,2023-12-01,Seasonal Naive,5240.0,test
+Terrestre,2024-01-01,Seasonal Naive,49155.0,test
+Terrestre,2024-02-01,Seasonal Naive,23821.0,test
+Terrestre,2024-03-01,Seasonal Naive,26210.2567144905,test
+Terrestre,2024-04-01,Seasonal Naive,9550.0,test
+Terrestre,2024-05-01,Seasonal Naive,9169.0,test
+Terrestre,2024-06-01,Seasonal Naive,10399.0,test
+Terrestre,2024-07-01,Seasonal Naive,12437.0,test
+Terrestre,2024-08-01,Seasonal Naive,14098.0,test
+Terrestre,2024-09-01,Seasonal Naive,6966.49268292683,test
+Terrestre,2024-10-01,Seasonal Naive,11372.852044635285,test
+Terrestre,2024-11-01,Seasonal Naive,13871.0,test
+Terrestre,2024-12-01,Seasonal Naive,5240.0,test
+Terrestre,2025-01-01,Seasonal Naive,49155.0,test
+Terrestre,2025-02-01,Seasonal Naive,23821.0,test
+Terrestre,2025-03-01,Seasonal Naive,26210.2567144905,test
+Terrestre,2025-04-01,Seasonal Naive,9550.0,test
+Terrestre,2025-05-01,Seasonal Naive,9169.0,test
+Terrestre,2025-06-01,Seasonal Naive,10399.0,test
+Terrestre,2025-07-01,Seasonal Naive,12437.0,test
+Terrestre,2025-08-01,Seasonal Naive,14098.0,test
+Terrestre,2025-09-01,Seasonal Naive,6966.49268292683,test
+Terrestre,2025-10-01,Seasonal Naive,11372.852044635285,test
+Terrestre,2025-11-01,Seasonal Naive,13871.0,test
+Terrestre,2025-12-01,Seasonal Naive,5240.0,test
+Terrestre,2026-01-01,Seasonal Naive,49155.0,test
+Terrestre,2026-02-01,Seasonal Naive,23821.0,test
+Terrestre,2026-03-01,Seasonal Naive,26210.2567144905,test
+Terrestre,2026-04-01,Seasonal Naive,9550.0,test
+Terrestre,2026-05-01,Seasonal Naive,9169.0,test
+Terrestre,2026-06-01,Seasonal Naive,10399.0,test
