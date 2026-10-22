@@ -30,5 +30,9 @@ python app.py             # http://127.0.0.1:8050
 
 ## Estado
 
-- [x] Avance: preguntas de gestión, alcance, paleta, planificación, bosquejo y herramienta (`docs/`)
-- [ ] Tablero completo (8 visualizaciones) — entrega final 25-oct-2026
+- [x] **Avance (22-oct)**: preguntas de gestión, alcance, paleta, herramienta, bosquejo y planificación
+      → `docs/Diseno_Avance_Lab10.pdf` (fuente en `docs/diseno_avance.md`)
+- [x] Panorama: V1 llegadas anuales por vía, **enlazada** con V2 detalle mensual y V3 mercados del año
+- [x] Pronósticos: V4 observado vs. estimado (ARIMA(1,1,1), Holt-Winters, Seasonal Naive) + tabla de errores
+- [ ] Mercados y fronteras (V5 treemap región → país, V6 fronteras), Estacionalidad (V7, V8), V9 error por mes
+- [ ] Documento de diseño final — entrega 25-oct-2026
