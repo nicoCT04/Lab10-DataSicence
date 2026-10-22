@@ -4,7 +4,7 @@ INK = "#1E2A38"
 MUTED = "#5B6675"
 GRID = "#E3E7ED"
 BAND = "#ECEFF3"
-FONT = "Source Sans 3, Segoe UI, sans-serif"
+FONT = '"Source Sans 3", "Segoe UI", Arial, sans-serif'
 
 # Okabe-Ito: segura para daltonismo
 VIA_COLORS = {"Aérea": "#0072B2", "Terrestre": "#E69F00", "Marítima": "#009E73"}
@@ -38,3 +38,5 @@ def empty_figure(message, height=360):
     fig.add_annotation(text=message, showarrow=False, font=dict(size=15, color=MUTED))
     fig.update_xaxes(visible=False); fig.update_yaxes(visible=False)
     return base_layout(fig, height=height)
+
+NEUTRAL = "#4A6382"  # magnitudes sin categoría (mercados, totales)
