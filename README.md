@@ -34,5 +34,6 @@ python app.py             # http://127.0.0.1:8050
       → `docs/Diseno_Avance_Lab10.pdf` (fuente en `docs/diseno_avance.md`)
 - [x] Panorama: V1 llegadas anuales por vía, **enlazada** con V2 detalle mensual y V3 mercados del año
 - [x] Pronósticos: V4 observado vs. estimado (ARIMA(1,1,1), Holt-Winters, Seasonal Naive) + tabla de errores
-- [ ] Mercados y fronteras (V5 treemap región → país, V6 fronteras), Estacionalidad (V7, V8), V9 error por mes
+- [x] Pronósticos: V9 error de los modelos por mes, enlazada al zoom de V4 junto con la tabla de errores
+- [ ] Mercados y fronteras (V5 treemap región → país, V6 fronteras), Estacionalidad (V7, V8)
 - [ ] Documento de diseño final — entrega 25-oct-2026

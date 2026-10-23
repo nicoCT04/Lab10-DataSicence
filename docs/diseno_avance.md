@@ -113,7 +113,7 @@ Cuando un filtro deja un gráfico sin datos, este muestra un mensaje que lo expl
 | V6 | Llegadas por frontera | Barras horizontales: ranking de puntos de ingreso | Enlazada a V5 | Pendiente |
 | V7 | Calendario de llegadas | Mapa de calor año × mes: patrones estacionales de 17 años de un vistazo | Tooltip, filtro de vía | Pendiente |
 | V8 | Perfil estacional | Boxplot por mes: variabilidad de cada mes entre años | Filtro de vía y periodo | Pendiente |
-| V9 | Error de los modelos por mes | Barras agrupadas: cuándo y cuánto falla cada modelo | Enlazada a la selección de serie y modelos | Pendiente |
+| V9 | Error de los modelos por mes | Barras agrupadas: cuándo y cuánto falla cada modelo | Enlazada al zoom y a la barra de rango de V4, a la serie y a los modelos | **Funcional** |
 
 Las tarjetas KPI, los controles, los textos y la tabla de métricas son complementarios y no se cuentan
 como visualizaciones.
@@ -125,7 +125,72 @@ El Salvador es el principal mercado y la vía terrestre concentra cerca de dos t
 **Estimación**: los tres modelos subestiman 2022-2026 porque se entrenaron con datos que terminan en plena
 pandemia; el ARIMA(1,1,1) es el de menor error (MAPE 59 % en el Total) y se presenta solo como referencia.
 
-# 8. Planificación de tareas
+# 8. Pestaña Pronósticos: V4, V9 y comparación de modelos
+
+Esta pestaña responde la pregunta P5, qué tan confiables son las estimaciones de llegadas y qué modelo
+conviene como referencia. Usa las predicciones de los tres modelos sencillos del Laboratorio 1,
+ARIMA(1,1,1), Holt-Winters y Seasonal Naive, entrenados hasta marzo de 2021 y evaluados con los 63 meses
+de abril de 2021 a junio de 2026 que no vieron. No se entrena ningún modelo nuevo, `src/models.py`
+reproduce las predicciones y las funciones de error las resumen, y sobre el periodo completo dan
+exactamente las mismas métricas que `outputs/metrics.csv`.
+
+## V4. Observado frente a estimado
+
+El dato es una serie de tiempo mensual, así que el gráfico adecuado es el de líneas, donde la pendiente
+se lee como crecimiento y la distancia entre dos líneas como error. Lo observado va en el azul casi negro
+de la paleta y cada modelo en un color que nunca se usa para datos observados, con un tipo de línea
+distinto, de modo que la comparación no dependa solo del color. Una franja gris marca el periodo de
+evaluación, donde los modelos estiman sin haber visto los datos. La barra de rango inferior y los botones
+de cinco años o todo el periodo permiten acercar o alejar el nivel de detalle. Al prender o apagar
+modelos el gráfico conserva el zoom, y solo se reinicia al cambiar de serie.
+
+## V9. Error de los modelos por mes
+
+V4 muestra que los modelos fallan, pero no cuándo. V9 responde esa segunda pregunta con el error
+promedio de cada modelo según el mes del año. Es una variable cuantitativa sobre dos categorías, mes y
+modelo, por eso usamos barras agrupadas, que comparan longitudes desde una base común, la forma más
+precisa de comparar magnitudes. Los meses van en su orden natural de enero a diciembre para que se lea
+la temporada, y cada modelo conserva su color de V4 y además una trama distinta en sus barras, para que
+se distinga sin depender del color. Al pasar el cursor sobre una barra se ve si el modelo se quedó corto
+o se pasó, y cuántos meses entran en el promedio.
+
+V9 está enlazada con V4. Al acercar V4 o mover su barra de rango, V9 y la tabla de errores se
+recalculan solo con los meses visibles, y un rótulo indica el periodo analizado. Es la forma de
+aumentar o disminuir el nivel de detalle de la comparación, desde los 63 meses completos hasta un
+solo año. Si el periodo elegido no contiene meses de evaluación, o si no hay modelos seleccionados, el
+gráfico muestra un mensaje que explica qué hacer en lugar de quedar vacío.
+
+## Comparación de modelos
+
+La tabla de errores acompaña a V9 y no cuenta como visualización. Ordena los modelos de menor a mayor
+error y muestra tres métricas con una explicación en lenguaje llano. El MAE es cuántos visitantes se
+equivoca en promedio cada mes, el RMSE es parecido pero castiga más los errores grandes y el MAPE es el
+error como porcentaje de lo observado. También indica cuántos meses de evaluación entran en el periodo,
+porque un error calculado con pocos meses es menos confiable.
+
+| Serie | Mejor modelo | MAE | MAPE |
+|---|---|---|---|
+| Total | ARIMA(1,1,1) | 154,494 | 59.2 % |
+| Aérea | ARIMA(1,1,1) | 33,226 | 33.3 % |
+| Terrestre | ARIMA(1,1,1) | 123,363 | 75.5 % |
+
+## Lo que el directivo puede leer, y sus límites
+
+Lo observado en la pestaña es que los tres modelos subestiman las llegadas en el 90 % al 100 % de los
+meses y que su mayor error cae en diciembre, el pico de la temporada, salvo en la vía aérea, donde el
+Holt-Winters y el Seasonal Naive fallan más en julio. También se observa que el error crece con el
+horizonte. Con el total, el ARIMA se equivoca en un 31 % durante el primer año después del
+entrenamiento y en un 66 % entre 2024 y 2026.
+
+La interpretación, que no es un hallazgo directo de los datos, es que los modelos aprendieron con una
+serie que termina en plena pandemia y proyectan ese nivel deprimido, por eso no anticipan la
+recuperación y se quedan más cortos en los meses de mayor demanda. El ARIMA(1,1,1) es el de menor error
+en las tres series, pero se presenta solo como referencia para comparar modelos y no como cifra oficial.
+Para planificar, un directivo debería usar estos pronósticos a corto plazo y reentrenarlos con datos
+recientes, y tratar con cautela cualquier estimación de diciembre. El aviso de limitaciones al pie de la
+pestaña lo dice de forma explícita.
+
+# 9. Planificación de tareas
 
 Responsable de todas las tareas: **Nicolás Concuá (23197)**.
 
@@ -138,6 +203,6 @@ Responsable de todas las tareas: **Nicolás Concuá (23197)**.
 | 5 | Pestaña Pronósticos: V4 y tabla de modelos | 22-oct-2026 | Hecho |
 | 6 | Pestaña Mercados y fronteras: V5-V6 enlazadas | 23-oct-2026 | Pendiente |
 | 7 | Pestaña Estacionalidad: V7-V8 | 23-oct-2026 | Pendiente |
-| 8 | V9 (error por mes) y comparación de modelos | 24-oct-2026 | Pendiente |
+| 8 | V9 (error por mes) y comparación de modelos | 23-oct-2026 | Hecho |
 | 9 | Pruebas de uso, mensajes vacíos, legibilidad y corrección de errores | 24-oct-2026 | Pendiente |
 | 10 | Documento de diseño final (PDF) y README | 25-oct-2026 | Pendiente |
