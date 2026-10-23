@@ -48,6 +48,39 @@ def metrics(y, p):
                 MAPE=np.mean(np.abs(err / y)) * 100)
 
 
+def test_errors(preds: pd.DataFrame, serie: str, models: list[str], start=None, end=None) -> pd.DataFrame:
+    """
+    Error mes a mes de cada modelo en el periodo de evaluación, opcionalmente
+    recortado a [start, end]. Error = observado - estimado, así que un valor
+    positivo indica que el modelo se quedó corto (subestimó).
+    """
+    data = preds[preds["Serie"] == serie]
+    obs = data[(data["Modelo"] == "Observado") & (data["Tramo"] == "test")]
+    est = data[data["Modelo"].isin(models)]
+    err = est[["Fecha", "Modelo", "Valor"]].rename(columns={"Valor": "Estimado"}).merge(
+        obs[["Fecha", "Valor"]].rename(columns={"Valor": "Observado"}), on="Fecha")
+    if start is not None:
+        err = err[err["Fecha"] >= pd.Timestamp(start)]
+    if end is not None:
+        err = err[err["Fecha"] <= pd.Timestamp(end)]
+    err = err.assign(Error=err["Observado"] - err["Estimado"])
+    return err.assign(ErrorAbs=err["Error"].abs())
+
+
+def errors_by_month(err: pd.DataFrame) -> pd.DataFrame:
+    """Error absoluto medio y sesgo de cada modelo por mes del año (Ene a Dic)."""
+    return (err.assign(Mes=err["Fecha"].dt.month)
+            .groupby(["Modelo", "Mes"], as_index=False)
+            .agg(MAE=("ErrorAbs", "mean"), Sesgo=("Error", "mean"), Meses=("Error", "size")))
+
+
+def window_metrics(err: pd.DataFrame) -> pd.DataFrame:
+    """MAE, RMSE y MAPE de cada modelo sobre los meses de err (mismas fórmulas que metrics)."""
+    rows = [{"Modelo": m, **metrics(g["Observado"].values, g["Estimado"].values), "Meses": len(g)}
+            for m, g in err.groupby("Modelo")]
+    return pd.DataFrame(rows, columns=["Modelo", "MAE", "RMSE", "MAPE", "Meses"])
+
+
 def run():
     warnings.filterwarnings("ignore")
     series = build_series(load_arrivals())
