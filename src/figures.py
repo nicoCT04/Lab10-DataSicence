@@ -82,5 +82,35 @@ def forecast_lines(preds: pd.DataFrame, serie: str, models: list[str]):
                      rangeselector=dict(x=1, xanchor="right", y=1.12, buttons=[dict(count=5, label="5 años", step="year", stepmode="backward"),
                                                  dict(step="all", label="Todo")]))
     fig = base_layout(fig, height=460)
-    fig.update_layout(margin_t=70, legend=dict(y=1.12))
+    # conserva el zoom al prender o apagar modelos; cambiar de serie lo reinicia
+    fig.update_layout(margin_t=70, legend=dict(y=1.12), uirevision=serie)
+    return fig
+
+
+MODEL_PATTERN = {"ARIMA(1,1,1)": "", "Holt-Winters": "/", "Seasonal Naive": "."}
+
+
+def error_by_month(by_month: pd.DataFrame, models: list[str]):
+    """V9: error medio de cada modelo por mes del año, en el periodo que muestra V4."""
+    if not models:
+        return empty_figure("Seleccione al menos un modelo para comparar sus errores.", height=380)
+    if by_month.empty:
+        return empty_figure("El periodo elegido arriba no incluye meses de evaluación.<br>"
+                            "Acerque el gráfico de arriba a 2021-2026 o pulse «Todo».", height=380)
+    fig = go.Figure()
+    for model in models:
+        d = by_month[by_month["Modelo"] == model].set_index("Mes").reindex(range(1, 13))
+        lado = ["subestimó" if s > 0 else "sobrestimó" for s in d["Sesgo"].fillna(0)]
+        fig.add_bar(
+            x=MONTHS, y=d["MAE"], name=model,
+            marker=dict(color=MODEL_COLORS[model], pattern_shape=MODEL_PATTERN[model],
+                        pattern_fgcolor="white"),
+            customdata=list(zip(d["Sesgo"].abs().fillna(0), lado, d["Meses"].fillna(0))),
+            hovertemplate=("%{x}: error medio de %{y:,.0f} visitantes<br>"
+                           "en promedio %{customdata[1]} por %{customdata[0]:,.0f}<br>"
+                           "%{customdata[2]:.0f} meses en el periodo<extra>" + model + "</extra>"),
+        )
+    fig = base_layout(fig, height=380)
+    fig.update_layout(barmode="group", bargap=0.25, bargroupgap=0.05)
+    fig.update_yaxes(title_text="error medio (visitantes)", title_font_size=13)
     return fig

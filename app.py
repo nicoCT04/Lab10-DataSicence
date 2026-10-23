@@ -1,9 +1,11 @@
 import pandas as pd
 from dash import Dash, Input, Output, State, dash_table, dcc, html
 
-from src.data import ROOT, VIAS, load_arrivals, yearly_by_via
-from src.figures import forecast_lines, market_bars, monthly_lines, yearly_bars
-from src.models import MODELS, SERIES
+from src.data import MONTHS, ROOT, VIAS, load_arrivals, yearly_by_via
+from dash import callback_context
+
+from src.figures import error_by_month, forecast_lines, market_bars, monthly_lines, yearly_bars
+from src.models import MODELS, SERIES, errors_by_month, test_errors, window_metrics
 
 df = load_arrivals()
 yearly = yearly_by_via(df)
@@ -93,9 +95,21 @@ def tab_forecast():
             dcc.Graph(id="forecast-lines", config={"displaylogo": False}),
         ], className="panel"),
         html.Div([
-            html.H3("Error promedio de cada modelo"),
-            html.P("MAE: cuántos visitantes se equivoca en promedio cada mes. MAPE: ese error como "
-                   "porcentaje de lo observado. Menor es mejor.", className="help"),
+            html.H3("¿En qué meses falla más cada modelo?"),
+            html.P([html.Span("Estimado", className="badge est"),
+                    "Error promedio de cada modelo según el mes del año. Está enlazado con el gráfico de "
+                    "arriba: al acercar o mover su barra inferior, este gráfico y la tabla se recalculan solo "
+                    "para ese periodo. Pase el cursor sobre una barra para ver si el modelo se quedó corto o "
+                    "se pasó."], className="help"),
+            html.P(id="window-label", className="help", style={"fontWeight": 600}),
+            dcc.Graph(id="error-by-month", config={"displaylogo": False}),
+        ], className="panel"),
+        dcc.Store(id="forecast-window", data=None),
+        html.Div([
+            html.H3("Error promedio de cada modelo en el periodo elegido"),
+            html.P("MAE: cuántos visitantes se equivoca en promedio cada mes. RMSE: parecido, pero castiga más "
+                   "los errores grandes. MAPE: el error como porcentaje de lo observado. Menor es mejor en las "
+                   "tres. Meses: cuántos meses de evaluación entran en el periodo elegido.", className="help"),
             dash_table.DataTable(id="metrics-table", style_as_list_view=True,
                                  style_cell={"fontFamily": '"Source Sans 3", Arial, sans-serif', "fontSize": 14,
                                              "padding": "6px 10px", "textAlign": "right"},
@@ -148,14 +162,51 @@ def update_detail(year, vias):
             f"Detalle mensual de {year}", f"Principales mercados de {year}")
 
 
-@app.callback(Output("forecast-lines", "figure"), Output("metrics-table", "data"),
-              Output("metrics-table", "columns"),
+@app.callback(Output("forecast-lines", "figure"),
               Input("serie", "value"), Input("model-filter", "value"))
 def update_forecast(serie, models):
-    table = metrics[(metrics["Serie"] == serie) & metrics["Modelo"].isin(models)].sort_values("MAE")
-    table = table.assign(MAE=table["MAE"].map("{:,.0f}".format), MAPE=table["MAPE"].map("{:.1f} %".format))
-    cols = [{"name": c, "id": c} for c in ["Modelo", "MAE", "MAPE"]]
-    return forecast_lines(preds, serie, models), table[["Modelo", "MAE", "MAPE"]].to_dict("records"), cols
+    return forecast_lines(preds, serie, models)
+
+
+def range_from_relayout(relayout):
+    """Periodo visible de V4 según su zoom o su barra de rango; None si muestra todo."""
+    if not relayout or relayout.get("xaxis.autorange"):
+        return None
+    if "xaxis.range[0]" in relayout:
+        return [relayout["xaxis.range[0]"], relayout["xaxis.range[1]"]]
+    if "xaxis.range" in relayout:
+        return list(relayout["xaxis.range"])
+    return "sin cambio"
+
+
+@app.callback(Output("forecast-window", "data"),
+              Input("forecast-lines", "relayoutData"), Input("serie", "value"),
+              State("forecast-window", "data"))
+def update_window(relayout, serie, current):
+    # cambiar de serie redibuja V4 completo, así que el periodo vuelve a ser todo
+    if callback_context.triggered_id == "serie":
+        return None
+    window = range_from_relayout(relayout)
+    return current if window == "sin cambio" else window
+
+
+@app.callback(Output("error-by-month", "figure"), Output("metrics-table", "data"),
+              Output("metrics-table", "columns"), Output("window-label", "children"),
+              Input("serie", "value"), Input("model-filter", "value"), Input("forecast-window", "data"))
+def update_errors(serie, models, window):
+    start, end = (pd.Timestamp(window[0]), pd.Timestamp(window[1])) if window else (None, None)
+    err = test_errors(preds, serie, models, start, end)
+    cols = [{"name": c, "id": c} for c in ["Modelo", "MAE", "RMSE", "MAPE", "Meses"]]
+    if err.empty:
+        label = "Periodo analizado: sin meses de evaluación en la selección."
+        return error_by_month(err, models), [], cols, label
+    ini, fin = err["Fecha"].min(), err["Fecha"].max()
+    label = (f"Periodo analizado: {MONTHS[ini.month - 1].lower()} {ini.year} a "
+             f"{MONTHS[fin.month - 1].lower()} {fin.year} ({err['Fecha'].nunique()} meses de evaluación)")
+    table = window_metrics(err).sort_values("MAE")
+    table = table.assign(MAE=table["MAE"].map("{:,.0f}".format), RMSE=table["RMSE"].map("{:,.0f}".format),
+                         MAPE=table["MAPE"].map("{:.1f} %".format))
+    return error_by_month(errors_by_month(err), models), table.to_dict("records"), cols, label
 
 
 if __name__ == "__main__":
