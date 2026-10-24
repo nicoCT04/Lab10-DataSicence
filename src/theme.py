@@ -40,3 +40,4 @@ def empty_figure(message, height=360):
     return base_layout(fig, height=height)
 
 NEUTRAL = "#4A6382"  # magnitudes sin categoría (mercados, totales)
+NEUTRAL_LIGHT = "#C9D4E2"  # mismo tono aclarado: segundo nivel de una jerarquía (país dentro de región)

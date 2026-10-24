@@ -1,10 +1,13 @@
 import pandas as pd
 from dash import Dash, Input, Output, State, dash_table, dcc, html
 
-from src.data import MONTHS, ROOT, VIAS, load_arrivals, yearly_by_via
+from src.data import (MONTHS, OTHERS, ROOT, ROOT_ID, VIAS, border_ranking, load_arrivals, market_tree,
+                      parent_of, select_node, visitors, yearly_by_via)
 from dash import callback_context
 
-from src.figures import error_by_month, forecast_lines, market_bars, monthly_lines, yearly_bars
+from src.figures import (border_bars, error_by_month, forecast_lines, market_bars, market_treemap, monthly_lines,
+                         yearly_bars)
+from src.theme import empty_figure
 from src.models import MODELS, SERIES, errors_by_month, test_errors, window_metrics
 
 df = load_arrivals()
@@ -75,6 +78,47 @@ def tab_overview():
     ])
 
 
+def year_slider(id_, value):
+    return dcc.RangeSlider(id=id_, min=YEARS[0], max=YEARS[-1], step=1, value=value,
+                           marks={y: str(y) for y in YEARS if (y - YEARS[0]) % 3 == 0 or y == YEARS[-1]})
+
+
+def via_checklist(id_, value):
+    return dcc.Checklist(id=id_, options=VIAS, value=value, inline=True,
+                         inputStyle={"marginRight": "4px"}, labelStyle={"marginRight": "14px"})
+
+
+def tab_markets():
+    return html.Div([
+        html.P("¿De qué países vienen los visitantes y por qué puntos del país entran? "
+               "Haga clic en una región del primer gráfico para ver sus países; el segundo gráfico muestra "
+               "por dónde ingresan los visitantes de lo que usted seleccione.", className="tab-intro"),
+        html.Div(id="markets-cards", className="cards"),
+        html.Div([
+            html.Div([html.Label("Vías de ingreso", className="title"),
+                      via_checklist("mk-vias", VIAS)]),
+            html.Div([html.Label("Años", className="title"), year_slider("mk-years", [LAST_FULL_YEAR] * 2)],
+                     style={"flex": "1", "minWidth": "280px"}),
+        ], className="controls"),
+        html.Div([
+            html.Div([html.H3("Visitantes por región y país de residencia"),
+                      html.P([html.Span("Observado", className="badge obs"),
+                              "El tamaño de cada rectángulo es proporcional a sus visitantes. Clic en una región "
+                              "para entrar a sus países; clic en la barra superior para volver. Los países "
+                              f"pequeños de cada región se agrupan en «{OTHERS}». Se excluyen los guatemaltecos "
+                              "residentes en el exterior."], className="help"),
+                      dcc.Graph(id="market-tree", config={"displaylogo": False})], className="panel"),
+            html.Div([html.H3(id="borders-title"),
+                      html.P([html.Span("Observado", className="badge obs"),
+                              "Puntos de ingreso ordenados por visitantes; el color indica la vía (aire, tierra o "
+                              "mar). Se actualiza con la región o el país elegido a la izquierda."],
+                             className="help"),
+                      dcc.Graph(id="border-bars", config={"displaylogo": False})], className="panel"),
+        ], className="grid-2"),
+        dcc.Store(id="market-node", data=ROOT_ID),
+    ])
+
+
 def tab_forecast():
     return html.Div([
         html.P("¿Qué tan bien anticipan los modelos las llegadas? Compare lo observado con lo estimado "
@@ -132,8 +176,7 @@ app.layout = html.Div([
              className="header"),
     html.Div(dcc.Tabs(id="tabs", value="overview", children=[
         dcc.Tab(label="Panorama", value="overview", children=tab_overview()),
-        dcc.Tab(label="Mercados y fronteras", value="markets",
-                children=tab_pending("En construcción para la entrega final.")),
+        dcc.Tab(label="Mercados y fronteras", value="markets", children=tab_markets()),
         dcc.Tab(label="Estacionalidad", value="season",
                 children=tab_pending("En construcción para la entrega final.")),
         dcc.Tab(label="Pronósticos", value="forecast", children=tab_forecast()),
@@ -160,6 +203,56 @@ def update_yearly(year, vias, years):
 def update_detail(year, vias):
     return (monthly_lines(df, year, vias), market_bars(df, year, vias),
             f"Detalle mensual de {year}", f"Principales mercados de {year}")
+
+
+def node_name(node):
+    if node == ROOT_ID:
+        return "todas las regiones"
+    region, _, country = node.partition("/")
+    return f"{country} ({region})" if country else region
+
+
+@app.callback(Output("market-node", "data"),
+              Input("market-tree", "clickData"), Input("mk-years", "value"), Input("mk-vias", "value"),
+              State("market-node", "data"))
+def pick_market(click, years, vias, current):
+    # cambiar los filtros redibuja V5 desde la raíz
+    if callback_context.triggered_id != "market-tree" or not click or not click["points"]:
+        return ROOT_ID
+    node = click["points"][0].get("id")
+    if not node:
+        return current
+    shown = current if "/" not in current else parent_of(current)
+    # clic en la barra superior (el nivel que se está viendo) o de nuevo en el país elegido: sube un nivel
+    return parent_of(node) if node in (shown, current) and node != ROOT_ID else node
+
+
+@app.callback(Output("market-tree", "figure"), Output("border-bars", "figure"),
+              Output("borders-title", "children"), Output("markets-cards", "children"),
+              Input("market-node", "data"), Input("mk-years", "value"), Input("mk-vias", "value"))
+def update_markets(node, years, vias):
+    period = str(years[0]) if years[0] == years[1] else f"{years[0]}-{years[1]}"
+    title = f"Puntos de ingreso de visitantes de {node_name(node)}, {period}"
+    if not vias:
+        msg = "Seleccione al menos una vía de ingreso para ver este gráfico."
+        return empty_figure(msg, height=460), empty_figure(msg, height=460), title, []
+    sub = visitors(df, years, vias)
+    chosen = select_node(sub, node)
+    total = sub["Viajero"].sum()
+    by_market = sub.groupby("País")["Viajero"].sum().sort_values(ascending=False)
+    by_border = chosen.groupby("Frontera")["Viajero"].sum().sort_values(ascending=False)
+    cards = [
+        card("Visitantes extranjeros", f"{total / 1e6:.2f} M" if total >= 1e5 else f"{total:,.0f}",
+             f"{period} · vías elegidas"),
+        card("Mercado principal", by_market.index[0] if total else "—",
+             f"{by_market.iloc[0] / total * 100:.0f} % de los visitantes" if total else ""),
+        card("Tres mayores mercados", f"{by_market.head(3).sum() / total * 100:.0f} %" if total else "—",
+             "del total: mide la dependencia de pocos países"),
+        card("Ingreso principal de la selección", by_border.index[0][3:] if len(by_border) else "—",
+             f"{by_border.iloc[0] / by_border.sum() * 100:.0f} % de {node_name(node)}" if len(by_border) else ""),
+    ]
+    return (market_treemap(market_tree(sub), node), border_bars(border_ranking(chosen), node_name(node)),
+            title, cards)
 
 
 @app.callback(Output("forecast-lines", "figure"),

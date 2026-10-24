@@ -1,9 +1,9 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-from src.data import MONTHS, monthly_by_via, top_markets
-from src.theme import (BAND, FADED_OPACITY, HIGHLIGHT_OPACITY, MODEL_COLORS, MODEL_DASH,
-                       MUTED, NEUTRAL, VIA_COLORS, base_layout, empty_figure)
+from src.data import MONTHS, ROOT_ID, monthly_by_via, parent_of, top_markets
+from src.theme import (BAND, FADED_OPACITY, HIGHLIGHT_OPACITY, INK, MODEL_COLORS, MODEL_DASH,
+                       MUTED, NEUTRAL, NEUTRAL_LIGHT, VIA_COLORS, base_layout, empty_figure)
 
 NO_VIA = "Seleccione al menos una vía de ingreso para ver este gráfico."
 
@@ -113,4 +113,56 @@ def error_by_month(by_month: pd.DataFrame, models: list[str]):
     fig = base_layout(fig, height=380)
     fig.update_layout(barmode="group", bargap=0.25, bargroupgap=0.05)
     fig.update_yaxes(title_text="error medio (visitantes)", title_font_size=13)
+    return fig
+
+
+def market_treemap(tree: pd.DataFrame, node: str):
+    """V5: región -> país. El área es el número de visitantes; el color solo distingue el nivel
+    y resalta el país elegido, que se muestra dentro de su región."""
+    if tree.empty:
+        return empty_figure("No hay visitantes extranjeros para las vías y años elegidos.", height=460)
+    regions = tree.groupby("Región", as_index=False)["Viajero"].sum()
+    ids = [ROOT_ID] + regions["Región"].tolist() + tree["id"].tolist()
+    labels = [ROOT_ID] + regions["Región"].tolist() + tree["País"].tolist()
+    parents = [""] + [ROOT_ID] * len(regions) + tree["Región"].tolist()
+    values = [regions["Viajero"].sum()] + regions["Viajero"].tolist() + tree["Viajero"].tolist()
+    level = node if "/" not in node else parent_of(node)
+    picked = (tree["id"] == node).tolist()
+    colors = ["white"] + [NEUTRAL] * len(regions) + [NEUTRAL if p else NEUTRAL_LIGHT for p in picked]
+    fig = go.Figure(go.Treemap(
+        ids=ids, labels=labels, parents=parents, values=values, branchvalues="total",
+        level=level if level in ids else ROOT_ID, maxdepth=2,
+        marker=dict(colors=colors, line=dict(color="white", width=2)),
+        textfont=dict(color=[INK] + ["white"] * len(regions) + ["white" if p else INK for p in picked]),
+        texttemplate="<b>%{label}</b><br>%{value:,.0f}<br>%{percentRoot:.1%}",
+        hovertemplate="<b>%{label}</b><br>%{value:,.0f} visitantes<br>"
+                      "%{percentParent:.1%} de %{parent}<extra></extra>",
+        pathbar=dict(visible=True, thickness=24), tiling=dict(pad=2),
+    ))
+    fig = base_layout(fig, height=460)
+    fig.update_layout(margin=dict(l=4, r=4, t=30, b=4), uirevision=level)
+    return fig
+
+
+def border_bars(borders: pd.DataFrame, who: str):
+    """V6: puntos de ingreso de los visitantes elegidos en V5, coloreados por su vía."""
+    if borders.empty:
+        return empty_figure(f"No hay ingresos registrados de {who}<br>para las vías y años elegidos.",
+                            height=460)
+    total = borders["Viajero"].sum()
+    fig = go.Figure()
+    for via, color in VIA_COLORS.items():
+        d = borders[borders["Vía"] == via]
+        if d.empty:
+            continue
+        fig.add_bar(x=d["Viajero"], y=d["Punto"], orientation="h", name=via, marker_color=color,
+                    customdata=d["Viajero"] / total * 100,
+                    hovertemplate="%{y} (" + via + "): %{x:,.0f} visitantes<br>"
+                                  "%{customdata:.1f} % del total de " + who + "<extra></extra>")
+    order = borders.groupby("Punto")["Viajero"].sum().sort_values().index.tolist()
+    fig.update_yaxes(categoryorder="array", categoryarray=order)
+    fig.update_xaxes(gridcolor="#E3E7ED", tickformat="~s")
+    fig = base_layout(fig, height=max(300, 120 + 26 * len(order)))
+    fig.update_yaxes(gridcolor="rgba(0,0,0,0)", automargin=True)
+    fig.update_layout(barmode="stack", margin_l=10, bargap=0.3, legend_traceorder="normal")
     return fig

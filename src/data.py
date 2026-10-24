@@ -46,6 +46,52 @@ def top_markets(df: pd.DataFrame, year: int, n: int = 10) -> pd.DataFrame:
     return sub.groupby("Mercado", as_index=False)["Viajero"].sum().nlargest(n, "Viajero")
 
 
+ROOT_ID = "Todas las regiones"
+OTHERS = "Otros países"
+
+
+def visitors(df: pd.DataFrame, years: list[int], vias: list[str]) -> pd.DataFrame:
+    """Visitantes extranjeros del periodo y las vías elegidas (sin guatemaltecos residentes fuera)."""
+    sub = df[df["Año"].between(*years) & df["Vía"].isin(vias) & (df["País"] != "Guatemala")]
+    return sub.assign(Región=sub["Región"].replace("0", "Sin región"))
+
+
+def market_tree(sub: pd.DataFrame, per_region: int = 10) -> pd.DataFrame:
+    """Jerarquía región -> país para el treemap; los países pequeños de cada región se agrupan."""
+    g = sub.groupby(["Región", "País"], as_index=False)["Viajero"].sum()
+    g = g[g["Viajero"] > 0].sort_values("Viajero", ascending=False)
+    g["rank"] = g.groupby("Región").cumcount()
+    g.loc[g["rank"] >= per_region, "País"] = OTHERS
+    g = g.groupby(["Región", "País"], as_index=False)["Viajero"].sum()
+    g["id"] = g["Región"] + "/" + g["País"]
+    return g
+
+
+def parent_of(node: str) -> str:
+    return node.rsplit("/", 1)[0] if "/" in node else ROOT_ID
+
+
+def select_node(sub: pd.DataFrame, node: str) -> pd.DataFrame:
+    """Filas de la región o del país elegidos en el treemap."""
+    if node == ROOT_ID:
+        return sub
+    region, _, country = node.partition("/")
+    out = sub[sub["Región"] == region]
+    if country and country != OTHERS:
+        out = out[out["País"] == country]
+    elif country == OTHERS:
+        top = out.groupby("País")["Viajero"].sum().nlargest(10).index
+        out = out[~out["País"].isin(top)]
+    return out
+
+
+def border_ranking(sub: pd.DataFrame) -> pd.DataFrame:
+    g = sub.groupby(["Frontera", "Vía"], as_index=False)["Viajero"].sum()
+    g = g[g["Viajero"] > 0]
+    g["Punto"] = g["Frontera"].str.replace(r"^\d+\s*", "", regex=True)
+    return g.sort_values("Viajero")
+
+
 if __name__ == "__main__":
     arr = load_arrivals()
     print(arr.shape, arr["Fecha"].min().date(), arr["Fecha"].max().date())
