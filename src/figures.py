@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 
 from src.data import MONTHS, ROOT_ID, monthly_by_via, parent_of, top_markets
 from src.theme import (BAND, FADED_OPACITY, HIGHLIGHT_OPACITY, INK, MODEL_COLORS, MODEL_DASH,
-                       MUTED, NEUTRAL, NEUTRAL_LIGHT, VIA_COLORS, base_layout, empty_figure)
+                       MUTED, NEUTRAL, NEUTRAL_LIGHT, SEQUENTIAL, VIA_COLORS, base_layout, empty_figure)
 
 NO_VIA = "Seleccione al menos una vía de ingreso para ver este gráfico."
 
@@ -165,4 +165,66 @@ def border_bars(borders: pd.DataFrame, who: str):
     fig = base_layout(fig, height=max(300, 120 + 26 * len(order)))
     fig.update_yaxes(gridcolor="rgba(0,0,0,0)", automargin=True)
     fig.update_layout(barmode="stack", margin_l=10, bargap=0.3, legend_traceorder="normal")
+    return fig
+
+
+MEASURE_TEXT = {"abs": "visitantes", "idx": "índice (100 = mes promedio del año)"}
+
+
+def season_heatmap(m: pd.DataFrame, measure: str, year: int):
+    """V7: calendario año x mes. Un solo tono neutro de claro (pocas llegadas) a oscuro (muchas)."""
+    if m.notna().sum().sum() == 0:
+        return empty_figure("No hay datos para las vías y años elegidos." if measure == "abs" else
+                            "No hay años completos en la selección para calcular el índice.", height=520)
+    years = m.index.tolist()
+    if measure == "abs":
+        hover, colorbar, zrange = "%{x} %{y}: %{z:,.0f} visitantes<extra></extra>", dict(tickformat="~s"), {}
+    else:
+        # escala fija 60-140: los meses extremos de 2020 (hasta 400) no deben apagar el resto del calendario
+        hover = "%{x} %{y}: índice %{z:.0f}<br>(100 = mes promedio de ese año)<extra></extra>"
+        colorbar = dict(tickvals=[60, 80, 100, 120, 140], ticktext=["≤60", "80", "100", "120", "≥140"])
+        zrange = dict(zmin=60, zmax=140)
+    fig = go.Figure(go.Heatmap(z=m.values, x=MONTHS, y=years, colorscale=SEQUENTIAL, xgap=2, ygap=2, **zrange,
+                               hovertemplate=hover, hoverongaps=False,
+                               colorbar=dict(thickness=12, outlinewidth=0, title=None, **colorbar)))
+    gaps = m.isna().stack()
+    gaps = gaps[gaps].reset_index()
+    if not gaps.empty:
+        fig.add_scatter(x=[MONTHS[i - 1] for i in gaps["Mes"]], y=gaps["Año"], mode="markers",
+                        marker=dict(symbol="x-thin", size=8, line=dict(width=1.5, color=MUTED)),
+                        hovertemplate="%{x} %{y}: sin datos<extra></extra>", showlegend=False)
+    if year in years:
+        fig.add_shape(type="rect", x0=-0.5, x1=11.5, y0=year - 0.5, y1=year + 0.5,
+                      line=dict(color=INK, width=2.5))
+    fig = base_layout(fig, height=max(320, 90 + 24 * len(years)))
+    fig.update_yaxes(range=[years[-1] + 0.5, years[0] - 0.5], dtick=1, gridcolor="rgba(0,0,0,0)", tickformat="d")
+    fig.update_xaxes(side="top")
+    fig.update_layout(margin=dict(l=50, r=10, t=30, b=10), clickmode="event")
+    return fig
+
+
+def season_boxes(long: pd.DataFrame, highlight: pd.Series | None, measure: str, year: int):
+    """V8: perfil estacional. Cada caja resume un mes en todos los años; la línea es el año elegido."""
+    if long.empty:
+        return empty_figure("No hay años en la selección para construir el perfil." if measure == "abs" else
+                            "No hay años completos en la selección para calcular el índice.", height=420)
+    x = [MONTHS[i - 1] for i in long["Mes"]]
+    unit = "visitantes" if measure == "abs" else "índice"
+    fmt = ",.0f" if measure == "abs" else ".0f"
+    fig = go.Figure(go.Box(
+        x=x, y=long["Valor"], name="Años del periodo", customdata=long["Año"].tolist(),
+        marker=dict(color=NEUTRAL, size=5, opacity=0.55), line=dict(color=NEUTRAL, width=1.5),
+        fillcolor="rgba(74, 99, 130, 0.18)", boxpoints="all", jitter=0.35, pointpos=0, hoveron="points",
+        hovertemplate="%{x} %{customdata}: %{y:" + fmt + "} " + unit + "<extra></extra>"))
+    if highlight is not None and highlight.notna().any():
+        fig.add_scatter(x=MONTHS, y=highlight.values, name=f"Año {year}", mode="lines+markers",
+                        line=dict(color=INK, width=2.5), marker=dict(size=7),
+                        hovertemplate="%{x} " + str(year) + ": %{y:" + fmt + "} " + unit + "<extra></extra>")
+    if measure == "idx":
+        fig.add_hline(y=100, line=dict(color=MUTED, dash="dot", width=1))
+    fig.update_xaxes(categoryorder="array", categoryarray=MONTHS)
+    fig = base_layout(fig, height=420)
+    fig.update_yaxes(title_text=MEASURE_TEXT[measure], title_font_size=13,
+                     tickformat="~s" if measure == "abs" else "d")
+    fig.update_layout(clickmode="event")
     return fig

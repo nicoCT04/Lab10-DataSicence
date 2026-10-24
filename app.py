@@ -2,11 +2,11 @@ import pandas as pd
 from dash import Dash, Input, Output, State, dash_table, dcc, html
 
 from src.data import (MONTHS, OTHERS, ROOT, ROOT_ID, VIAS, border_ranking, load_arrivals, market_tree,
-                      parent_of, select_node, visitors, yearly_by_via)
+                      parent_of, seasonal_matrix, seasonal_profile, select_node, visitors, yearly_by_via)
 from dash import callback_context
 
 from src.figures import (border_bars, error_by_month, forecast_lines, market_bars, market_treemap, monthly_lines,
-                         yearly_bars)
+                         season_boxes, season_heatmap, yearly_bars)
 from src.theme import empty_figure
 from src.models import MODELS, SERIES, errors_by_month, test_errors, window_metrics
 
@@ -119,6 +119,51 @@ def tab_markets():
     ])
 
 
+PANDEMIC = [2020, 2021]
+
+
+def tab_season():
+    return html.Div([
+        html.P("¿En qué meses se concentra la demanda y qué tan estable es ese patrón de un año a otro? "
+               "Haga clic en un año del calendario (o en un punto del perfil) para compararlo con el patrón típico.",
+               className="tab-intro"),
+        html.Div(id="season-cards", className="cards"),
+        html.Div([
+            html.Div([html.Label("Vías de ingreso", className="title"),
+                      via_checklist("ss-vias", ["Aérea", "Terrestre"])]),
+            html.Div([html.Label("Medida", className="title"),
+                      dcc.RadioItems(id="ss-measure", inline=True, value="idx",
+                                     options=[{"label": "Índice estacional", "value": "idx"},
+                                              {"label": "Llegadas", "value": "abs"}],
+                                     inputStyle={"marginRight": "4px"}, labelStyle={"marginRight": "14px"})]),
+            html.Div([html.Label("Años", className="title"), year_slider("ss-years", [YEARS[0], YEARS[-1]])],
+                     style={"flex": "1", "minWidth": "280px"}),
+            html.Div([html.Label("Perfil", className="title"),
+                      dcc.Checklist(id="ss-exclude", value=["covid"], inputStyle={"marginRight": "4px"},
+                                    options=[{"label": "Excluir 2020-2021 (pandemia)", "value": "covid"}])]),
+        ], className="controls"),
+        html.P("Índice estacional: compara cada mes con el mes promedio de su propio año (100). Un 130 significa "
+               "30 % más visitantes que un mes típico de ese año; así se ve la temporada aunque el total crezca o "
+               "caiga entre años. Solo se calcula para años completos.", className="help"),
+        html.Div([
+            html.Div([html.H3("Calendario de llegadas: año por mes"),
+                      html.P([html.Span("Observado", className="badge obs"),
+                              "Cada celda es un mes; más oscuro = más visitantes. Las columnas oscuras repetidas "
+                              "son la temporada alta. ✕ = sin datos (p. ej. jul-dic 2026). El recuadro marca el "
+                              "año elegido."], className="help"),
+                      dcc.Graph(id="season-heatmap", config={"displaylogo": False})], className="panel"),
+            html.Div([html.H3(id="profile-title"),
+                      html.P([html.Span("Observado", className="badge obs"),
+                              "Cada caja resume un mes en todos los años del periodo: la línea central es el valor "
+                              "típico (mediana) y la caja abarca la mitad central de los años. Cajas altas = mes "
+                              "variable. La línea oscura es el año elegido en el calendario."], className="help"),
+                      dcc.Graph(id="season-boxes", config={"displaylogo": False}),
+                      html.P(id="profile-note", className="help")], className="panel"),
+        ], className="grid-2"),
+        dcc.Store(id="season-year", data=LAST_FULL_YEAR),
+    ])
+
+
 def tab_forecast():
     return html.Div([
         html.P("¿Qué tan bien anticipan los modelos las llegadas? Compare lo observado con lo estimado "
@@ -166,10 +211,6 @@ def tab_forecast():
     ])
 
 
-def tab_pending(text):
-    return html.Div(html.P(text, className="tab-intro"))
-
-
 app.layout = html.Div([
     html.Div([html.H1("Observatorio de turismo sostenible — Guatemala"),
               html.P("Ingreso de visitantes internacionales, ene-2009 a jun-2026 · Fuente: INGUAT / Migración")],
@@ -177,8 +218,7 @@ app.layout = html.Div([
     html.Div(dcc.Tabs(id="tabs", value="overview", children=[
         dcc.Tab(label="Panorama", value="overview", children=tab_overview()),
         dcc.Tab(label="Mercados y fronteras", value="markets", children=tab_markets()),
-        dcc.Tab(label="Estacionalidad", value="season",
-                children=tab_pending("En construcción para la entrega final.")),
+        dcc.Tab(label="Estacionalidad", value="season", children=tab_season()),
         dcc.Tab(label="Pronósticos", value="forecast", children=tab_forecast()),
     ]), className="container"),
 ])
@@ -253,6 +293,58 @@ def update_markets(node, years, vias):
     ]
     return (market_treemap(market_tree(sub), node), border_bars(border_ranking(chosen), node_name(node)),
             title, cards)
+
+
+@app.callback(Output("season-year", "data"),
+              Input("season-heatmap", "clickData"), Input("season-boxes", "clickData"),
+              State("season-year", "data"))
+def pick_season_year(heat_click, box_click, current):
+    click = heat_click if callback_context.triggered_id == "season-heatmap" else box_click
+    if not click or not click["points"]:
+        return current
+    point = click["points"][0]
+    year = point.get("y") if callback_context.triggered_id == "season-heatmap" else point.get("customdata")
+    return int(year) if year is not None else current
+
+
+@app.callback(Output("season-heatmap", "figure"), Output("season-boxes", "figure"),
+              Output("profile-title", "children"), Output("profile-note", "children"),
+              Output("season-cards", "children"),
+              Input("ss-vias", "value"), Input("ss-measure", "value"), Input("ss-years", "value"),
+              Input("ss-exclude", "value"), Input("season-year", "data"))
+def update_season(vias, measure, years, exclude, year):
+    title = f"Perfil estacional: ¿cómo se compara {year} con el patrón típico?"
+    if not vias:
+        msg = "Seleccione al menos una vía de ingreso para ver este gráfico."
+        return empty_figure(msg, height=420), empty_figure(msg, height=420), title, "", []
+    m = seasonal_matrix(df, years, vias, measure)
+    profile_years = m.drop(index=PANDEMIC, errors="ignore") if exclude else m
+    highlight = m.loc[year] if year in m.index else None
+    if highlight is None:
+        note = f"{year} está fuera del rango de años elegido; elija otro año en el calendario."
+    elif highlight.isna().all():
+        note = f"{year} no tiene un año completo de datos, por eso no aparece en el índice estacional."
+    else:
+        note = "Se excluyen 2020-2021 de las cajas (no de la línea del año elegido)." if exclude else ""
+    # las tarjetas siempre usan el índice, que es comparable entre años
+    idx = seasonal_matrix(df, years, vias, "idx")
+    idx = idx.drop(index=PANDEMIC, errors="ignore") if exclude else idx
+    typical = idx.median().dropna()
+    cards = []
+    if not typical.empty:
+        peak, low = typical.idxmax(), typical.idxmin()
+        n_years = int(idx.notna().all(axis=1).sum())
+        cards = [
+            card("Mes más fuerte (típico)", MONTHS[peak - 1], f"índice {typical[peak]:.0f}: "
+                 f"{typical[peak] - 100:+.0f} % frente a un mes promedio"),
+            card("Mes más débil (típico)", MONTHS[low - 1], f"índice {typical[low]:.0f}: "
+                 f"{typical[low] - 100:+.0f} % frente a un mes promedio"),
+            card("Pico frente a valle", f"{(typical[peak] / typical[low] - 1) * 100:+.0f} %",
+                 "más visitantes en el mes fuerte que en el débil"),
+            card("Años usados", str(n_years), "años completos del periodo elegido"),
+        ]
+    return (season_heatmap(m, measure, year), season_boxes(seasonal_profile(profile_years), highlight, measure, year),
+            title, note, cards)
 
 
 @app.callback(Output("forecast-lines", "figure"),

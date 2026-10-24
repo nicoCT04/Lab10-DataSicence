@@ -92,6 +92,25 @@ def border_ranking(sub: pd.DataFrame) -> pd.DataFrame:
     return g.sort_values("Viajero")
 
 
+def seasonal_matrix(df: pd.DataFrame, years: list[int], vias: list[str], measure: str) -> pd.DataFrame:
+    """Año x mes. measure='abs' llegadas; 'idx' índice estacional (100 = mes promedio de ese año).
+    El índice se omite en años incompletos, porque su promedio no es comparable."""
+    sub = df[df["Año"].between(*years) & df["Vía"].isin(vias)]
+    m = sub.groupby(["Año", "Mes"])["Viajero"].sum().unstack("Mes").reindex(columns=range(1, 13))
+    m = m.reindex(range(years[0], years[1] + 1))
+    if measure == "idx":
+        complete = m.notna().all(axis=1) & (m > 0).all(axis=1)
+        m = m.div(m.mean(axis=1), axis=0) * 100
+        m[~complete] = float("nan")
+    return m
+
+
+def seasonal_profile(m: pd.DataFrame) -> pd.DataFrame:
+    """Valores de cada mes en los años elegidos, en formato largo, para el perfil estacional."""
+    out = m.stack().rename("Valor").reset_index()
+    return out[out["Valor"].notna()]
+
+
 if __name__ == "__main__":
     arr = load_arrivals()
     print(arr.shape, arr["Fecha"].min().date(), arr["Fecha"].max().date())

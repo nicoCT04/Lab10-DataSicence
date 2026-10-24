@@ -41,3 +41,5 @@ def empty_figure(message, height=360):
 
 NEUTRAL = "#4A6382"  # magnitudes sin categoría (mercados, totales)
 NEUTRAL_LIGHT = "#C9D4E2"  # mismo tono aclarado: segundo nivel de una jerarquía (país dentro de región)
+# escala secuencial de un solo tono (el neutro): de claro (poco) a tinta (mucho), sin chocar con las vías
+SEQUENTIAL = [[0, "#E8EDF3"], [0.5, "#7F93AD"], [1, "#1E2A38"]]
