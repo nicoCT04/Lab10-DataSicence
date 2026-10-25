@@ -1,8 +1,8 @@
 ---
 title: "Laboratorio 10 — Visualización interactiva"
-subtitle: "Documento de diseño · Avance"
-author: "Nicolás Concuá — 23197 · Ciencia de Datos (CC3084), Universidad del Valle de Guatemala"
-date: "22 de octubre de 2026"
+subtitle: "Documento de diseño final"
+author: "Equipo de proyecto · Ciencia de Datos (CC3084), Universidad del Valle de Guatemala"
+date: "25 de octubre de 2026"
 ---
 
 # 1. Contexto y usuarios
@@ -103,7 +103,7 @@ particular** y de lo observado a lo estimado.
 Cada pestaña sigue la misma plantilla: pregunta → KPIs → controles → gráficos con texto de ayuda.
 Cuando un filtro deja un gráfico sin datos, este muestra un mensaje que lo explica en vez de un gráfico vacío.
 
-# 7. Visualizaciones (estado del avance)
+# 7. Visualizaciones del tablero final
 
 | # | Visualización | Tipo y por qué | Interacción | Estado |
 |--|------|---------|--------|----|
@@ -119,6 +119,44 @@ Cuando un filtro deja un gráfico sin datos, este muestra un mensaje que lo expl
 
 Las tarjetas KPI, los controles, los textos y la tabla de métricas son complementarios y no se cuentan
 como visualizaciones.
+
+## V1. Llegadas anuales por vía
+
+El año es una categoría temporal ordenada y el número de visitantes es una magnitud. Las barras
+apiladas permiten comparar el total anual y su composición por vía con una base común en cero.
+El color conserva el significado de aire, tierra y mar; la opacidad destaca el año seleccionado sin
+introducir otra categoría. El directivo puede detectar recuperación y cambios de composición, pero
+no debe comparar 2026 como un año completo: la anotación «ene-jun» advierte su cobertura parcial.
+
+V1 controla V2 y V3 mediante un clic real sobre una barra. Al cambiar el rango de años, el año
+seleccionado se mantiene si sigue dentro del período; si queda fuera, se ajusta al extremo más próximo.
+Así el detalle nunca corresponde a un año oculto. Las tarjetas superiores conservan su referencia
+explícita a 2025 y no representan el rango filtrado.
+
+## V2. Detalle mensual del año
+
+Se usan líneas con marcadores porque interesa la continuidad de los meses y la posición de los picos,
+no un ranking. Cada vía conserva su color y el tooltip muestra mes, año y cantidad. La selección de
+V1 cambia el año de V2 y su título; el filtro de vías permite aislar series y el zoom inspeccionar
+un tramo. No se rellenan como cero los meses ausentes de un año parcial: ausencia no significa que
+no llegaron visitantes. Si no se selecciona ninguna vía o no existen registros, aparece una indicación.
+
+## V3. Principales mercados del año
+
+El mercado es una categoría nominal con nombres largos; las barras horizontales ordenadas hacen
+legibles los nombres y permiten comparar cantidades desde cero. El tono neutro evita confundir
+mercados con vías o modelos. V3 utiliza el mismo año de V1 y las mismas vías de V2, de modo que una
+selección permite consultar simultáneamente temporada y origen. El tooltip expresa la cantidad y su
+porcentaje de las llegadas de las vías elegidas; el ranking excluye a guatemaltecos residentes fuera.
+Es una selección de los diez primeros mercados, no la distribución completa de países.
+
+## V4. Comparación temporal de observado y estimado
+
+Las líneas comparten eje mensual y unidad para comparar la evolución observada con las estimaciones
+de tres modelos. La distancia vertical entre líneas representa diferencia de visitantes, no probabilidad
+ni causalidad. El rango inferior permite cambiar el detalle sin entrenar modelos. La leyenda distingue
+observaciones y estimaciones por texto, color y trazo; los botones ocupan una franja separada para no
+invadir la leyenda en pantallas estrechas. La sección 8 detalla su enlace con V9 y las limitaciones.
 
 ![Pestaña Panorama funcional: el año seleccionado (2025) se resalta en V1 y actualiza V2 y V3](img/panorama.png){width=92%}
 
@@ -280,17 +318,60 @@ es una **aproximación** de la presión sobre los destinos, no una medida de ell
 
 # 10. Planificación de tareas
 
-Responsable de todas las tareas: **Nicolás Concuá (23197)**.
+La asignación distingue el avance de las tres partes de la entrega final. El responsable de integración
+se identifica por su rol (integrante 3 del reparto); el documento no lleva una firma personal.
+Las fechas de la tabla son las previstas en la planificación, no constancias de entrega en Canvas.
 
-| # | Tarea | Fecha de terminación | Estado |
-|--|------------------|------|----|
-| 1 | Preguntas de gestión, alcance y elección de herramienta | 22-oct-2026 | Hecho |
-| 2 | Paleta, tipografía, bosquejo y navegación | 22-oct-2026 | Hecho |
-| 3 | Preparación de datos y predicciones del Lab 1 (`src/`) | 22-oct-2026 | Hecho |
-| 4 | Pestaña Panorama: KPIs, V1-V3 enlazadas | 22-oct-2026 | Hecho |
-| 5 | Pestaña Pronósticos: V4 y tabla de modelos | 22-oct-2026 | Hecho |
-| 6 | Pestaña Mercados y fronteras: V5-V6 enlazadas | 24-oct-2026 | Hecho |
-| 7 | Pestaña Estacionalidad: V7-V8 | 24-oct-2026 | Hecho |
-| 8 | V9 (error por mes) y comparación de modelos | 23-oct-2026 | Hecho |
-| 9 | Pruebas de uso, mensajes vacíos, legibilidad y corrección de errores | 24-oct-2026 | Pendiente |
-| 10 | Documento de diseño final (PDF) y README | 25-oct-2026 | Pendiente |
+| # | Tarea | Responsable | Terminación prevista | Estado al 25-oct |
+|--|------------------|------|------|----|
+| 1 | Preguntas de gestión, alcance y herramienta | Nicolás Concuá | 22-oct-2026 | Implementado |
+| 2 | Paleta, tipografía, bosquejo y navegación | Nicolás Concuá | 22-oct-2026 | Implementado |
+| 3 | Datos, resultados del Lab 1 y Panorama V1–V3 | Nicolás Concuá | 22-oct-2026 | Implementado |
+| 4 | V4 y tabla de modelos del avance | Nicolás Concuá | 22-oct-2026 | Implementado |
+| 5 | V9 y comparación enlazada; sección de Pronósticos | Fernando Rueda | 23-oct-2026 | Implementado |
+| 6 | V5–V6, V7–V8 y sus secciones de diseño | Fernando Hernández | 24-oct-2026 | Implementado |
+| 7 | Pruebas, mensajes vacíos y legibilidad | Integración y pruebas (integrante 3) | 24-oct-2026 | Verificado el 25-oct |
+| 8 | Justificación V1–V4 y documento integrado | Integración y pruebas (integrante 3) | 25-oct-2026 | Integrado |
+| 9 | PDF final y README | Integración y pruebas (integrante 3) | 25-oct-2026 | Generado |
+
+# 11. Pruebas de uso y pulido final
+
+Se realizaron recorridos técnicos de tareas en Chromium, no un estudio con participantes externos.
+Se comprobaron las cuatro pestañas, filtros, enlaces y estados sin información. Las pruebas
+automatizadas reproducibles están en `tests/test_dashboard.py`; no regeneran predicciones ni ajustan
+modelos. La revisión visual complementa esas pruebas y no demuestra por sí sola los cálculos.
+
+| Recorrido | Resultado esperado |
+|--|--|
+| V1: limitar el rango a 2009–2010 y seleccionar una barra | V2 y V3 muestran un año dentro del rango; un clic actualiza ambos |
+| Desmarcar todas las vías | Se explica que debe seleccionarse una vía, sin excepción del servidor |
+| Elegir solo Marítima en 2025–2026 | Se informa que no hay registros; no se pide seleccionar una vía que ya está marcada |
+| V5: seleccionar América del Centro | V6 cambia a sus puntos de ingreso y el título identifica la selección |
+| V7: seleccionar un año del calendario | V8 compara ese año con el perfil del período |
+| Índice estacional limitado a 2026 | Se explica que no hay años completos; cambiar a llegadas permite ver los meses disponibles |
+| V4: pulsar «5 años» y después «Todo» | V9 y la tabla cambian su período y vuelven a los 63 meses de evaluación |
+| Quitar los tres modelos | V9 pide seleccionar al menos uno y la tabla no conserva cifras anteriores |
+| Pantallas de 1440 y 600 px | Ejes, leyendas y botones legibles; sin desplazamiento horizontal de página |
+
+Se corrigieron el año de detalle fuera del rango, el mensaje ambiguo sin registros en V1 y la
+superposición de controles con la leyenda de V4 a 600 px. La semántica de colores, las agregaciones
+y los archivos originales de predicciones y métricas se conservan. Los estados vacíos no equivalen
+a una cantidad de cero ni permiten concluir que dejó de existir turismo por esa vía.
+
+# 12. Comprobación del enunciado y entrega
+
+El tablero incluye nueve visualizaciones (V1–V9), sin contar tarjetas, filtros ni tabla. Hay enlaces
+distintos V1 → V2/V3, V5 → V6, V7 ↔ V8 y V4 → V9/tabla; la navegación por pestañas, filtros, zoom y
+jerarquías permite elegir qué consultar y con qué detalle. Los tres modelos reutilizan los resultados
+del Lab 1: no se incorporan nuevos algoritmos ni se ajustan modelos durante el uso de la aplicación.
+
+Para la rúbrica, las secciones 2–9 justifican exploración, gráficos, color, lenguaje ejecutivo y alcance
+(30 puntos de diseño y 50 de visualización). La sección 11 y las pruebas reproducibles respaldan
+funcionamiento e interacción (20 puntos), sin asignar una nota automática. El PDF final y el README
+incluyen ejecución y fuentes editables. El avance PDF original se conserva como registro histórico.
+
+No se puede comprobar desde el repositorio la inscripción en Canvas, la entrega completa del avance
+antes del 22-oct a las 17:20, el acceso del docente al historial ni la entrega final del 25-oct. Son
+condiciones externas que el equipo debe confirmar; el historial local no demuestra una entrega en la
+plataforma. Los datos siguen siendo de uso académico: no se despliega ni publica el tablero sin
+autorización, y las llegadas no prueban sostenibilidad ambiental ni explican causas de la demanda.
