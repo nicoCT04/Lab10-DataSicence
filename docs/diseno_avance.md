@@ -71,6 +71,8 @@ permite aplicar la paleta y la tipografía con el mismo significado en todo el t
 | Vía Terrestre | `#E69F00` | Naranja tierra, opuesto al azul en el círculo cromático (complementario): máxima separación entre las dos vías principales. |
 | Vía Marítima | `#009E73` | Verde azulado = mar; tercer color Okabe-Ito. |
 | Magnitud sin categoría | `#4A6382` | Azul gris neutro para rankings (mercados), así no se confunde con ninguna vía. |
+| Segundo nivel de jerarquía | `#C9D4E2` | El mismo neutro aclarado: países dentro de su región en el treemap (V5). |
+| Escala secuencial | `#E8EDF3` → `#7F93AD` → `#1E2A38` | Un solo tono, de claro (poco) a tinta (mucho), para el calendario (V7); no usa ningún color de vía ni de modelo. |
 | Estimaciones (modelos) | `#6A3D9A`, `#CC79A7`, `#8C8C8C` | Morado, rosa y gris, tonos que **nunca** se usan para datos observados; además cada modelo tiene su tipo de línea (continua, raya-punto, punteada), así no depende solo del color. |
 | Contexto | `#ECEFF3` | Franja gris para periodos especiales (COVID-19, periodo de evaluación). |
 | Fondo / tarjetas | `#F5F7FA` / `#FFFFFF` | Fondo claro de baja saturación para que el color se reserve a los datos. |
@@ -109,10 +111,10 @@ Cuando un filtro deja un gráfico sin datos, este muestra un mensaje que lo expl
 | V2 | Detalle mensual del año | Líneas: la secuencia de meses muestra la temporada alta y baja | Enlazada a V1, filtro de vías, zoom | **Funcional** |
 | V3 | Principales mercados del año | Barras horizontales ordenadas: ranking con nombres largos legibles | Enlazada a V1, tooltip con % | **Funcional** |
 | V4 | Observado vs. estimado | Líneas temporales con franja de evaluación | Serie, modelos visibles, range slider, botones 5 años / todo | **Funcional** |
-| V5 | Mercados por región → país | Treemap: jerarquía y proporción; clic para acercar o alejar | Drill-down, enlazada con V6 | Pendiente |
-| V6 | Llegadas por frontera | Barras horizontales: ranking de puntos de ingreso | Enlazada a V5 | Pendiente |
-| V7 | Calendario de llegadas | Mapa de calor año × mes: patrones estacionales de 17 años de un vistazo | Tooltip, filtro de vía | Pendiente |
-| V8 | Perfil estacional | Boxplot por mes: variabilidad de cada mes entre años | Filtro de vía y periodo | Pendiente |
+| V5 | Mercados por región → país | Treemap: jerarquía y proporción; clic para acercar o alejar | Drill-down, enlazada con V6, filtro de vías y años | **Funcional** |
+| V6 | Llegadas por frontera | Barras horizontales apiladas por vía: ranking de puntos de ingreso | Enlazada a V5, tooltip con % | **Funcional** |
+| V7 | Calendario de llegadas | Mapa de calor año × mes: patrones estacionales de 17 años de un vistazo | Clic en un año (resalta y actualiza V8), llegadas o índice, vías, rango de años | **Funcional** |
+| V8 | Perfil estacional | Boxplot por mes: variabilidad de cada mes entre años | Enlazada con V7 en ambos sentidos, excluir pandemia, vías y periodo | **Funcional** |
 | V9 | Error de los modelos por mes | Barras agrupadas: cuándo y cuánto falla cada modelo | Enlazada al zoom y a la barra de rango de V4, a la serie y a los modelos | **Funcional** |
 
 Las tarjetas KPI, los controles, los textos y la tabla de métricas son complementarios y no se cuentan
@@ -190,7 +192,93 @@ Para planificar, un directivo debería usar estos pronósticos a corto plazo y r
 recientes, y tratar con cautela cualquier estimación de diciembre. El aviso de limitaciones al pie de la
 pestaña lo dice de forma explícita.
 
-# 9. Planificación de tareas
+# 9. Pestañas Mercados y fronteras y Estacionalidad: V5 a V8
+
+Estas dos pestañas responden las preguntas P2, P3 y P4: de dónde vienen los visitantes, por dónde entran
+y en qué meses se concentra la demanda. Todo lo que muestran es **observado**, por eso cada gráfico lleva
+la etiqueta *Observado* y ninguno usa los colores reservados a las estimaciones.
+
+## V5. Visitantes por región y país de residencia
+
+El dato es jerárquico, región que contiene países, y lo que interesa al directivo es el **peso** de cada
+mercado dentro del total. El treemap representa las dos cosas a la vez: el área de cada rectángulo es
+proporcional a sus visitantes y los países quedan dentro del rectángulo de su región. Frente a un gráfico
+de pastel, el treemap admite decenas de países sin volverse ilegible, y frente a unas barras conserva la
+jerarquía. Es también la forma de **aumentar o disminuir el nivel de detalle**: al inicio solo se ven
+las regiones; un clic en una región la abre y muestra sus países, y un clic en la barra superior vuelve
+al nivel anterior. Para que los rectángulos pequeños no saturen la vista, en cada región se muestran los
+diez países más grandes y el resto se agrupa en «Otros países». Se excluyen los guatemaltecos residentes
+en el exterior, igual que en V3, y la región sin código de la base se rotula «Sin región».
+
+El color no codifica una categoría nueva, para no competir con los colores de las vías: las regiones
+usan el azul gris neutro de la paleta y los países el mismo tono aclarado, de modo que el color solo
+indica el nivel de la jerarquía. Cada rectángulo muestra su nombre, sus visitantes y su porcentaje del
+total, y el tooltip agrega el porcentaje dentro de su región.
+
+## V6. Puntos de ingreso de la selección
+
+V6 responde «¿por dónde entran?» para lo que el usuario eligió en V5. Son 21 puntos con nombres largos,
+por eso usamos barras horizontales ordenadas de mayor a menor, que dejan leer cada nombre y comparar
+longitudes desde una base común. Aquí el color sí tiene significado y es el mismo de todo el tablero:
+azul aérea, naranja terrestre y verde marítima, así que se ve de inmediato qué puntos son aeropuertos y
+cuáles pasos terrestres.
+
+V5 y V6 están **enlazadas**: al hacer clic en una región o en un país de V5, V6 se recalcula solo con
+esos visitantes y su título lo indica (por ejemplo, «Puntos de ingreso de visitantes de El Salvador
+(América Del Centro), 2025»). Al volver a la raíz, V6 muestra de nuevo a todos los visitantes. Las
+tarjetas de la pestaña acompañan la lectura: visitantes extranjeros del periodo, mercado principal, peso
+de los tres mayores mercados (una medida simple de dependencia) y principal punto de ingreso de la
+selección. Si no hay vías seleccionadas, o si la combinación de vías y años no tiene registros, ambos
+gráficos muestran un mensaje que lo explica.
+
+**Lectura de ejemplo (2025, observado)**: América del Centro aporta el 64 % de los visitantes extranjeros
+y América del Norte el 25 %; El Salvador por sí solo representa el 47 % y los tres mayores mercados el
+75 %, una concentración alta. Los centroamericanos entran sobre todo por tierra (Valle Nuevo, 31 %),
+mientras que el 85 % de los norteamericanos y el 70 % de los europeos entran por La Aurora. Para un
+directivo esto separa dos públicos con infraestructuras distintas: servicios fronterizos para el mercado
+regional y conectividad aérea para los mercados de larga distancia. Los datos muestran por dónde entran
+los visitantes, no por qué eligen esa vía.
+
+## V7. Calendario de llegadas: año por mes
+
+Para ver la estacionalidad de 17 años de un vistazo, el mapa de calor año × mes es el gráfico más
+compacto: cada fila es un año, cada columna un mes y la intensidad del color es el número de llegadas.
+Las columnas que se oscurecen año tras año son la temporada alta y las filas claras muestran caídas como
+la de 2020. Al ser una magnitud ordenada, usamos una **escala secuencial de un solo tono** que va del gris
+azulado claro (pocas llegadas) a la tinta (muchas), derivada del neutro de la paleta para no confundirse
+con ninguna vía. Los meses sin datos (julio a diciembre de 2026) se marcan con ✕ en lugar de quedar en
+blanco, y el año elegido se enmarca con un recuadro.
+
+El control **Medida** cambia entre llegadas e **índice estacional**, que compara cada mes con el mes
+promedio de su propio año (100). El índice quita el efecto del crecimiento o la caída entre años y deja
+solo la forma de la temporada; se calcula únicamente para años completos. Su escala de color se fija
+entre 60 y 140 porque los primeros meses de 2020, comparados con un año hundido por la pandemia, llegan
+a 400 y apagarían el resto del calendario; el tooltip sigue mostrando el valor real.
+
+## V8. Perfil estacional
+
+V7 muestra cada mes de cada año; V8 resume cuál es el mes **típico** y qué tan estable es ese patrón.
+Por eso usamos un diagrama de caja por mes: la línea central es la mediana de los años y la caja abarca
+la mitad central, así que una caja corta significa un mes estable y una larga, un mes que varía mucho
+entre años. Encima se dibujan los años como puntos y, con la tinta de lo observado, la línea del año
+elegido, para comparar un año concreto con el patrón típico. Por defecto se excluyen 2020-2021 de las
+cajas, porque la pandemia deformaría el patrón, aunque se pueden incluir desmarcando la casilla.
+
+V7 y V8 están **enlazadas en ambos sentidos**: un clic en una fila del calendario dibuja ese año en V8,
+y un clic en un punto de V8 enmarca su año en V7. Las tarjetas resumen el perfil con el índice, que es
+comparable entre años: mes más fuerte y más débil, diferencia entre pico y valle, y cuántos años
+completos entran en el cálculo. Si el año elegido queda fuera del rango o no tiene un año completo de
+datos, una nota bajo el gráfico lo explica.
+
+**Lectura de ejemplo (aérea y terrestre, 2009-2026 sin 2020-2021, observado)**: diciembre es el mes más
+fuerte (índice 135, un 35 % más que un mes promedio) y febrero el más débil (81); el pico supera al valle
+en un 66 %. Septiembre (85) y mayo (88) también son meses bajos. La vía aérea tiene un segundo pico en
+julio (116), mientras que la terrestre concentra más su temporada en diciembre (140) y varía más entre
+años. Para planificar, esto sugiere reforzar capacidad y personal en diciembre y julio, y dirigir las
+campañas a febrero, mayo y septiembre. Como la base solo registra llegadas, la concentración estacional
+es una **aproximación** de la presión sobre los destinos, no una medida de ella.
+
+# 10. Planificación de tareas
 
 Responsable de todas las tareas: **Nicolás Concuá (23197)**.
 
@@ -201,8 +289,8 @@ Responsable de todas las tareas: **Nicolás Concuá (23197)**.
 | 3 | Preparación de datos y predicciones del Lab 1 (`src/`) | 22-oct-2026 | Hecho |
 | 4 | Pestaña Panorama: KPIs, V1-V3 enlazadas | 22-oct-2026 | Hecho |
 | 5 | Pestaña Pronósticos: V4 y tabla de modelos | 22-oct-2026 | Hecho |
-| 6 | Pestaña Mercados y fronteras: V5-V6 enlazadas | 23-oct-2026 | Pendiente |
-| 7 | Pestaña Estacionalidad: V7-V8 | 23-oct-2026 | Pendiente |
+| 6 | Pestaña Mercados y fronteras: V5-V6 enlazadas | 24-oct-2026 | Hecho |
+| 7 | Pestaña Estacionalidad: V7-V8 | 24-oct-2026 | Hecho |
 | 8 | V9 (error por mes) y comparación de modelos | 23-oct-2026 | Hecho |
 | 9 | Pruebas de uso, mensajes vacíos, legibilidad y corrección de errores | 24-oct-2026 | Pendiente |
 | 10 | Documento de diseño final (PDF) y README | 25-oct-2026 | Pendiente |
