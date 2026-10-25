@@ -11,7 +11,9 @@ NO_VIA = "Seleccione al menos una vía de ingreso para ver este gráfico."
 def yearly_bars(yearly: pd.DataFrame, selected: int, vias: list[str], years: list[int]):
     data = yearly[yearly["Vía"].isin(vias) & yearly["Año"].between(*years)]
     if data.empty:
-        return empty_figure(NO_VIA)
+        return empty_figure(NO_VIA if not vias else
+                            "No hay registros para las vías y años elegidos.<br>"
+                            "Pruebe otra vía o amplíe el rango de años.")
     fig = go.Figure()
     for via in vias:
         d = data[data["Vía"] == via]
@@ -79,11 +81,11 @@ def forecast_lines(preds: pd.DataFrame, serie: str, models: list[str]):
                                   width=2 if model == "Observado" else 2.5),
                         hovertemplate="%{x|%b %Y}: %{y:,.0f}<extra>" + label + "</extra>")
     fig.update_xaxes(rangeslider=dict(visible=True, thickness=0.06),
-                     rangeselector=dict(x=1, xanchor="right", y=1.12, buttons=[dict(count=5, label="5 años", step="year", stepmode="backward"),
+                     rangeselector=dict(x=1, xanchor="right", y=1.02, buttons=[dict(count=5, label="5 años", step="year", stepmode="backward"),
                                                  dict(step="all", label="Todo")]))
     fig = base_layout(fig, height=460)
     # conserva el zoom al prender o apagar modelos; cambiar de serie lo reinicia
-    fig.update_layout(margin_t=70, legend=dict(y=1.12), uirevision=serie)
+    fig.update_layout(margin_t=110, legend=dict(y=1.22), uirevision=serie)
     return fig
 
 

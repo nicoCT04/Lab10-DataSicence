@@ -224,11 +224,12 @@ app.layout = html.Div([
 ])
 
 @app.callback(Output("selected-year", "data"),
-              Input("yearly-bars", "clickData"), State("selected-year", "data"))
-def select_year(click, current):
-    if click and click["points"]:
-        return int(click["points"][0]["x"])
-    return current
+              Input("yearly-bars", "clickData"), Input("year-range", "value"),
+              State("selected-year", "data"))
+def select_year(click, years, current):
+    if callback_context.triggered_id == "yearly-bars" and click and click["points"]:
+        current = int(click["points"][0]["x"])
+    return min(max(current, years[0]), years[1])
 
 
 @app.callback(Output("yearly-bars", "figure"),
