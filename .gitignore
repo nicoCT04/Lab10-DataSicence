@@ -3,3 +3,8 @@ __pycache__/
 .DS_Store
 outputs/arrivals.parquet
 ~$*
+
+# Lab 11: telefonía institucional (se monta, no se versiona) y ejecuciones locales
+data/raw/BD_moviidad_*.xlsx
+mlops/runs/
+mlops/test_runs/

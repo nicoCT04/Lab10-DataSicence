@@ -1,0 +1,49 @@
+# Configuración del flujo MLOps del Lab 11 (Grupo 1, La Antigua Guatemala).
+# Las rutas son relativas a la raíz del repositorio; en Docker se montan en data/raw.
+
+destination = "Antigua Guatemala"
+procedure_version = "factor-reparto-1.0"
+unit = "visitantes únicos del mes"
+seed = 2026
+
+[paths]
+mobility = "data/raw/BD_moviidad_mensual.xlsx"
+mobility_sheet = "Antigua"
+migration = "data/raw/Base_Migracion_2009-2026jun.xlsx"
+migration_sheet = "Datos"
+runs = "mlops/runs"
+published = "mlops/published"
+
+[sources]
+# polígono principal; los subdestinos no se suman
+polygon = "Antigua Guatemala"
+traveler_types = ["Turista", "Excursionista"]
+
+[periods]
+fit = ["2025-09", "2025-10", "2025-11", "2025-12",
+       "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08"]
+# meses observados que se ocultan uno a uno (ventana expansiva)
+evaluation = ["2026-04", "2026-05", "2026-06", "2026-07", "2026-08"]
+# meses sin cobertura de telefonía que se estiman
+estimate = ["2026-01", "2026-02"]
+
+[procedure]
+factor = "mean"           # mean | median de los factores mensuales
+baseline = "last_value"   # referencia: último valor observado
+
+[quality]
+# columnas indispensables y su tipo esperado
+mobility_columns = { destino = "text", anio = "int", mes = "int", fecha = "date", pais = "text", es_consecutivo = "text", visitantes = "number" }
+migration_columns = { "Año" = "int", "Mes cod" = "int", "Tipo de Viajero" = "text", "Viajero" = "number" }
+mobility_key = ["destino", "fecha", "pais", "es_consecutivo"]
+migration_key = ["Año", "Mes cod", "Vía", "Frontera", "País", "Tipo de Viajero"]
+# faltantes permitidos (se reportan como advertencia)
+allowed_missing = ["pais", "permanencia_prom"]
+# columna que delata la base diaria
+daily_columns = ["idfecha", "dia_semana", "cantidad_visitantes"]
+
+[acceptance]
+# umbrales de la regla de aceptación (los justifica quien implemente la evaluación)
+max_mape = 15.0                 # % sobre meses de evaluación
+max_ratio_vs_baseline = 1.25    # MAE candidato / MAE referencia
+max_monthly_change = 0.40       # variación relativa entre meses consecutivos para alertar
