@@ -20,6 +20,7 @@ from pathlib import Path
 
 import numpy as np
 
+from mlops.checks import WARN, failed, run_checks, write_report
 from mlops.config import DEFAULT_CONFIG, ROOT, load_config, resolve
 from mlops.procedure import estimate, fit_factor, prepare
 from mlops.sources import read_sources
@@ -92,6 +93,19 @@ def run(cfg: dict) -> dict:
         with log.stage("lectura"):
             mob, mig, sources = read_sources(cfg)
             log.data["sources"] = sources
+
+        with log.stage("validación"):
+            report = run_checks(mob, mig, cfg)
+            write_report(report, run_dir)
+            log.data["quality"] = {r["control"]: r["status"] for r in report}
+            for r in report:
+                print(f"  {r['status']:<12} {r['control']}")
+                if r["status"] == WARN:
+                    log.warn("validación", f"{r['control']}: {r['detail']}")
+        if failed(report):
+            msg = " | ".join(f"{r['control']}: {r['detail']}" for r in failed(report))
+            log.data["errors"].append({"stage": "validación", "error": msg})
+            raise StopPipeline(f"control crítico fallido, no se reemplazan resultados: {msg}")
 
         with log.stage("preparación"):
             series = prepare(mob, mig, cfg)
