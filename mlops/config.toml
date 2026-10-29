@@ -20,10 +20,11 @@ polygon = "Antigua Guatemala"
 traveler_types = ["Turista", "Excursionista"]
 
 [periods]
+# jul-ago 2026 tienen telefonía pero no migración (la base termina en jun 2026)
 fit = ["2025-09", "2025-10", "2025-11", "2025-12",
-       "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08"]
+       "2026-03", "2026-04", "2026-05", "2026-06"]
 # meses observados que se ocultan uno a uno (ventana expansiva)
-evaluation = ["2026-04", "2026-05", "2026-06", "2026-07", "2026-08"]
+evaluation = ["2026-04", "2026-05", "2026-06"]
 # meses sin cobertura de telefonía que se estiman
 estimate = ["2026-01", "2026-02"]
 
