@@ -126,3 +126,51 @@ académicos; no se publica ni despliega el tablero sin autorización.
 - [x] Mercados y fronteras (V5 treemap región → país, V6 fronteras), Estacionalidad (V7, V8)
 - [x] Pruebas de uso, estados sin datos y pulido de legibilidad
 - [x] Documento de diseño final, PDF y README — entrega prevista 25-oct-2026
+
+---
+
+# Laboratorio 11 — MLOps del observatorio (Grupo 1, La Antigua Guatemala)
+
+Flujo reproducible que estima los **visitantes únicos mensuales del polígono Antigua Guatemala**
+para ene–feb 2026 (sin cobertura de telefonía) con el factor de reparto sobre la migración.
+Alcance, fórmulas, períodos y diagrama: [docs/lab11/alcance.md](docs/lab11/alcance.md).
+
+## Datos
+
+Los datos institucionales **no se versionan ni se copian a imágenes**. Colocar en `data/raw/`:
+
+- `BD_moviidad_mensual.xlsx` (carpeta compartida del proyecto; ignorado por Git)
+- `Base_Migracion_2009-2026jun.xlsx` (ya incluido)
+
+Las rutas se pueden cambiar en [mlops/config.toml](mlops/config.toml).
+
+## Ejecutar el pipeline
+
+```bash
+source .venv/bin/activate
+pip install -r requirements-mlops.txt
+python -m mlops.pipeline                 # o --config otra_config.toml
+python -m unittest tests.test_checks -v  # controles con datos sintéticos
+```
+
+Cada ejecución crea `mlops/runs/<run_id>/` con `config.toml`, `run_log.json` (inicio, fin, etapas,
+advertencias, errores y publicación), `quality_report.json/.md`, `series.csv`, `params.json` y
+`estimates.csv`. Si falla un control crítico, el flujo se detiene antes de estimar y no toca la
+versión publicada.
+
+| Módulo | Etapa |
+|--|--|
+| `mlops/sources.py` | Lectura y huella SHA-256 de las fuentes |
+| `mlops/checks.py` | Seis controles de calidad y reporte |
+| `mlops/procedure.py` | Serie destino-mes, factor de reparto y estimación |
+| `mlops/pipeline.py` | Orquestación, registro por ejecución y publicación |
+
+## Estado
+
+- [x] **Avance (29-oct)**: alcance, diagrama, configuración, pipeline inicial y seis controles de calidad con pruebas
+- [ ] Registro en MLflow y dos ejecuciones reproducibles
+- [ ] Validación temporal (ventana expansiva), referencia y regla de aceptación
+- [ ] Publicación de la versión aprobada e integración con el tablero
+- [ ] Monitoreo, prueba controlada de fallo y restauración de versión
+- [ ] Docker Compose (tablero + pipeline + MLflow) y documentación final
+- [ ] Informe técnico en PDF — entrega 1-nov-2026
