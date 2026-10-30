@@ -1,0 +1,44 @@
+services:
+  tablero:
+    build: .
+    ports:
+      - "127.0.0.1:8050:8050"
+    volumes:
+      - ./data:/app/data:ro
+      - ./mlops/published:/app/mlops/published:ro
+
+  # Ejecución explícita, no al levantar las interfaces:
+  # GIT_COMMIT=$(git rev-parse HEAD) docker compose run --rm pipeline
+  pipeline:
+    build: .
+    profiles: ["pipeline"]
+    command: ["python", "-m", "mlops.pipeline"]
+    restart: "no"
+    environment:
+      GIT_COMMIT: "${GIT_COMMIT:-desconocido}"
+      MLFLOW_TRACKING_URI: sqlite:////app/mlruns/mlflow.db
+      MLFLOW_EXPERIMENT_NAME: observatorio-antigua
+    volumes:
+      - ./data:/app/data:ro
+      - ./mlruns:/app/mlruns
+      - ./mlops/published:/app/mlops/published
+      - ./mlops/runs:/app/mlops/runs
+
+  mlflow:
+    build: .
+    command:
+      - mlflow
+      - ui
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --backend-store-uri
+      - sqlite:////app/mlruns/mlflow.db
+      - --default-artifact-root
+      - /app/mlruns/artifacts
+    ports:
+      # 5000 suele estar ocupado por AirPlay en macOS.
+      - "127.0.0.1:5001:5000"
+    volumes:
+      - ./mlruns:/app/mlruns

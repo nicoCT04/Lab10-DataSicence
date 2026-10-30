@@ -8,6 +8,7 @@ la serie preparada, los parámetros y las estimaciones candidatas.
 """
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -25,6 +26,7 @@ from mlops.config import DEFAULT_CONFIG, ROOT, load_config, resolve
 from mlops.evaluation import accept, evaluate
 from mlops.procedure import estimate, fit_factor, prepare
 from mlops.sources import read_sources
+from mlops import tracking
 
 
 class StopPipeline(Exception):
@@ -32,6 +34,8 @@ class StopPipeline(Exception):
 
 
 def git_commit() -> dict:
+    if os.environ.get("GIT_COMMIT"):
+        return {"commit": os.environ["GIT_COMMIT"], "dirty": None}
     def git(*args):
         return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     try:
@@ -90,7 +94,12 @@ def run(cfg: dict) -> dict:
     log = RunLog(run_id, run_dir)
     log.data["code"] = git_commit()
     result = {"run_id": run_id, "run_dir": str(run_dir)}
+    tracked = None
     try:
+        with log.stage("tracking"):
+            tracked = tracking.start(cfg, log.data)
+            log.data["mlflow_run_id"] = tracked[1]
+            result["mlflow_run_id"] = tracked[1]
         with log.stage("lectura"):
             mob, mig, sources = read_sources(cfg)
             log.data["sources"] = sources
@@ -160,6 +169,14 @@ def run(cfg: dict) -> dict:
         log.data["errors"].append({"stage": "-", "error": traceback.format_exc(limit=3)})
         log.close("fallida")
         result.update(status="fallida")
+    finally:
+        if tracked:
+            try:
+                tracking.finish(*tracked, log.data, run_dir)
+            except Exception:
+                log.data["errors"].append({"stage": "tracking", "error": traceback.format_exc(limit=3)})
+                log.close("fallida")
+                result.update(status="fallida", reason="No se pudo completar el registro en MLflow; ver run_log.json")
     return result
 
 

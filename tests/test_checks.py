@@ -1,9 +1,12 @@
 """Controles de calidad con datos sintéticos: cada caso introduce un problema y verifica que se detecta."""
 import copy
+import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from mlflow import MlflowClient
 import numpy as np
 import pandas as pd
 
@@ -127,6 +130,12 @@ class PipelineStops(unittest.TestCase):
 
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
+        self.uri = f"sqlite:///{self.tmp.name}/mlflow.db"
+        env = patch.dict(os.environ, {"MLFLOW_TRACKING_URI": self.uri,
+                                     "MLFLOW_STORAGE": self.tmp.name,
+                                     "GIT_COMMIT": "test-commit"})
+        env.start()
+        self.addCleanup(env.stop)
 
     def tearDown(self):
         self.tmp.cleanup()
@@ -138,12 +147,47 @@ class PipelineStops(unittest.TestCase):
         res = self.run_with(mob, broken)
         self.assertEqual(res["status"], "detenida")
         self.assertFalse((Path(res["run_dir"]) / "estimates.csv").exists())
+        client = MlflowClient(tracking_uri=self.uri)
+        stopped = client.get_run(res["mlflow_run_id"])
+        self.assertEqual(stopped.info.status, "FAILED")
+        self.assertEqual(stopped.data.metrics, {})
+        self.assertIn("denominador", stopped.data.tags["failure.reason"])
+        self.assertEqual(len([k for k in stopped.data.tags if k.startswith("quality.")]), 6)
 
         res = self.run_with(mob, mig)
         self.assertEqual(res["status"], "completada")
         # factor sintético = 1000 / 300 en todos los meses
         self.assertAlmostEqual(res["factor"], 1000 / 300)
         self.assertTrue(np.allclose(res["estimates"]["valor"], 1000.0))
+
+    def test_repeated_runs_keep_metrics_sources_and_artifacts(self):
+        mob, mig = synthetic()
+        # Tendencia asimétrica: errores no nulos, verificables sin usar evaluate().
+        for i, month in enumerate(FIT):
+            mob.loc[mob["fecha"] == pd.Timestamp(month + "-01"), "visitantes"] *= 1 + i / 10
+        first = self.run_with(mob, mig)
+        cfg = copy.deepcopy(CFG)
+        tmp = Path(self.tmp.name)
+        cfg["paths"].update(mobility=str(tmp / "mob.xlsx"), migration=str(tmp / "mig.xlsx"),
+                            runs=str(tmp / "runs"), published=str(tmp / "published"))
+        second = run(cfg)  # mismos archivos físicos, sin volver a serializar los Excel
+        self.assertEqual(first["status"], "completada")
+        self.assertEqual(second["status"], "completada")
+        self.assertNotEqual(first["mlflow_run_id"], second["mlflow_run_id"])
+        client = MlflowClient(tracking_uri=self.uri)
+        a, b = [client.get_run(r["mlflow_run_id"]) for r in (first, second)]
+        self.assertEqual(a.info.status, "FINISHED")
+        # Abr–jun tienen 1500,1600,1700; promedio previo 1200,1250,1300.
+        self.assertAlmostEqual(a.data.metrics["candidate.MAE"], 350.0)
+        self.assertAlmostEqual(a.data.metrics["reference.MAE"], 100.0)
+        self.assertEqual(a.data.metrics, b.data.metrics)
+        self.assertEqual(a.data.params["sources.mobility.sha256"], b.data.params["sources.mobility.sha256"])
+        self.assertEqual(a.data.tags["mlflow.source.git.commit"], "test-commit")
+        self.assertEqual(a.data.tags["acceptance.approved"], "False")
+        np.testing.assert_allclose(first["estimates"]["valor"], second["estimates"]["valor"], rtol=1e-12, atol=1e-8)
+        artifacts = {f.path for f in client.list_artifacts(a.info.run_id)}
+        self.assertTrue({"config.toml", "params.json", "estimates.csv", "evaluation.json",
+                         "quality_report.json", "run_log.json", "environment.json"} <= artifacts)
 
 
 if __name__ == "__main__":

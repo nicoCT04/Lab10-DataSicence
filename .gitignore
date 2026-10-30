@@ -9,3 +9,5 @@ data/raw/BD_moviidad_*.xlsx
 mlops/runs/
 mlops/test_runs/
 .venv-mlops/
+mlruns/
+mlops/published/

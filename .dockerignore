@@ -1,0 +1,26 @@
+# Datos y estado persistente se proporcionan exclusivamente mediante bind mounts.
+data/
+mlruns/
+mlops/published/
+mlops/runs/
+mlops/test_runs/
+
+.git/
+.amp/
+.venv/
+.venv-*/
+**/__pycache__/
+**/*.py[cod]
+.pytest_cache/
+.DS_Store
+.env
+.env.*
+
+# Mantener los CSV originales que consume app.py, pero no su caché de datos.
+outputs/*
+!outputs/*.csv
+
+docs/
+tests/
+*.docx
+*.pdf
