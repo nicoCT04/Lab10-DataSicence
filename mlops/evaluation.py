@@ -9,6 +9,7 @@ meses y con la misma restricción temporal.
 import numpy as np
 import pandas as pd
 
+from mlops.checks import failed
 from mlops.config import months
 
 
@@ -60,6 +61,16 @@ def metrics(observed, predicted) -> dict:
     }
 
 
+TOL = 1e-6  # visitantes; absorbe el residuo de punto flotante cuando el error es nulo
+
+
+def mae_ratio(candidate_mae: float, reference_mae: float) -> float:
+    """MAE del procedimiento / MAE de la referencia; si la referencia no se equivoca, 1 o infinito."""
+    if reference_mae <= TOL:
+        return 1.0 if candidate_mae <= TOL else float("inf")
+    return candidate_mae / reference_mae
+
+
 def evaluate(series: pd.DataFrame, cfg: dict) -> dict:
     """Errores mes a mes y métricas del procedimiento y de la referencia en los mismos meses."""
     proc = cfg["procedure"]
@@ -84,6 +95,54 @@ def evaluate(series: pd.DataFrame, cfg: dict) -> dict:
         "baseline": proc["baseline"],
         "candidate": cand_m,
         "reference": base_m,
-        "ratio_mae_vs_reference": cand_m["MAE"] / base_m["MAE"] if base_m["MAE"] else None,
+        "ratio_mae_vs_reference": mae_ratio(cand_m["MAE"], base_m["MAE"]),
         "monthly": table.to_dict("records"),
     }
+
+
+def accept(report: list[dict], estimates: pd.DataFrame, evaluation: dict, cfg: dict) -> dict:
+    """
+    Regla verificable para aprobar la versión candidata. Se aprueba solo si se
+    cumplen las cuatro condiciones; los umbrales vienen de [acceptance] y no se
+    ajustan después de ver el resultado.
+
+      1. Calidad: ningún control con falla (ni sin ejecutar).
+      2. Salidas completas: un valor por cada mes de periods.estimate, finito y >= 0.
+      3. Error del procedimiento: MAPE de la validación <= max_mape.
+      4. Comparación: MAE del procedimiento / MAE de la referencia <= max_ratio_vs_baseline.
+    """
+    acc = cfg["acceptance"]
+    checks = []
+
+    bad = failed(report)
+    checks.append({"rule": "Controles de calidad", "passed": not bad,
+                   "detail": "sin fallas" if not bad else
+                   "controles con falla: " + ", ".join(r["control"] for r in bad)})
+
+    expected = sorted(cfg["periods"]["estimate"])
+    got = sorted(estimates["periodo"].astype(str)) if len(estimates) else []
+    values = pd.to_numeric(estimates["valor"], errors="coerce") if len(estimates) else pd.Series(dtype=float)
+    complete = got == expected and bool(np.isfinite(values).all()) and bool((values >= 0).all())
+    checks.append({"rule": "Salidas completas", "passed": complete,
+                   "detail": f"{len(got)} de {len(expected)} meses, finitos y no negativos" if complete else
+                   f"se esperaban {expected} con valores finitos y >= 0; se obtuvo {got} "
+                   f"con valores {values.round(0).tolist()}"})
+
+    mape = evaluation["candidate"]["MAPE"]
+    ok_mape = mape is not None and mape <= acc["max_mape"]
+    checks.append({"rule": "Error del procedimiento", "passed": ok_mape,
+                   "detail": "MAPE no calculable" if mape is None else
+                   f"MAPE {mape:.1f} % (umbral {acc['max_mape']} %)"})
+
+    ratio = evaluation["ratio_mae_vs_reference"]
+    ok_ratio = ratio is not None and ratio <= acc["max_ratio_vs_baseline"]
+    checks.append({"rule": "Comparación con la referencia", "passed": ok_ratio,
+                   "detail": "razón no calculable" if ratio is None else
+                   f"MAE {evaluation['candidate']['MAE']:,.0f} frente a {evaluation['reference']['MAE']:,.0f} "
+                   f"de la referencia, razón {ratio:.2f} (umbral {acc['max_ratio_vs_baseline']})"})
+
+    approved = all(c["passed"] for c in checks)
+    reason = ("aprobada: cumple las cuatro condiciones" if approved else
+              "rechazada: " + "; ".join(f"{c['rule']} ({c['detail']})" for c in checks if not c["passed"]))
+    return {"approved": approved, "reason": reason, "checks": checks,
+            "thresholds": {k: acc[k] for k in ("max_mape", "max_ratio_vs_baseline")}}

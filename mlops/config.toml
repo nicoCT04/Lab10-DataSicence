@@ -44,7 +44,13 @@ allowed_missing = ["pais", "permanencia_prom"]
 daily_columns = ["idfecha", "dia_semana", "cantidad_visitantes"]
 
 [acceptance]
-# umbrales de la regla de aceptación (los justifica quien implemente la evaluación)
+# Umbrales de la regla de aceptación (mlops/evaluation.py, accept). Se fijaron en el avance
+# (commit 3ae4055, 29-oct) antes de existir la evaluación y no se ajustan para aprobar.
+# max_mape: los visitantes observados van de 0.82 M a 1.05 M por mes, unos ±12 % alrededor
+#   de su promedio (~0.94 M). Un error mayor al 15 % (~140 mil visitantes) supera esa variación
+#   natural entre meses: la estimación no diría más que "un mes típico".
+# max_ratio_vs_baseline: con solo 3 meses evaluados el MAE es ruidoso; se tolera hasta un 25 %
+#   más de error que la referencia, pero un procedimiento claramente peor se rechaza.
 max_mape = 15.0                 # % sobre meses de evaluación
 max_ratio_vs_baseline = 1.25    # MAE candidato / MAE referencia
-max_monthly_change = 0.40       # variación relativa entre meses consecutivos para alertar
+max_monthly_change = 0.40       # alerta de monitoreo, no forma parte de la aceptación

@@ -22,7 +22,7 @@ import numpy as np
 
 from mlops.checks import WARN, failed, run_checks, write_report
 from mlops.config import DEFAULT_CONFIG, ROOT, load_config, resolve
-from mlops.evaluation import evaluate
+from mlops.evaluation import accept, evaluate
 from mlops.procedure import estimate, fit_factor, prepare
 from mlops.sources import read_sources
 
@@ -137,12 +137,22 @@ def run(cfg: dict) -> dict:
             est.to_csv(run_dir / "estimates.csv", index=False)
 
         with log.stage("publicación"):
-            # pendiente: regla de aceptación y reemplazo controlado de published/current
-            log.data["publication"] = "no publicada: regla de aceptación pendiente"
-            log.warn("publicación", "la versión queda como candidata")
+            decision = accept(report, est, evaluation, cfg)
+            evaluation["decision"] = decision
+            (run_dir / "evaluation.json").write_text(json.dumps(evaluation, indent=2, ensure_ascii=False))
+            log.data["acceptance"] = {"approved": decision["approved"], "reason": decision["reason"]}
+            for c in decision["checks"]:
+                print(f"  {'cumple' if c['passed'] else 'NO cumple':<10} {c['rule']}: {c['detail']}")
+            if decision["approved"]:
+                # pendiente (publish.py): mover published/current a versions/ y copiar esta versión
+                log.data["publication"] = "aprobada, pendiente de publicar"
+            else:
+                log.data["publication"] = "no publicada: " + decision["reason"]
+                log.warn("publicación", "versión rechazada; se conserva la última versión aprobada")
 
         log.close("completada")
-        result.update(status="completada", factor=fit["factor"], estimates=est)
+        result.update(status="completada", factor=fit["factor"], estimates=est,
+                      approved=decision["approved"], reason=decision["reason"])
     except StopPipeline as e:
         log.close("detenida")
         result.update(status="detenida", reason=str(e))
@@ -161,6 +171,7 @@ def main(argv=None):
     print(f"\nrun {res['run_id']}: {res['status']}  ->  {res['run_dir']}")
     if "estimates" in res:
         print(res["estimates"][["periodo", "valor", "tipo"]].round(0).to_string(index=False))
+        print(f"\nversión candidata {res['reason']}")
     if res["status"] != "completada":
         print(res.get("reason", "ver run_log.json"))
         sys.exit(1)
