@@ -25,6 +25,7 @@ from mlops.checks import WARN, failed, run_checks, write_report
 from mlops.config import DEFAULT_CONFIG, ROOT, load_config, resolve
 from mlops.evaluation import accept, evaluate
 from mlops.procedure import estimate, fit_factor, prepare
+from mlops.publish import publish
 from mlops.sources import read_sources
 from mlops import tracking
 
@@ -83,6 +84,15 @@ def estimates_table(est, cfg: dict, run_id: str, generated: str):
                       version_procedimiento=cfg["procedure_version"])[
         ["destino", "periodo", "valor", "unidad", "tipo", "run_id", "fecha_generacion",
          "version_procedimiento"]]
+
+
+def version_metadata(log: dict, cfg: dict) -> dict:
+    """Lo que acompaña a una versión publicada: identifica datos, código, evaluación y decisión."""
+    return {"run_id": log["run_id"], "generated": log["start"], "destination": cfg["destination"],
+            "unit": cfg["unit"], "procedure_version": cfg["procedure_version"],
+            "periods": cfg["periods"], "code": log.get("code"), "sources": log.get("sources"),
+            "mlflow_run_id": log.get("mlflow_run_id"), "quality": log.get("quality"),
+            "evaluation": log.get("evaluation"), "acceptance": log.get("acceptance")}
 
 
 def run(cfg: dict) -> dict:
@@ -153,8 +163,11 @@ def run(cfg: dict) -> dict:
             for c in decision["checks"]:
                 print(f"  {'cumple' if c['passed'] else 'NO cumple':<10} {c['rule']}: {c['detail']}")
             if decision["approved"]:
-                # pendiente (publish.py): mover published/current a versions/ y copiar esta versión
-                log.data["publication"] = "aprobada, pendiente de publicar"
+                pub = publish(run_dir, resolve(cfg, "published"), version_metadata(log.data, cfg))
+                log.data["publication"] = (f"publicada en current/; la anterior ({pub['previous']}) "
+                                           "quedó en versions/" if pub["previous"] else
+                                           "publicada en current/ (primera versión aprobada)")
+                print(f"  {log.data['publication']}")
             else:
                 log.data["publication"] = "no publicada: " + decision["reason"]
                 log.warn("publicación", "versión rechazada; se conserva la última versión aprobada")
