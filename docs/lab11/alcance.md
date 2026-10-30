@@ -51,7 +51,7 @@ Así la migración aporta la forma estacional y la telefonía aporta la escala p
 | Período | Meses | Uso |
 |--|--|--|
 | Ajuste | sep–dic 2025 y mar–jun 2026 (8 meses) | Cálculo de `f̂` y factores mensuales |
-| Evaluación | abr–jun 2026, con ventana expansiva | Ocultar el mes y estimarlo solo con meses anteriores (pendiente, ver reparto) |
+| Evaluación | abr–jun 2026, con ventana expansiva | Ocultar el mes y estimarlo solo con meses anteriores ([evaluacion.md](evaluacion.md)) |
 | Estimación | ene–feb 2026 | Meses publicados como «Estimación» |
 
 Jul–ago 2026 tienen telefonía, pero la base de migración termina en junio de 2026: sin denominador

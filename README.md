@@ -151,11 +151,12 @@ source .venv/bin/activate
 pip install -r requirements-mlops.txt
 python -m mlops.pipeline                 # o --config otra_config.toml
 python -m unittest tests.test_checks -v  # controles con datos sintéticos
+python -m unittest tests.test_evaluation -v  # validación temporal y regla de aceptación
 ```
 
 Cada ejecución crea `mlops/runs/<run_id>/` con `config.toml`, `run_log.json` (inicio, fin, etapas,
 advertencias, errores y publicación), `quality_report.json/.md`, `series.csv`, `params.json` y
-`estimates.csv`. Si falla un control crítico, el flujo se detiene antes de estimar y no toca la
+`estimates.csv` y `evaluation.json` (métricas de la validación y decisión de la regla de aceptación). Si falla un control crítico, el flujo se detiene antes de estimar y no toca la
 versión publicada.
 
 | Módulo | Etapa |
@@ -163,13 +164,14 @@ versión publicada.
 | `mlops/sources.py` | Lectura y huella SHA-256 de las fuentes |
 | `mlops/checks.py` | Seis controles de calidad y reporte |
 | `mlops/procedure.py` | Serie destino-mes, factor de reparto y estimación |
+| `mlops/evaluation.py` | Validación temporal (ventana expansiva), referencia y regla de aceptación |
 | `mlops/pipeline.py` | Orquestación, registro por ejecución y publicación |
 
 ## Estado
 
 - [x] **Avance (29-oct)**: alcance, diagrama, configuración, pipeline inicial y seis controles de calidad con pruebas
 - [ ] Registro en MLflow y dos ejecuciones reproducibles
-- [ ] Validación temporal (ventana expansiva), referencia y regla de aceptación
+- [x] Validación temporal (ventana expansiva), referencia y regla de aceptación → [docs/lab11/evaluacion.md](docs/lab11/evaluacion.md)
 - [ ] Publicación de la versión aprobada e integración con el tablero
 - [ ] Monitoreo, prueba controlada de fallo y restauración de versión
 - [ ] Docker Compose (tablero + pipeline + MLflow) y documentación final
