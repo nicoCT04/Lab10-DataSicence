@@ -146,12 +146,15 @@ Las rutas se pueden cambiar en [mlops/config.toml](mlops/config.toml).
 
 ## Ejecutar el pipeline
 
+Para el Lab 11 se usa **Python 3.14**, separado del entorno anterior del Lab 10.
+
 ```bash
-source .venv/bin/activate
+python3.14 -m venv .venv-mlops
+source .venv-mlops/bin/activate
 pip install -r requirements-mlops.txt
 python -m mlops.pipeline                 # o --config otra_config.toml
-python -m unittest tests.test_checks -v  # controles con datos sintéticos
-python -m unittest tests.test_evaluation -v  # validación temporal y regla de aceptación
+python -m unittest discover -s tests -p 'test_checks.py' -v
+python -m unittest discover -s tests -p 'test_evaluation.py' -v
 ```
 
 Cada ejecución crea `mlops/runs/<run_id>/` con `config.toml`, `run_log.json` (inicio, fin, etapas,
@@ -166,13 +169,118 @@ versión publicada.
 | `mlops/procedure.py` | Serie destino-mes, factor de reparto y estimación |
 | `mlops/evaluation.py` | Validación temporal (ventana expansiva), referencia y regla de aceptación |
 | `mlops/pipeline.py` | Orquestación, registro por ejecución y publicación |
+| `mlops/tracking.py` | Experimento MLflow, parámetros, métricas, controles y artefactos |
+| `mlops/reproduce.py` | Dos corridas sobre las mismas fuentes, comparación y exportación consultable |
+
+## Docker: desde un clon limpio
+
+Requisitos: Git, Docker Engine o Docker Desktop activo y Docker Compose v2. Clonar el repositorio
+privado con una cuenta autorizada. Colocar la base mensual en `data/raw/` antes de ejecutar.
+Las fuentes se montan como solo lectura; **ningún Excel ni `.git` entra en la imagen**.
+El tablero conserva los resultados CSV del Lab 10; no los regenera al abrirlo.
+
+```bash
+git clone https://github.com/nicoCT04/Lab10-DataSicence.git
+cd Lab10-DataSicence
+# Colocar BD_moviidad_mensual.xlsx en data/raw/ por el medio institucional.
+docker compose --profile pipeline build
+export GIT_COMMIT=$(git rev-parse HEAD)
+docker compose run --rm pipeline
+docker compose up -d tablero mlflow
+docker compose logs --tail=100 tablero mlflow
+```
+
+En la máquina que ejecuta Docker: tablero `http://127.0.0.1:8050` y MLflow
+`http://127.0.0.1:5001` (5000 suele estar ocupado por AirPlay en macOS). Los puertos se vinculan
+solo a localhost; no son un despliegue público. El servicio `pipeline` no arranca con `up`:
+es una ejecución explícita que termina. Antes de cada corrida, actualizar `GIT_COMMIT` y reconstruir
+si cambió el código. No atribuir cambios sin commit a una versión limpia.
+
+**Estado funcional:** la regla de aceptación ya funciona, pero la etapa de copia a
+`published/current/`, la pestaña Antigua y el monitoreo/restauración todavía dependen de la
+integración del compañero responsable. `aprobada, pendiente de publicar` no significa publicada.
+La versión real documentada en `evaluacion.md` fue rechazada; no se cambian umbrales para aprobarla.
+
+## MLflow y reproducibilidad
+
+Experimento: **observatorio-antigua**. Cada run tiene ID propio y el ID del pipeline como nombre/tag.
+En la interfaz de MLflow seleccionar **Model training → Experiments → observatorio-antigua**;
+la vista inicial GenAI/Traces no muestra estas ejecuciones de estimación.
+Registra fecha, commit, huellas SHA-256, períodos, parámetros, controles, métricas reales y artefactos.
+`environment.json` conserva versiones instaladas. Una ejecución detenida figura como `FAILED`, con
+su causa y sin métricas si no llegó a evaluación. Una candidata rechazada puede ser `FINISHED`:
+terminar el cálculo no equivale a autorizar su publicación.
+
+```bash
+export GIT_COMMIT=$(git rev-parse HEAD)
+docker compose run --rm pipeline python -m mlops.reproduce --output mlops/runs/reproducibility
+docker compose run --rm pipeline mlflow experiments search
+# Usar el ID que corresponda a observatorio-antigua (1 en un almacén nuevo).
+docker compose run --rm pipeline mlflow runs list --experiment-id 1
+```
+
+`comparison.json` comprueba fuentes/configuración/código, parámetros y evaluación, además de valores
+y métricas con `rtol=1e-12`, `atol=1e-8`. Solo excluye ID y fecha de generación de la tabla comparada.
+`runs_export.json` exporta la consulta completa de esos dos runs. Un error de comparación devuelve
+código 1. **No confundir equivalencia con precisión o aprobación.**
+
+La comprobación técnica inicial usa datos sintéticos y está identificada como tal en
+[el informe](docs/lab11/informe.md). Falta repetir el comando con la base mensual institucional,
+ausente en este equipo. Las pruebas unitarias usan almacenes temporales, no contaminan el experimento
+de trabajo. La ejecución local sin Docker usa SQLite en `mlruns/mlflow.db`; para consultar ese
+almacén desde el mismo entorno:
+
+```bash
+mlflow ui --backend-store-uri "sqlite:///$PWD/mlruns/mlflow.db" --host 127.0.0.1 --port 5001
+```
+
+No mezclar un almacén local con uno creado en Docker: los URI de artefactos contienen rutas absolutas
+(`/app/mlruns/artifacts` dentro del contenedor). Conservar cada almacén con su entorno de consulta.
+
+## Persistencia, entrega y recuperación
+
+| Ruta del host (bind mount) | Contenido |
+|--|--|
+| `data/` | Fuentes institucionales, solo lectura para los contenedores |
+| `mlruns/` | SQLite y artefactos de MLflow |
+| `mlops/runs/` | Logs, controles, parámetros, evaluación, candidatos y exportaciones |
+| `mlops/published/` | Versiones aprobadas cuando se integre `publish.py` |
+
+```bash
+docker compose down
+docker compose up -d tablero mlflow
+```
+
+Eliminar contenedores no elimina estas carpetas. No borrarlas para «reiniciar» el tablero.
+Para entregar los registros, detener primero los servicios y copiar **juntas** `mlruns/` y
+`mlops/runs/` por Canvas/OneDrive autorizado; incluir `mlops/published/` cuando existan versiones.
+Las capturas y JSON del informe complementan, pero no sustituyen, la base y sus artefactos.
+No subir fuentes ni registros institucionales a servicios públicos.
+
+**Restauración de resultados:** pendiente del comando de `publish.py`; no se propone copiar un
+candidato rechazado a `current/`. Cuando llegue esa parte se documentará el comando probado y la
+evidencia de lectura desde el tablero. Para regresar el código a una versión conocida, detener
+servicios, usar `git switch --detach <commit_verificado>`, reconstruir y conservar los volúmenes.
+Regresar el código no restaura automáticamente las estimaciones.
+
+## Informe integrado
+
+[PDF](docs/lab11/Informe_Lab11.pdf) y [fuente editable](docs/lab11/informe.md). Integra el alcance
+y la evaluación ya escritos con trazabilidad/Docker; identifica las evidencias aún pendientes.
+Para regenerarlo usando las dependencias de desarrollo del Lab 10:
+
+```bash
+python scripts/export_design.py --source docs/lab11/informe.md --output docs/lab11/Informe_Lab11.pdf
+```
 
 ## Estado
 
 - [x] **Avance (29-oct)**: alcance, diagrama, configuración, pipeline inicial y seis controles de calidad con pruebas
-- [ ] Registro en MLflow y dos ejecuciones reproducibles
+- [x] Registro en MLflow y comprobación reproducible sintética
+- [ ] Repetir y entregar registros con las fuentes institucionales completas
 - [x] Validación temporal (ventana expansiva), referencia y regla de aceptación → [docs/lab11/evaluacion.md](docs/lab11/evaluacion.md)
 - [ ] Publicación de la versión aprobada e integración con el tablero
 - [ ] Monitoreo, prueba controlada de fallo y restauración de versión
-- [ ] Docker Compose (tablero + pipeline + MLflow) y documentación final
-- [ ] Informe técnico en PDF — entrega 1-nov-2026
+- [x] Docker Compose (tablero + pipeline + MLflow) y documentación
+- [x] PDF integrado del estado disponible, sin firma personal
+- [ ] Incorporar al PDF la publicación, monitoreo y recuperación verificados — entrega 1-nov-2026

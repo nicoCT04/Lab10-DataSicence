@@ -1,0 +1,7 @@
+ Container lab11-clean-pipeline-run-bec28859691b Creating 
+ Container lab11-clean-pipeline-run-bec28859691b Created 
+Date                     Name                    ID                              
+-----------------------  ----------------------  --------------------------------
+2026-10-30 19:13:59 UTC  20261030-191359-82fa8c  2ffbdea1a4f0456b8e0c7610e4befdbb
+2026-10-30 19:12:41 UTC  20261030-191241-ebfc3e  bafc08dd7e2e441395af2c1507e9cd66
+2026-10-30 19:12:41 UTC  20261030-191240-99cfaf  5f84525ed9a04f62a259a07de69b9516

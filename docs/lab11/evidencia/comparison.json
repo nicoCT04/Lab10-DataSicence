@@ -1,0 +1,12 @@
+{
+  "run_ids": [
+    "20261030-191240-99cfaf",
+    "20261030-191241-ebfc3e"
+  ],
+  "config_sha256": "d0684c4050bd4465b1173f994e9c81037619be70c5add97d23f4383535e833d9",
+  "rtol": 1e-12,
+  "atol": 1e-08,
+  "equivalent": true,
+  "max_estimate_difference": 0.0,
+  "note": "IDs y fechas cambian; parámetros y evaluación idénticos; estimaciones y métricas dentro de tolerancia."
+}

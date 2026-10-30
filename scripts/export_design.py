@@ -1,4 +1,5 @@
 """Exporta el documento integrado sin servicios externos. Requiere requirements-dev.txt y Chromium."""
+import argparse
 from html import escape
 from pathlib import Path
 import re
@@ -11,7 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
-    source = ROOT / "docs/diseno_final.md"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, default=ROOT / "docs/diseno_final.md")
+    parser.add_argument("--output", type=Path, default=ROOT / "docs/Diseno_Final_Lab10.pdf")
+    args = parser.parse_args()
+    source = args.source.resolve()
     _, metadata, body = source.read_text(encoding="utf-8").split("---", 2)
     fields = dict(re.findall(r'^(\w+): "(.*)"$', metadata, re.MULTILINE))
     body = re.sub(r"\{width=\d+%\}", "", body)
@@ -34,6 +39,7 @@ def main():
     th {{ background:#ECEFF3; }} tr {{ break-inside:avoid; }} thead {{ display:table-header-group; }}
     img {{ display:block; max-width:100%; max-height:210mm; margin:8pt auto; object-fit:contain; }}
     code {{ font-size:9pt; overflow-wrap:anywhere; }} a {{ color:#305D7C; overflow-wrap:anywhere; }}
+    pre {{ white-space:pre-wrap; font-size:9pt; }}
     </style></head><body><header class="cover">{cover}</header>{rendered}</body></html>"""
     with tempfile.TemporaryDirectory() as directory, sync_playwright() as playwright:
         page_path = Path(directory) / "document.html"
@@ -41,13 +47,13 @@ def main():
         browser = playwright.chromium.launch()
         page = browser.new_page()
         page.goto(page_path.as_uri(), wait_until="networkidle")
-        page.pdf(path=str(ROOT / "docs/Diseno_Final_Lab10.pdf"), print_background=True,
+        page.pdf(path=str(args.output.resolve()), print_background=True,
                  display_header_footer=True, header_template="<span></span>",
                  footer_template='<div style="font:9px Arial;width:100%;text-align:center;color:#5B6675">'
-                                 'CC3084 · Documento de diseño · <span class="pageNumber"></span>'
+                                 f'{escape(fields["title"])} · <span class="pageNumber"></span>'
                                  ' / <span class="totalPages"></span></div>')
         browser.close()
-    print("Generado: docs/Diseno_Final_Lab10.pdf")
+    print(f"Generado: {args.output}")
 
 
 if __name__ == "__main__":
