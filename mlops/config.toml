@@ -54,3 +54,14 @@ daily_columns = ["idfecha", "dia_semana", "cantidad_visitantes"]
 max_mape = 15.0                 # % sobre meses de evaluación
 max_ratio_vs_baseline = 1.25    # MAE candidato / MAE referencia
 max_monthly_change = 0.40       # alerta de monitoreo, no forma parte de la aceptación
+
+[monitoring]
+# Alertas para revisión (mlops/monitoring.py); no deciden la publicación.
+# Calidad: se alerta si faltantes o duplicados crecen frente a la versión vigente en al menos
+#   min_rows_change filas Y más de max_relative_change. La telefonía tiene ~3.9 mil filas y hoy
+#   28 faltantes permitidos en permanencia_prom: unas pocas filas más son ruido de una nueva entrega,
+#   pero un 20 % más indica un cambio en cómo se generó la base. Perder meses de cobertura siempre alerta.
+# Resultados: la variación mensual usa acceptance.max_monthly_change (40 %). Entre meses observados
+#   de sep-2025 a jun-2026 el mayor cambio fue de +26 % (oct → nov); 40 % queda fuera de esa variación.
+min_rows_change = 5
+max_relative_change = 0.20

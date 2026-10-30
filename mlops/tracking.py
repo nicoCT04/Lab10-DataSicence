@@ -54,6 +54,8 @@ def finish(client, run_id: str, log: dict, directory: Path):
             client.log_param(run_id, f"sources.{source}.{key}", value)
     for control, status in log.get("quality", {}).items():
         client.set_tag(run_id, f"quality.{control}", status)
+    for item in log.get("monitoring", []):
+        client.set_tag(run_id, f"monitoring.{item['check']}", item["status"])
     if log.get("errors"):
         client.set_tag(run_id, "failure.reason", json.dumps(log["errors"], ensure_ascii=False)[:5000])
     if "acceptance" in log:

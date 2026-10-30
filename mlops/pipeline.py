@@ -24,6 +24,7 @@ import numpy as np
 from mlops.checks import WARN, failed, run_checks, write_report
 from mlops.config import DEFAULT_CONFIG, ROOT, load_config, resolve
 from mlops.evaluation import accept, evaluate
+from mlops import monitoring
 from mlops.procedure import estimate, fit_factor, prepare
 from mlops.publish import publish
 from mlops.sources import read_sources
@@ -92,7 +93,25 @@ def version_metadata(log: dict, cfg: dict) -> dict:
             "unit": cfg["unit"], "procedure_version": cfg["procedure_version"],
             "periods": cfg["periods"], "code": log.get("code"), "sources": log.get("sources"),
             "mlflow_run_id": log.get("mlflow_run_id"), "quality": log.get("quality"),
+            "quality_stats": log.get("quality_stats"),
             "evaluation": log.get("evaluation"), "acceptance": log.get("acceptance")}
+
+
+def monitor(log: RunLog, cfg: dict, run_dir: Path, stats, series=None, est=None):
+    """Actualización, calidad y resultados contra la versión vigente; solo alerta, no decide publicar."""
+    if stats is None:
+        return
+    try:
+        with log.stage("monitoreo"):
+            checks = monitoring.run_monitoring(stats, series, est, cfg, resolve(cfg, "published"))
+            monitoring.write_report(checks, run_dir)
+            log.data["monitoring"] = checks
+            for c in checks:
+                print(f"  {c['status']:<10} {c['check']}: {c['detail']}")
+                if c["status"] == monitoring.ALERT:
+                    log.warn("monitoreo", f"{c['check']}: {c['detail']}")
+    except Exception as e:
+        log.warn("monitoreo", f"no se pudo completar el monitoreo: {type(e).__name__}: {e}")
 
 
 def run(cfg: dict) -> dict:
@@ -104,7 +123,7 @@ def run(cfg: dict) -> dict:
     log = RunLog(run_id, run_dir)
     log.data["code"] = git_commit()
     result = {"run_id": run_id, "run_dir": str(run_dir)}
-    tracked = None
+    tracked = stats = None
     try:
         with log.stage("tracking"):
             tracked = tracking.start(cfg, log.data)
@@ -118,6 +137,8 @@ def run(cfg: dict) -> dict:
             report = run_checks(mob, mig, cfg)
             write_report(report, run_dir)
             log.data["quality"] = {r["control"]: r["status"] for r in report}
+            stats = monitoring.quality_stats(mob, mig, cfg)
+            log.data["quality_stats"] = stats
             for r in report:
                 print(f"  {r['status']:<12} {r['control']}")
                 if r["status"] == WARN:
@@ -155,6 +176,8 @@ def run(cfg: dict) -> dict:
         with log.stage("almacenamiento"):
             est.to_csv(run_dir / "estimates.csv", index=False)
 
+        monitor(log, cfg, run_dir, stats, series, est)
+
         with log.stage("publicación"):
             decision = accept(report, est, evaluation, cfg)
             evaluation["decision"] = decision
@@ -176,6 +199,7 @@ def run(cfg: dict) -> dict:
         result.update(status="completada", factor=fit["factor"], estimates=est,
                       approved=decision["approved"], reason=decision["reason"])
     except StopPipeline as e:
+        monitor(log, cfg, run_dir, stats)
         log.close("detenida")
         result.update(status="detenida", reason=str(e))
     except Exception:
