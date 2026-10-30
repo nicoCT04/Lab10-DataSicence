@@ -22,6 +22,7 @@ import numpy as np
 
 from mlops.checks import WARN, failed, run_checks, write_report
 from mlops.config import DEFAULT_CONFIG, ROOT, load_config, resolve
+from mlops.evaluation import evaluate
 from mlops.procedure import estimate, fit_factor, prepare
 from mlops.sources import read_sources
 
@@ -117,8 +118,16 @@ def run(cfg: dict) -> dict:
             print(f"  factor de reparto = {fit['factor']:.4f} ({fit['n_months']} meses)")
 
         with log.stage("evaluación"):
-            # pendiente: validación temporal con ventana expansiva y referencia
-            log.warn("evaluación", "evaluación temporal no implementada; no hay métricas")
+            evaluation = evaluate(series, cfg)
+            (run_dir / "evaluation.json").write_text(json.dumps(evaluation, indent=2, ensure_ascii=False))
+            c, r = evaluation["candidate"], evaluation["reference"]
+            log.data["evaluation"] = {"months": evaluation["evaluated_months"],
+                                      "candidate": c, "reference": r,
+                                      "ratio_mae_vs_reference": evaluation["ratio_mae_vs_reference"]}
+            print(f"  meses evaluados: {', '.join(evaluation['evaluated_months'])}")
+            print(f"  factor de reparto: MAE {c['MAE']:,.0f}  RMSE {c['RMSE']:,.0f}  MAPE {c['MAPE']:.1f} %")
+            print(f"  referencia ({evaluation['baseline']}): MAE {r['MAE']:,.0f}  RMSE {r['RMSE']:,.0f}  "
+                  f"MAPE {r['MAPE']:.1f} %")
 
         with log.stage("estimación"):
             est = estimates_table(estimate(series, fit, cfg["periods"]["estimate"]),
