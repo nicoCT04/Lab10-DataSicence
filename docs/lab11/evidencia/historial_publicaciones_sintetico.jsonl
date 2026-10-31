@@ -1,0 +1,5 @@
+{"at": "2026-10-30T23:41:16", "action": "publicar", "run_id": "20261030-234115-c11b1d", "previous": null}
+{"at": "2026-10-30T23:41:16", "action": "publicar", "run_id": "20261030-234116-a5faa5", "previous": "20261030-234115-c11b1d"}
+{"at": "2026-10-30T23:41:16", "action": "restaurar", "run_id": "20261030-234115-c11b1d", "previous": "20261030-234116-a5faa5"}
+{"at": "2026-10-30T23:41:43", "action": "restaurar", "run_id": "20261030-234116-a5faa5", "previous": "20261030-234115-c11b1d"}
+{"at": "2026-10-30T23:41:45", "action": "restaurar", "run_id": "20261030-234115-c11b1d", "previous": "20261030-234116-a5faa5"}

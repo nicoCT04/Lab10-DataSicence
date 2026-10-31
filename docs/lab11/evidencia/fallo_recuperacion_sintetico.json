@@ -1,0 +1,131 @@
+{
+  "fecha": "2026-10-30T23:41:16",
+  "datos": "sinteticos",
+  "problema": "denominador",
+  "carpeta": "mlops/test_runs/evidencia",
+  "pasos": [
+    {
+      "paso": "1. versión inicial",
+      "run_id": "20261030-234115-c11b1d",
+      "estado": "completada",
+      "motivo": "aprobada: cumple las cuatro condiciones",
+      "publicacion": "publicada en current/ (primera versión aprobada)",
+      "controles": {
+        "Columnas y tipos": "ok",
+        "Fechas y cobertura": "ok",
+        "Unicidad": "ok",
+        "Valores faltantes": "ok",
+        "Valores y denominadores": "ok",
+        "Regla metodológica": "ok"
+      },
+      "monitoreo": {
+        "Actualización": "alerta",
+        "Calidad": "sin datos",
+        "Resultados": "ok"
+      },
+      "current_cambio": true,
+      "vigente": "20261030-234115-c11b1d",
+      "tablero": [
+        {
+          "periodo": "2026-01",
+          "valor": 1050000
+        },
+        {
+          "periodo": "2026-02",
+          "valor": 829500
+        }
+      ]
+    },
+    {
+      "paso": "2. entrega con problema (denominador)",
+      "run_id": "20261030-234116-2c1eeb",
+      "estado": "detenida",
+      "motivo": "control crítico fallido, no se reemplazan resultados: Valores y denominadores: denominador de migración igual a cero en: 2025-10",
+      "publicacion": "no publicada",
+      "controles": {
+        "Columnas y tipos": "ok",
+        "Fechas y cobertura": "ok",
+        "Unicidad": "ok",
+        "Valores faltantes": "ok",
+        "Valores y denominadores": "falla",
+        "Regla metodológica": "ok"
+      },
+      "monitoreo": {
+        "Actualización": "ok",
+        "Calidad": "ok",
+        "Resultados": "sin datos"
+      },
+      "current_cambio": false,
+      "vigente": "20261030-234115-c11b1d",
+      "tablero": [
+        {
+          "periodo": "2026-01",
+          "valor": 1050000
+        },
+        {
+          "periodo": "2026-02",
+          "valor": 829500
+        }
+      ]
+    },
+    {
+      "paso": "3. entrega corregida",
+      "run_id": "20261030-234116-a5faa5",
+      "estado": "completada",
+      "motivo": "aprobada: cumple las cuatro condiciones",
+      "publicacion": "publicada en current/; la anterior (20261030-234115-c11b1d) quedó en versions/",
+      "controles": {
+        "Columnas y tipos": "ok",
+        "Fechas y cobertura": "ok",
+        "Unicidad": "ok",
+        "Valores faltantes": "ok",
+        "Valores y denominadores": "ok",
+        "Regla metodológica": "ok"
+      },
+      "monitoreo": {
+        "Actualización": "ok",
+        "Calidad": "ok",
+        "Resultados": "ok"
+      },
+      "current_cambio": true,
+      "vigente": "20261030-234116-a5faa5",
+      "tablero": [
+        {
+          "periodo": "2026-01",
+          "valor": 1134000
+        },
+        {
+          "periodo": "2026-02",
+          "valor": 895860
+        }
+      ]
+    },
+    {
+      "paso": "restaurar 20261030-234115-c11b1d",
+      "run_id": "20261030-234115-c11b1d",
+      "estado": "restaurada",
+      "current_cambio": true,
+      "vigente": "20261030-234115-c11b1d",
+      "tablero": [
+        {
+          "periodo": "2026-01",
+          "valor": 1050000
+        },
+        {
+          "periodo": "2026-02",
+          "valor": 829500
+        }
+      ]
+    }
+  ],
+  "comprobaciones": [
+    "la versión inicial se publica",
+    "el problema detiene el pipeline",
+    "con el problema current/ no cambia y sigue la versión inicial",
+    "el tablero sigue mostrando la versión inicial",
+    "la entrega corregida se publica",
+    "la versión inicial vuelve a estar vigente",
+    "el tablero lee de nuevo la versión inicial"
+  ],
+  "fallas": []
+}
