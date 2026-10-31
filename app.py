@@ -3,9 +3,11 @@ from dash import Dash, Input, Output, State, dash_table, dcc, html
 
 from src.data import (MONTHS, OTHERS, ROOT, ROOT_ID, VIAS, border_ranking, load_arrivals, market_tree,
                       parent_of, seasonal_matrix, seasonal_profile, select_node, visitors, yearly_by_via)
-from dash import callback_context
+from dash import callback_context, no_update
 
-from src.figures import (border_bars, error_by_month, forecast_lines, market_bars, market_treemap, monthly_lines,
+from src.antigua import date_label, frames, load_current, month_label
+
+from src.figures import (antigua_lines, border_bars, error_by_month, forecast_lines, market_bars, market_treemap, monthly_lines,
                          season_boxes, season_heatmap, yearly_bars)
 from src.theme import empty_figure
 from src.models import MODELS, SERIES, errors_by_month, test_errors, window_metrics
@@ -211,6 +213,40 @@ def tab_forecast():
     ])
 
 
+def tab_antigua():
+    return html.Div([
+        html.P("¿Cuántos visitantes recibe La Antigua Guatemala cada mes, incluidos enero y febrero de 2026, "
+               "que no tienen medición directa? Las cifras vienen de la última versión aprobada del cálculo; "
+               "cambiar la vista no recalcula nada.", className="tab-intro"),
+        html.Div(id="ant-cards", className="cards"),
+        html.Div([
+            html.Div([html.Label("Periodo", className="title"),
+                      dcc.RadioItems(id="ant-window", inline=True, value="all",
+                                     options=[{"label": "sep 2025 – jun 2026", "value": "all"},
+                                              {"label": "Solo 2026", "value": "2026"}],
+                                     inputStyle={"marginRight": "4px"}, labelStyle={"marginRight": "14px"})]),
+        ], className="controls"),
+        html.Div([
+            html.H3("Visitantes únicos del mes en La Antigua Guatemala"),
+            html.P([html.Span("Observado", className="badge obs"), html.Span("Estimación", className="badge est"),
+                    "La línea continua es lo medido con telefonía móvil en el polígono de Antigua. Los rombos "
+                    "morados son estimaciones para meses sin medición; el hueco en la línea indica que ahí no hay "
+                    "dato observado, no que hubo cero visitantes."], className="help"),
+            dcc.Graph(id="ant-lines", config={"displaylogo": False}),
+            html.P(id="ant-validation", className="help"),
+        ], className="panel"),
+        html.P(id="ant-warning", className="warning"),
+        dcc.Store(id="ant-data"),
+    ])
+
+
+ANT_LIMITS = ("Limitaciones: enero y febrero de 2026 no tienen datos de telefonía, ni ese año ni en años anteriores. "
+              "Su valor se estima con las llegadas de viajeros registradas por Migración y la proporción promedio "
+              "entre ambas fuentes en los meses que sí tienen las dos. No hay un enero o febrero previo con qué "
+              "comprobarlo y la prueba se hizo con otros meses: use las cifras como orden de magnitud, no como "
+              "dato oficial.")
+
+
 app.layout = html.Div([
     html.Div([html.H1("Observatorio de turismo sostenible — Guatemala"),
               html.P("Ingreso de visitantes internacionales, ene-2009 a jun-2026 · Fuente: INGUAT / Migración")],
@@ -220,6 +256,7 @@ app.layout = html.Div([
         dcc.Tab(label="Mercados y fronteras", value="markets", children=tab_markets()),
         dcc.Tab(label="Estacionalidad", value="season", children=tab_season()),
         dcc.Tab(label="Pronósticos", value="forecast", children=tab_forecast()),
+        dcc.Tab(label="Antigua Guatemala", value="antigua", children=tab_antigua()),
     ]), className="container"),
 ])
 
@@ -393,6 +430,42 @@ def update_errors(serie, models, window):
     table = table.assign(MAE=table["MAE"].map("{:,.0f}".format), RMSE=table["RMSE"].map("{:,.0f}".format),
                          MAPE=table["MAPE"].map("{:.1f} %".format))
     return error_by_month(errors_by_month(err), models), table.to_dict("records"), cols, label
+
+
+@app.callback(Output("ant-data", "data"), Input("tabs", "value"))
+def load_antigua(tab):
+    # se relee la versión vigente al abrir la pestaña: una publicación o restauración se ve sin reiniciar
+    return load_current() if tab == "antigua" else no_update
+
+
+@app.callback(Output("ant-cards", "children"), Output("ant-lines", "figure"),
+              Output("ant-validation", "children"), Output("ant-warning", "children"),
+              Input("ant-data", "data"), Input("ant-window", "value"))
+def update_antigua(data, window):
+    if not data:
+        cards = [card("Estimaciones no disponibles", "—",
+                      "todavía no hay una versión aprobada del cálculo")]
+        note = ("Las estimaciones de enero y febrero de 2026 se muestran solo cuando una versión supera los "
+                "controles de calidad y la validación. Mientras no exista una, no se presentan cifras.")
+        return cards, empty_figure("Estimaciones no disponibles", height=420), note, ANT_LIMITS
+    obs, est = frames(data, window)
+    meta = data["meta"]
+    ev = meta.get("evaluation") or {}
+    cand = ev.get("candidate") or {}
+    mape, mae = cand.get("MAPE"), cand.get("MAE")
+    months = ", ".join(month_label(m) for m in ev.get("months", []))
+    cards = [card(f"{month_label(r['periodo']).capitalize()} · estimación", f"{r['valor']:,.0f}",
+                  "visitantes únicos, sin medición directa") for r in data["estimates"]]
+    if mae is not None:
+        cards.append(card("Margen de error típico", f"± {mape:.1f} %" if mape is not None else f"± {mae:,.0f}",
+                          f"≈ {mae:,.0f} visitantes por mes en la prueba"))
+    cards.append(card("Actualizado", date_label(meta.get("published_at") or meta.get("generated")),
+                      f"versión del cálculo {meta.get('procedure_version')}"))
+    note = (f"Cómo leer el margen: se ocultaron {months}, meses que sí tienen medición, y se estimaron solo con "
+            f"los meses anteriores, igual que enero y febrero. En promedio la estimación se alejó "
+            f"{mae:,.0f} visitantes ({mape:.1f} %) de lo medido." if mae is not None and mape is not None else "")
+    fig = antigua_lines(obs, est) if not obs.empty or not est.empty else empty_figure("Sin datos en este periodo")
+    return cards, fig, note, ANT_LIMITS
 
 
 if __name__ == "__main__":

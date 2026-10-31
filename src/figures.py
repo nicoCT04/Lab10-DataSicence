@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 from src.data import MONTHS, ROOT_ID, monthly_by_via, parent_of, top_markets
-from src.theme import (BAND, FADED_OPACITY, HIGHLIGHT_OPACITY, INK, MODEL_COLORS, MODEL_DASH,
+from src.theme import (BAND, ESTIMATE, FADED_OPACITY, HIGHLIGHT_OPACITY, INK, MODEL_COLORS, MODEL_DASH,
                        MUTED, NEUTRAL, NEUTRAL_LIGHT, SEQUENTIAL, VIA_COLORS, base_layout, empty_figure)
 
 NO_VIA = "Seleccione al menos una vía de ingreso para ver este gráfico."
@@ -229,4 +229,36 @@ def season_boxes(long: pd.DataFrame, highlight: pd.Series | None, measure: str, 
     fig.update_yaxes(title_text=MEASURE_TEXT[measure], title_font_size=13,
                      tickformat="~s" if measure == "abs" else "d")
     fig.update_layout(clickmode="event")
+    return fig
+
+
+def antigua_lines(obs: pd.DataFrame, est: pd.DataFrame):
+    """
+    Visitantes de Antigua: observados en línea continua y estimaciones en morado discontinuo.
+    Los meses sin telefonía quedan como hueco en la línea observada, nunca como cero.
+    """
+    fig = go.Figure()
+    if not est.empty:
+        fig.add_vrect(x0=est["fecha"].min() - pd.Timedelta(days=15), x1=est["fecha"].max() + pd.Timedelta(days=15),
+                      fillcolor=BAND, layer="below", line_width=0, annotation_text="sin medición directa",
+                      annotation_position="top left", annotation_font_color=MUTED)
+    fig.add_scatter(x=obs["fecha"], y=obs["visitantes_obs"], name="Observado", mode="lines+markers",
+                    connectgaps=False, line=dict(color=INK, width=2.5), marker=dict(size=7),
+                    hovertemplate="%{x|%b %Y}: %{y:,.0f} visitantes<extra>Observado</extra>")
+    # el tramo discontinuo une el último observado anterior y el siguiente con las estimaciones
+    known = obs.dropna(subset=["visitantes_obs"])
+    before = known[known["fecha"] < est["fecha"].min()].tail(1) if not est.empty else known.iloc[0:0]
+    after = known[known["fecha"] > est["fecha"].max()].head(1) if not est.empty else known.iloc[0:0]
+    bridge = pd.concat([before.rename(columns={"visitantes_obs": "valor"}), est,
+                        after.rename(columns={"visitantes_obs": "valor"})])
+    fig.add_scatter(x=bridge["fecha"], y=bridge["valor"], mode="lines", showlegend=False, hoverinfo="skip",
+                    line=dict(color=ESTIMATE, width=2, dash="dash"))
+    fig.add_scatter(x=est["fecha"], y=est["valor"], name="Estimación", mode="markers+text",
+                    marker=dict(color=ESTIMATE, size=12, symbol="diamond"),
+                    text=[f"{v / 1e6:.2f} M" for v in est["valor"]], textposition="bottom center",
+                    textfont=dict(color=ESTIMATE),
+                    hovertemplate="%{x|%b %Y}: %{y:,.0f} visitantes<extra>Estimación</extra>")
+    fig = base_layout(fig, height=420)
+    fig.update_xaxes(dtick="M1", tickformat="%b\n%Y")
+    fig.update_yaxes(title="visitantes únicos del mes", rangemode="tozero")
     return fig
