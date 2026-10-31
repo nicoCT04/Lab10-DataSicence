@@ -155,6 +155,7 @@ pip install -r requirements-mlops.txt
 python -m mlops.pipeline                 # o --config otra_config.toml
 python -m unittest discover -s tests -p 'test_checks.py' -v
 python -m unittest discover -s tests -p 'test_evaluation.py' -v
+python -m unittest tests.test_publish tests.test_monitoring tests.test_antigua tests.test_drill -v
 ```
 
 Cada ejecución crea `mlops/runs/<run_id>/` con `config.toml`, `run_log.json` (inicio, fin, etapas,
@@ -171,6 +172,10 @@ versión publicada.
 | `mlops/pipeline.py` | Orquestación, registro por ejecución y publicación |
 | `mlops/tracking.py` | Experimento MLflow, parámetros, métricas, controles y artefactos |
 | `mlops/reproduce.py` | Dos corridas sobre las mismas fuentes, comparación y exportación consultable |
+| `mlops/monitoring.py` | Alertas de actualización, calidad y resultados frente a la versión vigente |
+| `mlops/publish.py` | Publicación de la versión aprobada, listado y restauración de versiones |
+| `mlops/drill.py` | Prueba controlada de fallo y recuperación en una carpeta aislada |
+| `src/antigua.py` | Lectura de `published/current/` para la pestaña Antigua del tablero |
 
 ## Docker: desde un clon limpio
 
@@ -196,10 +201,11 @@ solo a localhost; no son un despliegue público. El servicio `pipeline` no arran
 es una ejecución explícita que termina. Antes de cada corrida, actualizar `GIT_COMMIT` y reconstruir
 si cambió el código. No atribuir cambios sin commit a una versión limpia.
 
-**Estado funcional:** la regla de aceptación ya funciona, pero la etapa de copia a
-`published/current/`, la pestaña Antigua y el monitoreo/restauración todavía dependen de la
-integración del compañero responsable. `aprobada, pendiente de publicar` no significa publicada.
-La versión real documentada en `evaluacion.md` fue rechazada; no se cambian umbrales para aprobarla.
+**Publicación:** solo una versión aprobada por la regla reemplaza `mlops/published/current/`; la
+anterior pasa a `mlops/published/versions/<run_id>/`. Una corrida detenida o rechazada no toca
+`current/`. Con las fuentes institucionales actuales la versión candidata se **rechaza** (razón MAE
+1.38 > 1.25, ver `evaluacion.md`), así que el tablero muestra «Estimaciones no disponibles». No se
+cambian umbrales para aprobarla.
 
 ## MLflow y reproducibilidad
 
@@ -244,7 +250,7 @@ No mezclar un almacén local con uno creado en Docker: los URI de artefactos con
 | `data/` | Fuentes institucionales, solo lectura para los contenedores |
 | `mlruns/` | SQLite y artefactos de MLflow |
 | `mlops/runs/` | Logs, controles, parámetros, evaluación, candidatos y exportaciones |
-| `mlops/published/` | Versiones aprobadas cuando se integre `publish.py` |
+| `mlops/published/` | `current/` (versión que lee el tablero), `versions/` (anteriores) e `history.jsonl` |
 
 ```bash
 docker compose down
@@ -257,11 +263,58 @@ Para entregar los registros, detener primero los servicios y copiar **juntas** `
 Las capturas y JSON del informe complementan, pero no sustituyen, la base y sus artefactos.
 No subir fuentes ni registros institucionales a servicios públicos.
 
-**Restauración de resultados:** pendiente del comando de `publish.py`; no se propone copiar un
-candidato rechazado a `current/`. Cuando llegue esa parte se documentará el comando probado y la
-evidencia de lectura desde el tablero. Para regresar el código a una versión conocida, detener
-servicios, usar `git switch --detach <commit_verificado>`, reconstruir y conservar los volúmenes.
-Regresar el código no restaura automáticamente las estimaciones.
+**Restauración de resultados:** ver la sección siguiente. Para regresar el **código** a una versión
+conocida, detener servicios, usar `git switch --detach <commit_verificado>`, reconstruir y conservar
+los volúmenes. Regresar el código no restaura las estimaciones; para eso se usa `mlops.publish restore`.
+
+## Tablero, monitoreo y recuperación
+
+**Pestaña «Antigua Guatemala».** Lee solo `mlops/published/current/` (`estimates.csv`, `series.csv` y
+`metadata.json`); no lee los Excel ni ejecuta el pipeline. Muestra lo observado con línea continua y
+las estimaciones con rombos morados; ene–feb 2026 quedan como hueco en la línea observada, nunca como
+cero. Incluye fecha de actualización, margen de error de la validación (meses evaluados) y una
+advertencia de limitaciones. Los detalles de ejecuciones quedan en MLflow. La versión vigente se relee
+al abrir la pestaña: una publicación o restauración se ve sin reiniciar el tablero. El filtro de
+periodo solo recorta los datos ya cargados. `PUBLISHED_DIR=<carpeta>` muestra otra carpeta de versiones.
+
+**Monitoreo.** Cada corrida escribe `monitoring.json` y la sección `monitoring` de `run_log.json`, y
+registra `monitoring.<verificación>` en MLflow. Las alertas piden revisión; no deciden la publicación.
+
+| Verificación | Alerta cuando |
+|--|--|
+| Actualización | Telefonía no llega al último mes de ajuste, migración no llega al último mes de ajuste o estimación, faltan meses en los resultados o no hay versión aprobada publicada |
+| Calidad | Faltantes o duplicados crecen frente a la versión vigente en ≥ 5 filas y > 20 %, o se pierden meses de cobertura (`[monitoring]` en la config) |
+| Resultados | Estimaciones negativas o no finitas, variación entre meses consecutivos o frente a la versión vigente > 40 % (`acceptance.max_monthly_change`). El error predictivo solo se recalcula si aparece el observado de un mes estimado |
+
+**Versiones y restauración.**
+
+```bash
+python -m mlops.publish list                       # vigente y anteriores
+python -m mlops.publish restore <run_id>           # vuelve a poner una versión anterior aprobada
+# en Docker (published está montado con escritura en el servicio pipeline):
+docker compose run --rm pipeline python -m mlops.publish restore <run_id>
+```
+
+`restore` solo acepta versiones aprobadas completas de `versions/`; la vigente pasa a `versions/` y
+queda en `history.jsonl`. Recargar la pestaña Antigua para ver la versión restaurada.
+
+**Prueba controlada de fallo y recuperación.**
+
+```bash
+python -m mlops.drill                                   # sintético: denominador cero
+python -m mlops.drill --problem columna                 # o duplicado
+python -m mlops.drill --data real --problem denominador # copia de las fuentes institucionales
+PUBLISHED_DIR=mlops/test_runs/<carpeta>/published python app.py   # ver el resultado en el tablero
+# en Docker, guardar la carpeta en un volumen montado:
+docker compose run --rm pipeline python -m mlops.drill --output mlops/runs/drill
+```
+
+Todo ocurre en una carpeta aislada (`mlops/test_runs/drill-<fecha>/` por defecto) con sus propias
+fuentes, corridas, versiones y almacén MLflow; nunca toca `data/raw` ni `mlops/published`. Con datos
+sintéticos: publica una versión inicial, introduce el problema (el pipeline se detiene y `current/` no
+cambia), publica la entrega corregida y restaura la versión inicial. Con `--data real` hace los pasos
+de fallo y corrección sobre una copia de las fuentes. Resultados en
+[docs/lab11/evidencia/](docs/lab11/evidencia/).
 
 ## Informe integrado
 
@@ -279,8 +332,8 @@ python scripts/export_design.py --source docs/lab11/informe.md --output docs/lab
 - [x] Registro en MLflow y comprobación reproducible sintética
 - [ ] Repetir y entregar registros con las fuentes institucionales completas
 - [x] Validación temporal (ventana expansiva), referencia y regla de aceptación → [docs/lab11/evaluacion.md](docs/lab11/evaluacion.md)
-- [ ] Publicación de la versión aprobada e integración con el tablero
-- [ ] Monitoreo, prueba controlada de fallo y restauración de versión
+- [x] Publicación de la versión aprobada e integración con el tablero (pestaña Antigua)
+- [x] Monitoreo, prueba controlada de fallo y restauración de versión
 - [x] Docker Compose (tablero + pipeline + MLflow) y documentación
 - [x] PDF integrado del estado disponible, sin firma personal
 - [ ] Incorporar al PDF la publicación, monitoreo y recuperación verificados — entrega 1-nov-2026
